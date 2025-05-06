@@ -1,0 +1,345 @@
+.caixa {
+    background-color: white;
+    height: fit-content;
+    margin-top: 0;
+}
+
+.painelCliente_container {
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    flex-direction: row;
+    gap: 10px;
+    width: 85%;
+    background-color: transparent;
+}
+
+/* PAINEL */
+.pedidos_card,
+.pagamentos_card,
+.trabalhofinal_card,
+.conclussao_card,
+.historico_card {
+    margin: 10rem 0 10rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px;
+    padding: 0;
+    height: fit-content;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.093);
+    background-color: transparent;
+
+    h2 {
+        margin-top: 0;
+        padding: 5px 50px;
+        border-radius: 10px 10px 0 0;
+        width: 100%;
+        margin-top: 0;
+        text-align: center;
+        color: white;
+        font-weight: 500;
+    }
+
+    h3 {
+        margin-top: 1rem;
+        background-color: rgb(255, 255, 255);
+        padding: 5px 10px 5px 10px;
+        height: fit-content;
+        font-weight: 600;
+        font-size: 17px;
+        text-align: left;
+        color: rgba(0, 0, 0, 0.67);
+        border-bottom: 1px solid #b1b1b163;
+        border-top: 1px solid #b1b1b163;
+        width: 90%;
+    }
+
+    span {
+        padding: 10px 10px 0 10px;
+        text-align: center;
+        color: #666666;
+    }
+}
+
+.pedidos_card h2 {
+    background-color: #FA5D5D;
+
+}
+
+.pagamentos_card h2 {
+    background-color: #87D283;
+}
+
+.trabalhofinal_card h2 {
+    background-color: #8583D2;
+}
+
+.conclussao_card h2 {
+    background-color: #83AED2;
+}
+
+.historico_card h2 {
+    background-color: #D2B183;
+}
+
+
+/* CAIXA QUE APARECE AS INFORMAÇÕES DENTRO DO PAINEL */
+.card_caixa {
+    padding: 5px;
+    margin: 10px;
+    width: 90%;
+    border-left: 5px solid rgb(209, 209, 209);
+    background-color: rgba(230, 230, 230, 0.364);
+}
+
+
+/* BOTAO PARA BAIXAR IMAGEM */
+.botao_baixar {
+    background: linear-gradient(to right, #e0e0e0, #f5f5f5, #e0e0e0);
+    color: #5a5a5a;
+    padding: 10px 20px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    font-size: medium;
+
+    img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+}
+
+.botao_baixar:hover {
+    background: linear-gradient(to right, #d6d6d6, #ebebeb, #d6d6d6);
+    transform: translateY(-2px);
+    border: none;
+    color: #5a5a5a;
+}
+
+
+/* CAIXA DA COMISSÃO DO CLIENTE */
+.comissao_card {
+    border: 1px solid #D8D8D8;
+    background-color: white;
+    padding: 5px 7px;
+    color: #464646;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 0.5rem;
+
+    h4 {
+        text-align: left;
+    }
+
+    span {
+        font-weight: 450;
+        font-size: medium;
+        text-align: justify;
+        color: #464646;
+
+    }
+
+    img {
+        display: flex;
+        justify-self: center;
+        align-self: center;
+    }
+}
+
+
+/* ACEITAR CANCELAR BUTTON */
+.cancelar {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    border: 2px solid #C84545;
+    color: #C84545;
+    background-color: transparent;
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.cancelar:hover {
+    border: 2px solid #C84545;
+    background-color: #C84545;
+    color: white;
+}
+
+.aceitar {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    border: 2px solid #3BB60F;
+    color: white;
+    background-color: #3BB60F;
+    padding: 10px 20px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.aceitar:hover {
+    border: 2px solid #3BB60F;
+    background-color: white;
+    color: #3BB60F;
+}
+
+
+/* MODAL */
+.modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    flex-direction: column;
+    background-color: white;
+    padding: 0.5rem 2rem 3rem 2rem;
+    border-radius: 12px;
+    width: fit-content;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+    span {
+        text-align: right;
+        font-size: 20px;
+    }
+
+    span:hover {
+        color: red;
+    }
+
+    h3 {
+        font-size: 25px;
+        margin-bottom: 1rem;
+        font-weight: 500;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.36);
+    }
+
+    h4 {
+        text-align: center;
+        padding-top: 1rem;
+        font-size: 15px;
+    }
+}
+
+.mensagem_valor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+
+}
+
+.mensagem {
+    width: 100%;
+
+    p {
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    span {
+        color: #4D4D4D;
+        font-size: 15px;
+        font-weight: 450;
+    }
+}
+
+.valor {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 60px;
+    padding: 30px 15px;
+    border-left: 1px solid gray;
+}
+
+.pagamentos_botao {
+    width: 100%;
+    display: flex;
+    justify-self: center;
+    align-self: center;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: medium;
+
+    button {
+        width: fit-content;
+
+        img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 2rem;
+            background-color: white;
+        }
+    }
+}
+
+.pix,
+.debito,
+.credito {
+    padding: 10px 50px;
+}
+
+.pix {
+    background-color: #2DC2A0;
+    border: 1px solid #2DC2A0;
+}
+
+.debito {
+    background-color: #5E5959;
+    border: 1px solid #5E5959;
+
+}
+
+.credito {
+    background-color: #E6E6E6;
+    color: #4D4D4D;
+    border: 1px solid #E6E6E6;
+
+}
+
+.pix:hover {
+    color: #2DC2A0;
+    border: 1px solid #2DC2A0;
+    background-color: white;
+}
+
+.debito:hover {
+    color: #5E5959;
+    border: 1px solid #5E5959;
+    background-color: white;
+}
+
+.credito:hover {
+    color: #848484;
+    border: 1px solid #848484;
+    background-color: white;
+}

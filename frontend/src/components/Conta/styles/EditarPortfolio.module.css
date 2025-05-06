@@ -1,0 +1,171 @@
+.edit_container {
+    padding: 5rem 0 2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 1rem;
+    width: 100%;
+    height: 100vh;
+}
+
+/* BOTAO ADICIONAR ARTE E BIOGRAFIA */
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 12px 0;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+    color: black;
+    font-size: 16px;
+}
+
+.item i {
+    font-size: 14px;
+}
+
+
+/* CAMPO EDITAR */
+.editar_card_container {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.editar_card {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5rem;
+    width: 35rem;
+    height: 7.5rem;
+    border-radius: 10px;
+    padding: 1.5rem 3rem;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
+
+
+    img {
+        object-fit: contain;
+        height: 70px;
+    }
+}
+.card_info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    h4,span {
+        color: black;
+        font-size: 16px; 
+        font-weight: 500;  
+    }
+    p {
+        color: #646464;
+        font-size: 14px;
+    }
+}
+
+.card_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.card_btn i {
+    padding: 1rem;
+    border-radius: 50%;
+    border: 1px solid;
+}
+.card_btn i:hover {
+    background-color: black;
+    color: white;
+}
+
+/* MODAL BIOGRAFIA */
+.overlay_modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+}
+
+/* MODAL DELETE  */
+.delete_modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.botao_modal {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cancelar_btn {
+    background: #ccc;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.cancelar_btn:hover {
+    background: #bbb;
+    color: white;
+    border: none;
+}
+
+.confirm_delete_btn {
+    background: #ff1f1f;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.confirm_delete_btn:hover {
+    background: #bc1616;
+    border: none;
+    color: white;
+}

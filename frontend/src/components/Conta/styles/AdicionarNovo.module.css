@@ -1,0 +1,9 @@
+.addicionar_container {
+    padding: 5rem 0 2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 1rem;
+    width: 100%;
+    height: 100vh;
+}

@@ -1,0 +1,182 @@
+.navbarRoxo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    background-color: #9e00e782;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    color: white;
+    z-index: 10;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
+}
+
+/* Estilo da navbar das outras páginas */
+.navbarBranco {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    background-color: #FDFAFF;
+    color: black;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
+}
+
+.navbar_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 50px;
+}
+
+.logo_container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoLink {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logoTitle {
+    font-size: 27px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.corBranco {
+    color: white;
+}
+
+.corRoxo {
+    color: #580081;
+}
+
+/* IMAGEM DO LOGO */
+.logo {
+    width: 40px;
+}
+
+/* BARRA DE PESQUISA */
+.pesquisar {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid #EBC5FC;
+    border-radius: 30px;
+    padding: 0 15px;
+    width: 40%;
+}
+
+.buscar_icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.pesquisar_input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    background-color: #FDFAFF;
+}
+
+.pesquisar_input::placeholder {
+    color: #EBC5FC;
+    background-color: #FDFAFF;
+}
+
+/* Botões alinhados à direita */
+.button_container {
+    display: flex;
+    gap: 30px;
+}
+
+
+.loginButton {
+    background-color: #9E00E7;
+    color: white;
+    border: 2px solid white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.loginButton:hover {
+    background-color: white;
+    color: #9b30ff;
+}
+
+.registerButton {
+    background-color: #9E00E7;
+    color: white;
+    border: 2px solid white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.registerButton:hover {
+    background-color: white;
+    color: #9b30ff;
+}
+
+/* Responsives */
+@media (max-width: 800px) {
+
+    .logoTitle {
+        visibility: hidden;
+        font-size: xx-small;
+    }
+
+    .pesquisar {
+        width: 50%;
+    }
+
+    .registerButton {
+        visibility: hidden;
+        font-size: xx-small;
+    }
+
+    .loginButton {
+        position: absolute;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .logoTitle {
+        visibility: hidden;
+        font-size: xx-small;
+    }
+
+    .pesquisar {
+        width: 30%;
+    }
+
+    .registerButton {
+        visibility: hidden;
+        font-size: xx-small;
+    }
+
+    .loginButton {
+        position: absolute;
+    }
+}

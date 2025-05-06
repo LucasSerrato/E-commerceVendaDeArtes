@@ -1,0 +1,219 @@
+.comissao_container {
+    padding: 6rem 0 8rem 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+}
+
+.form_comissao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    width: 60%;
+    padding: 0 0px 30px 0;
+    border-radius: 15px;
+    border: #CFCDCD 1px solid;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
+}
+
+.infoDa_solicitacao {
+    padding: 0 20px 0 0;
+    border-bottom: 2px solid #CFCDCD;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 40px;
+    width: 100%;
+
+    img {
+        height: 100px;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 15px 0 0 0;
+    }
+
+    h4 {
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    p {
+        font-weight: 400;
+        display: flex;
+        gap: 10px;
+    }
+
+    span {
+        font-weight: bold;
+    }
+}
+
+.right_left {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 30px;
+    width: 90%;
+
+    label {
+        margin-top: 1rem;
+    }
+
+    input {
+        margin-top: 0.2rem;
+        border: #CFCDCD 1px solid;
+        padding: 10px 10px;
+        border-radius: 10px;
+        height: 40px;
+        width: 100%;
+    }
+
+    textarea {
+        margin-top: 0.2rem;
+        padding: 10px 10px;
+        height: 122px;
+        border: #CFCDCD 1px solid;
+        border-radius: 10px;
+        width: 100%;
+    }
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+/* DRAG AND DROP BOX */
+.dropzone {
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    color: #CFCDCD;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: border-color 0.3s ease;
+    width: 90%;
+}
+
+.dropzone:hover {
+    border-color: #999;
+    color: #000;
+}
+
+.previewGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 50%;
+}
+
+.previewItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.previewImage {
+    width: 150px;
+    height: 50px;
+    border-radius: 0.5rem 0 0 0.5rem;
+    object-fit: cover;
+}
+
+.cancelButton {
+    padding: 0.3rem 0.8rem;
+    height: 100%;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 0.8rem;
+}
+
+.cancelButton:hover {
+    background-color: #c0392b;
+    border: none;
+    color: white;
+}
+
+
+/* BOTAO SOLICITAR SERVIÇO */
+.botao_solicitarSer {
+    margin-top: 1.5rem;
+    background-color: #9E00E7;
+    border: 2px solid #9E00E7;
+    padding: 5px 40px;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.botao_solicitarSer:hover {
+    color: #9E00E7;
+    background-color: white;
+    border: 2px solid #9E00E7;
+}
+
+
+/* Responsives */
+@media (max-width: 700px) {
+    .form_comissao {
+        margin-top: 0;
+        width: 80%;
+    }
+
+    .infoDa_solicitacao {
+        padding: 0;
+        flex-direction: column;
+        gap: 20px;
+
+        img {
+            height: 80px;
+            width: 100%;
+            border-radius: 15px 15px 0 0;
+        }
+    }
+
+    .right_left {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+
+        label {
+            text-align: center;
+        }
+    }
+
+    .right {
+        width: 80%;
+    }
+
+    .left {
+        width: 80%;
+    }
+
+    .dropzone {
+        width: 79%;
+    }
+
+}
