@@ -1,4 +1,3 @@
-// src/main/java/com/pixxl/controller/ClienteController.java
 package com.pixxl.controller;
 
 import com.pixxl.model.Cliente;
@@ -12,16 +11,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") // permite requisições do front-end
 public class ClienteController {
 
     @Autowired
     private ClienteService service;
 
-    // Cadastro de cliente
+    // Cadastrar cliente
     @PostMapping
-    public Cliente cadastrarCliente(@RequestBody Cliente cliente) {
-        return service.salvar(cliente);
+    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
+        try {
+            Cliente salvo = service.salvar(cliente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     // Listar todos os clientes
@@ -30,22 +34,19 @@ public class ClienteController {
         return service.listarTodos();
     }
 
-    // Login simples por email e senha
+    // Login básico com e-mail e senha
     @PostMapping("/login")
     public ResponseEntity<Cliente> login(@RequestBody Cliente loginRequest) {
-        // Verifica se o email e a senha foram enviados na requisição
         if (loginRequest.getEmail() == null || loginRequest.getSenha() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Requisição malformada
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        // Busca o cliente pelo email
         Cliente cliente = service.buscarPorEmail(loginRequest.getEmail());
 
-        // Verifica se o cliente foi encontrado e se a senha está correta
         if (cliente != null && cliente.getSenha().equals(loginRequest.getSenha())) {
-            return ResponseEntity.ok(cliente); // Login bem-sucedido
+            return ResponseEntity.ok(cliente);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // Email ou senha inválidos
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }
