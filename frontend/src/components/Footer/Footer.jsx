@@ -51,7 +51,9 @@ export default function Footer() {
                 </div>
             </div>
 
-            <p className={styles.footerCopy}>© 2025 Freemix Web. Todos os direitos reservados</p>
+            <p className={styles.footerCopy}>
+                © 2025 Freemix Web. Todos os direitos reservados
+            </p>
         </footer>
     );
 }
