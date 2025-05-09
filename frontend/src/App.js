@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+
 import Navbar from "./components/Navbar/Navbar";
 import HeroSection from "./components/HeroSection/HeroSection";
 import FeatureSection from "./components/FeatureSection/FeatureSection";
 import FAQ from "./components/FAQ/FAQ";
 import Footer from "./components/Footer/Footer";
-import "./styles/global.css";
 import HowItWorksSection from './components/HowItWorks/HowItWorksSection';
 import ArtistasEclientes from './components/ArtistasEclientes/ArtistasEclientes';
 import Login from './components/Login/Login';
@@ -24,15 +24,14 @@ import Suporte from './components/Conta/Suporte';
 import AdiconarNovo from './components/Conta/AdicionarNovo';
 import Editar from './components/Conta/Editar';
 
-// Dentro do return:
-<HowItWorksSection />
-
+import "./styles/global.css";
 
 function App() {
     return (
         <Router>
             <Navbar />
             <Routes>
+                {/* Rota principal (página inicial) */}
                 <Route path="/" element={
                     <>
                         <HeroSection />
@@ -41,6 +40,18 @@ function App() {
                         <FAQ />
                     </>
                 } />
+
+                {/* Página Home - opcional, igual à principal */}
+                <Route path="/home" element={
+                    <>
+                        <HeroSection />
+                        <FeatureSection />
+                        <HowItWorksSection />
+                        <FAQ />
+                    </>
+                } />
+
+                {/* Rotas da conta do usuário */}
                 <Route path="/conta" element={<ContaLayout />}>
                     <Route index element={<Navigate to="perfil" replace />} />
                     <Route path="perfil" element={<Perfil />} />
@@ -52,6 +63,7 @@ function App() {
                     <Route path="editar" element={<Editar />} />
                 </Route>
 
+                {/* Outras rotas */}
                 <Route path="/artistas_clientes" element={<ArtistasEclientes />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro" element={<Cadastro />} />
