@@ -119,7 +119,9 @@ cd backend
 cd frontend
 npm install
 npm install @fortawesome/fontawesome-free
+npm install react-router-dom
 npm start
+
 ```
 
 > UI available at `http://localhost:3000`
@@ -258,7 +260,7 @@ O Pixxl utiliza uma **arquitetura cliente-servidor**, com comunicação via API 
 
 ```bash
 git clone https://github.com/LucasSerrato/curriculoTsuda.git
-cd curriculoTsuda
+cd Projeto5Sem
 ```
 
 ### 2. Inicie o back-end (Spring Boot)
@@ -276,6 +278,8 @@ cd backend
 ```bash
 cd frontend
 npm install
+npm install @fortawesome/fontawesome-free
+npm install react-router-dom
 npm start
 ```
 
