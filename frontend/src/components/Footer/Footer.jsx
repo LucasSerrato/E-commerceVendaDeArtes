@@ -14,7 +14,6 @@ export default function Footer() {
                         <li><Link to="/login">Entre</Link></li>
                         <li><Link to="/cadastro">Cadastre-se</Link></li>
                     </ul>
-
                 </div>
 
                 <div className={styles.footerSection}>
@@ -25,15 +24,29 @@ export default function Footer() {
 
                     <div className={styles.socialIcons}>
                         <a href="https://www.instagram.com/freemix" target="_blank" rel="noopener noreferrer">
-                            <img src="/imgs/instagram.svg" alt="Instagram" />
+                            <img
+                                src="https://img.icons8.com/ios-filled/50/000000/instagram-new.png"
+                                alt="Instagram"
+                                width="24"
+                                height="24"
+                            />
                         </a>
                         <a href="https://x.com/freemix" target="_blank" rel="noopener noreferrer">
-                            <img src="/imgs/x.svg" alt="X (Twitter)" />
+                            <img
+                                src="https://img.icons8.com/ios-filled/50/000000/twitterx.png"
+                                alt="X (Twitter)"
+                                width="24"
+                                height="24"
+                            />
                         </a>
                         <a href="https://www.linkedin.com/company/freemix" target="_blank" rel="noopener noreferrer">
-                            <img src="/imgs/linkedin.svg" alt="LinkedIn" />
+                            <img
+                                src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
+                                alt="LinkedIn"
+                                width="24"
+                                height="24"
+                            />
                         </a>
-
                     </div>
                 </div>
             </div>
