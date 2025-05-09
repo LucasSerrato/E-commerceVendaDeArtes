@@ -120,6 +120,7 @@ cd frontend
 npm install
 npm install @fortawesome/fontawesome-free
 npm install react-router-dom
+npm install react-toastify
 npm start
 
 ```
@@ -280,6 +281,7 @@ cd frontend
 npm install
 npm install @fortawesome/fontawesome-free
 npm install react-router-dom
+npm install react-toastify
 npm start
 ```
 
