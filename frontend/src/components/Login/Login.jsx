@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // ✅ importando navegação
+import { useContext, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
+import { AuthContext } from '../../context/AuthContext'; // ✅ Caminho corrigido
 
 function Login() {
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
-    const navigate = useNavigate(); // ✅ para redirecionar após login
+    const navigate = useNavigate();
+    const { login } = useContext(AuthContext); // usa o login do contexto
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -22,7 +24,9 @@ function Login() {
             if (response.ok) {
                 const usuario = await response.json();
                 alert(`Login bem-sucedido! Bem-vindo(a), ${usuario.nome}`);
-                navigate('/home'); // ✅ redireciona para tela principal
+
+                login(); // seta como logado e salva o token
+                navigate('/home');
             } else if (response.status === 401) {
                 alert('E-mail ou senha inválidos.');
             } else {

@@ -3,19 +3,19 @@ import logo from '../../assets/imgs/logo_white.png';
 import logoRoxo from '../../assets/imgs/logo_purple.png';
 import buscarIcon from '../../assets/imgs/buscar_icon.png';
 import { Link, useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 function Navbar() {
-    // FUNÇÃO PARA ALTERAR A COR DA NAVBAR QUANDO NÃO ESTIVER NA PÁGINA INICIAL
     const location = useLocation();
+    const { logado, logout } = useContext(AuthContext);
 
-    const isLandingPage = location.pathname === "/"; // só na home
+    const isLandingPage = location.pathname === "/";
     const navbarClass = isLandingPage ? styles.navbarRoxo : styles.navbarBranco;
 
     return (
         <nav className={navbarClass}>
             <section className={styles.navbar_container}>
-
-                {/* NAVEGAR PARA A TELA INICIAL QUANDO CLICA NO LOGO */}
                 <div className={styles.logo_container}>
                     <Link to="/" className={styles.logoLink}>
                         <img
@@ -29,7 +29,6 @@ function Navbar() {
                     </Link>
                 </div>
 
-                {/* EXIBIR A BARRA DE PESQUISA QUANDO NÃO ESTIVER NA TELA INICIAL*/}
                 {!isLandingPage && (
                     <div className={styles.pesquisar}>
                         <img src={buscarIcon} alt="Buscar icon" className={styles.buscar_icon} />
@@ -41,10 +40,15 @@ function Navbar() {
                     </div>
                 )}
 
-                {/* NAV A */}
                 <div className={styles.button_container}>
-                    <a href="/login" className={styles.loginButton}>Entre</a>
-                    <a href="/cadastro" className={styles.registerButton}>Cadastrar-se</a>
+                    {!logado ? (
+                        <>
+                            <Link to="/login" className={styles.loginButton}>Entre</Link>
+                            <Link to="/cadastro" className={styles.registerButton}>Cadastrar-se</Link>
+                        </>
+                    ) : (
+                        <button onClick={logout} className={styles.loginButton}>Sair</button>
+                    )}
                 </div>
             </section>
         </nav>
