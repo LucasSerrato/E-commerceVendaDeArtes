@@ -1,4 +1,4 @@
-package com.pixxl.dto;
+package com.pixxl.Dto;
 
 import com.pixxl.model.Comissao;
 

@@ -1,6 +1,6 @@
 package com.pixxl.controller;
 
-import com.pixxl.dto.ComissaoDTO;
+import com.pixxl.Dto.ComissaoDTO;
 import com.pixxl.model.Comissao;
 import com.pixxl.repository.ComissaoRepository;
 import org.springframework.web.bind.annotation.*;
