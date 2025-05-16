@@ -58,6 +58,15 @@
 .socialIcons img:hover {
     transform: scale(1.1);
 }
+.whiteIcon {
+  filter: invert(1) brightness(2);
+  transition: filter 0.3s ease;
+}
+
+.whiteIcon:hover {
+  filter: invert(0.7) brightness(2.5);
+}
+
 
 .footerCopy {
     text-align: center;

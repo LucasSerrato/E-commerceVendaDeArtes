@@ -1,18 +1,45 @@
-import { useOutletContext } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from './styles/Perfil.module.css';
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Perfil() {
-    const { role } = useOutletContext();
+    const { usuario, login, logout } = useContext(AuthContext);
     const fileInputRef = useRef(null);
+    const navigate = useNavigate();
 
     const [profileImage, setProfileImage] = useState(null);
     const [randomColor] = useState(
         `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`
     );
     const [showModal, setShowModal] = useState(false);
+    const [nome, setNome] = useState(usuario?.nome || "");
+    const [email, setEmail] = useState(usuario?.email || "");
 
-    // TROCAR DE IMAGEM
+    // Obter dados do usuário ao carregar o componente
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/clientes/${usuario.id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setNome(data.nome);
+                    setEmail(data.email);
+                    login(data); // Atualiza contexto com dados mais recentes
+                } else {
+                    console.error("Falha ao buscar dados do usuário");
+                }
+            } catch (error) {
+                console.error("Erro ao buscar dados do usuário:", error);
+            }
+        };
+
+        if (usuario?.id) {
+            fetchUserData();
+        }
+    }, [usuario?.id, login]);
+
+    // Selecionar nova imagem de perfil (simples preview local)
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -21,28 +48,67 @@ function Perfil() {
         }
     };
 
-    // ABRIR PASTA PARA SELECIONAR IMAGEM NOVA
+    // Abrir seletor de arquivos
     const openFileSelector = () => {
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
 
-    // APAGAR CONTA
-    const confirmDelete = () => {
+    // Atualiza dados do perfil do usuário
+    const handleUpdateProfile = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(`http://localhost:8080/api/clientes/${email}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ nome }),
+            });
+
+            if (response.ok) {
+                const updatedUser = await response.json();
+                login(updatedUser); // Atualiza contexto com dados novos
+                alert("Nome atualizado com sucesso!");
+            } else {
+                alert("Erro ao atualizar o perfil.");
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar o perfil:", error);
+            alert("Erro ao conectar com o servidor.");
+        }
+    };
+
+    // Confirma exclusão da conta
+    const confirmDelete = async () => {
         setShowModal(false);
-        alert("Conta apagada!");
+        try {
+            const response = await fetch(`http://localhost:8080/api/clientes/${email}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                alert("Conta apagada com sucesso!");
+                logout(); // Limpa contexto do usuário
+                navigate("/"); // Redireciona para a home
+            } else {
+                alert("Erro ao apagar a conta.");
+            }
+        } catch (error) {
+            console.error("Erro ao excluir conta:", error);
+            alert("Erro ao conectar com o servidor.");
+        }
     };
 
     return (
         <div className={styles.perfil_container}>
-
-            {/* IMG PERFIL */}
+            {/* Imagem do perfil */}
             <div
-                className={`${styles.profile_pic_wrapper} ${role === "artista" ? styles.editable : ""}`}
-                onClick={role === "artista" ? openFileSelector : undefined}
+                className={`${styles.profile_pic_wrapper} ${usuario?.role === "artista" ? styles.editable : ""}`}
+                onClick={usuario?.role === "artista" ? openFileSelector : undefined}
             >
-                {role === "artista" ? (
+                {usuario?.role === "artista" ? (
                     <>
                         <img
                             src={
@@ -72,23 +138,26 @@ function Perfil() {
                 />
             </div>
 
-            {/* FORM */}
-            <form className={styles.perfil_form}>
+            {/* Formulário de edição do perfil */}
+            <form className={styles.perfil_form} onSubmit={handleUpdateProfile}>
                 <label>Nome do usuário</label>
-                <input placeholder="pearls.art" />
+                <input
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                    required
+                />
                 <label>Email</label>
-                <input placeholder="pearlart@gmail.com" readOnly />
+                <input value={email} readOnly />
 
-                
                 <button className={styles.botao_salvar} type="submit">Salvar</button>
             </form>
 
+            {/* Botão de apagar conta */}
             <button className={styles.delete_btn} onClick={() => setShowModal(true)}>
                 Apagar conta
             </button>
 
-
-            {/* Modal para apagar a conta*/}
+            {/* Modal de confirmação de exclusão */}
             {showModal && (
                 <div className={styles.apagar_modal_overlay}>
                     <div className={styles.apagar_modal}>

@@ -2,24 +2,22 @@ package com.pixxl.controller;
 
 import com.pixxl.model.Cliente;
 import com.pixxl.service.ClienteService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/clientes")
 @CrossOrigin(origins = "*") // permite requisições do front-end
 public class ClienteController {
-
-    @Autowired
-    private ClienteService service;
+    @Autowired private ClienteService service;
 
     // Cadastrar cliente
     @PostMapping
-    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> cadastrarCliente(
+            @RequestBody Cliente cliente) {
         try {
             Cliente salvo = service.salvar(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
@@ -48,5 +46,43 @@ public class ClienteController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<Cliente> buscarPorEmail(@PathVariable String email) {
+        Cliente cliente = service.buscarPorEmail(email);
+        if (cliente != null) {
+            return ResponseEntity.ok(cliente);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PatchMapping("/{email}")
+    public ResponseEntity<Cliente> atualizarNome(
+            @PathVariable String email, @RequestBody Cliente atualizacao) {
+        Cliente clienteExistente = service.buscarPorEmail(email);
+
+        if (clienteExistente == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        clienteExistente.setNome(atualizacao.getNome());
+        Cliente atualizado = service.salvar(clienteExistente);
+
+        return ResponseEntity.ok(atualizado);
+    }
+
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Void> deletarCliente(@PathVariable String email) {
+        Cliente cliente = service.buscarPorEmail(email);
+
+        if (cliente == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        service.deletar(
+                cliente);
+        return ResponseEntity.noContent().build(); // 204 - sucesso
     }
 }
