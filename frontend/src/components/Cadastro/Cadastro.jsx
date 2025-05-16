@@ -1,14 +1,12 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import styles from './Cadastro.module.css';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
 
 function Cadastro() {
     const [email, setEmail] = useState('');
     const [nome, setNome] = useState('');
     const [senha, setSenha] = useState('');
     const [isArtista, setIsArtista] = useState(null);
-    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -34,7 +32,6 @@ function Cadastro() {
             });
 
             if (response.ok) {
-                const usuario = await response.json();
                 alert('Cadastro realizado com sucesso!');
                 navigate('/login');
             } else {
@@ -76,22 +73,22 @@ function Cadastro() {
                 <div className={styles.verificacao}>
                     <p>Você é artista?</p>
                     <label>
+                        Sim
                         <input
                             type="radio"
                             name="tipo"
                             checked={isArtista === true}
                             onChange={() => setIsArtista(true)}
                         />
-                        Sim
                     </label>
                     <label>
+                        Não
                         <input
                             type="radio"
                             name="tipo"
                             checked={isArtista === false}
                             onChange={() => setIsArtista(false)}
                         />
-                        Não
                     </label>
                 </div>
 
