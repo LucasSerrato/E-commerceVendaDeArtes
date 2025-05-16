@@ -83,14 +83,14 @@ function EditarPortfolio() {
                 <div className={styles.overlay_modal} onClick={() => setShowBioModal(false)}>
                     <div className={styles.content} onClick={e => e.stopPropagation()}>
                         <h2>Editar Biografia</h2>
-                        
-                        <label>Bio</label>
-                        <textarea className={styles.textarea} placeholder="Digite sua biografia..." />
 
-                            <label>Portfólio público</label>
-                            <input className={styles.input} type="url" placeholder="https://artistree.io/pearls.art" />
+                         <label>Portfólio público</label>
+                         <input className={styles.input} type="url" placeholder="https://artistree.io/pearls.art" />
 
-                        <button onClick={() => setShowBioModal(false)}>Salvar</button>
+                         <label>Bio</label>
+                         <textarea className={styles.textarea} placeholder="Digite sua biografia..." />
+
+                        <button className={styles.bio_btn} onClick={() => setShowBioModal(false)}>Salvar</button>
                     </div>
                 </div>
             )}
