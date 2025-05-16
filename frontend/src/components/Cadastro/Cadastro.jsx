@@ -73,27 +73,27 @@ function Cadastro() {
                 <div className={styles.verificacao}>
                     <p>Você é artista?</p>
                     <label>
-                        Sim
                         <input
                             type="radio"
                             name="tipo"
                             checked={isArtista === true}
                             onChange={() => setIsArtista(true)}
                         />
+                        Sim
                     </label>
                     <label>
-                        Não
                         <input
                             type="radio"
                             name="tipo"
                             checked={isArtista === false}
                             onChange={() => setIsArtista(false)}
                         />
+                        Não
                     </label>
                 </div>
 
                 <button className={styles.cadastro_botao} type='submit'>Cadastrar</button>
-                <p>Já possui cadastro? <a href='/login'>Clique aqui</a> para fazer login</p>
+                <p>Já possui cadastro? <a href='/login'>Clique aqui</a>para fazer login</p>
             </form>
         </section>
     );
