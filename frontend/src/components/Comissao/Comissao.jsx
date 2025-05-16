@@ -1,10 +1,31 @@
 import styles from './Comissao.module.css';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from "../../context/AuthContext";
 import ImgSelecionada from '../../assets/imgs/illustration_dragon.jpg'
 
 function Comissao() {
     const [images, setImages] = useState([]);
+    const [nomeUsuario, setNomeUsuario] = useState('');
+    const { usuario } = useContext(AuthContext);
+
+    useEffect(() => {
+            const buscarNomeUsuario = async () => {
+                try {
+                    const response = await fetch(`http://localhost:8080/api/clientes/${usuario.email}`);
+                    if (!response.ok) throw new Error("Erro ao buscar nome do usuario");
+
+                    const user = await response.json();
+                    setNomeUsuario(user.nome);
+                } catch (error) {
+                    console.error("Erro ao buscar dados do usuario:", error);
+                }
+            };
+
+            if (usuario && usuario.email) {
+                buscarNomeUsuario();
+            }
+        }, [usuario]);
 
     const handleFiles = (files) => {
         const newImages = Array.from(files).filter(file => file.type.startsWith('image/'));
@@ -31,7 +52,7 @@ function Comissao() {
                 <div className={styles.right_left}>
                     <div className={styles.right}>
                         <label>Nome:</label>
-                        <input type='name' placeholder='joao.carlos' readOnly />
+                        <input type='name' value={nomeUsuario} readOnly />
 
                     </div>
 
