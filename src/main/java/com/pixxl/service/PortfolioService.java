@@ -38,6 +38,7 @@ public class PortfolioService {
             alterado.setPrazo(portfolio.getPrazo());
             alterado.setPreco(portfolio.getPreco());
             alterado.setTipo_arte(portfolio.getTipo_arte());
+            alterado.setLink(portfolio.getLink());
             return portfolioRepository.save(alterado);
         }
         return null;

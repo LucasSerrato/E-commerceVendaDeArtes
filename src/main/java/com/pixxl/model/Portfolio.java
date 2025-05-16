@@ -24,19 +24,23 @@ public class Portfolio {
     @Column
     private int prazo;
 
+    @Column
+    private String link;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "artista_id", referencedColumnName = "id", nullable = false)
     private Cliente artista;
 
     public Portfolio() {}
 
-    public Portfolio(Long id, String bio, String tipo_arte, BigDecimal preco, int prazo, Cliente artista){
+    public Portfolio(Long id, String bio, String tipo_arte, BigDecimal preco, int prazo, Cliente artista, String link){
         this.id = id;
         this.bio = bio;
         this.tipo_arte = tipo_arte;
         this.preco = preco;
         this.prazo = prazo;
         this.artista = artista;
+        this.link = link;
     }
 
     public Long getId() {
@@ -85,5 +89,13 @@ public class Portfolio {
 
     public void setArtista(Cliente artista) {
         this.artista = artista;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }
