@@ -23,30 +23,33 @@ export default function Footer() {
                     </ul>
 
                     <div className={styles.socialIcons}>
-                        <a href="https://www.instagram.com/freemix" target="_blank" rel="noopener noreferrer">
-                            <img
-                                src="https://img.icons8.com/ios-filled/50/000000/instagram-new.png"
-                                alt="Instagram"
-                                width="24"
-                                height="24"
-                            />
-                        </a>
-                        <a href="https://x.com/freemix" target="_blank" rel="noopener noreferrer">
-                            <img
-                                src="https://img.icons8.com/ios-filled/50/000000/twitterx.png"
-                                alt="X (Twitter)"
-                                width="24"
-                                height="24"
-                            />
-                        </a>
-                        <a href="https://www.linkedin.com/company/freemix" target="_blank" rel="noopener noreferrer">
-                            <img
-                                src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
-                                alt="LinkedIn"
-                                width="24"
-                                height="24"
-                            />
-                        </a>
+                      <a href="https://www.instagram.com/freemix" target="_blank" rel="noopener noreferrer">
+                        <img
+                          src="https://img.icons8.com/ios-filled/50/000000/instagram-new.png"
+                          alt="Instagram"
+                          width="24"
+                          height="24"
+                          className={styles.whiteIcon}
+                        />
+                      </a>
+                      <a href="https://x.com/freemix" target="_blank" rel="noopener noreferrer">
+                        <img
+                          src="https://img.icons8.com/ios-filled/50/000000/twitterx.png"
+                          alt="X (Twitter)"
+                          width="24"
+                          height="24"
+                          className={styles.whiteIcon}
+                        />
+                      </a>
+                      <a href="https://www.linkedin.com/company/freemix" target="_blank" rel="noopener noreferrer">
+                        <img
+                          src="https://img.icons8.com/ios-filled/50/000000/linkedin.png"
+                          alt="LinkedIn"
+                          width="24"
+                          height="24"
+                          className={styles.whiteIcon}
+                        />
+                      </a>
                     </div>
                 </div>
             </div>

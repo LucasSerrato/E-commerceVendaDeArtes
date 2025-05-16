@@ -1,68 +1,81 @@
 .faqSection {
-    padding: 60px 20px;
-    background-color: #f9f9f9;
-    text-align: center;
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
 }
 
 .title {
-    color: #a000f0;
-    font-size: 2rem;
-    margin-bottom: 30px;
+  color: #a000f0;
+  font-size: 2rem;
+  margin-bottom: 30px;
 }
 
 .faqList {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .faqItem {
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
+/* PERGUNTAS */
 .question {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    color: #6a0dad;
-    font-weight: bold;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-    padding: 10px;
-    transition: all 0.2s;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #6a0dad;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  transition: all 0.2s;
 }
 
 .question:hover {
-    color: #a000f0;
-    transform: scale(1.02);
+  color: #a000f0;
+  transform: scale(1.02);
+  border: none;
+  background: none;
 }
 
 .answer {
-    margin-top: 10px;
-    font-size: 1.05rem;
-    color: #333;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transform: translateY(-10px);
-    transition: all 0.4s ease;
+  margin-top: 10px;
+  font-size: 1.05rem;
+  color: #333;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
 }
 
 /* Animação para resposta */
 .answer.active {
-    opacity: 1;
-    max-height: 500px;
-    transform: translateY(0);
-    animation: wiggle 0.6s ease-in-out;
+  opacity: 1;
+  max-height: 500px;
+  transform: translateY(0);
+  animation: wiggle 0.6s ease-in-out;
 }
 
 @keyframes wiggle {
-    0% { transform: translateY(0); }
-    25% { transform: translateY(-2px); }
-    50% { transform: translateY(2px); }
-    75% { transform: translateY(-1px); }
-    100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(2px);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }

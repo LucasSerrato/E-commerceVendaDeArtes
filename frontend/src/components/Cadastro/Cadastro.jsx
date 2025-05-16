@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import styles from './Cadastro.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function Cadastro() {
     const [email, setEmail] = useState('');
     const [nome, setNome] = useState('');
     const [senha, setSenha] = useState('');
     const [isArtista, setIsArtista] = useState(null);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,20 +25,15 @@ function Cadastro() {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/api/clientes', { // ✅ URL corrigida
+            const response = await fetch('http://localhost:8080/api/clientes', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
             });
 
             if (response.ok) {
                 alert('Cadastro realizado com sucesso!');
-                setEmail('');
-                setNome('');
-                setSenha('');
-                setIsArtista(null);
+                navigate('/login');
             } else {
                 alert('Erro ao cadastrar!');
             }
@@ -60,7 +57,7 @@ function Cadastro() {
                 />
                 <input
                     type='text'
-                    placeholder='Username'
+                    placeholder='Nome de usuário'
                     value={nome}
                     onChange={e => setNome(e.target.value)}
                     required
@@ -75,30 +72,24 @@ function Cadastro() {
 
                 <div className={styles.verificacao}>
                     <p>Você é artista?</p>
-
-                    <div className={styles.sim}>
-                        <label htmlFor='artista_sim'>Sim</label>
+                    <label>
+                        Sim
                         <input
-                            type='radio'
-                            id='artista_sim'
-                            name='tipo'
-                            onChange={() => setIsArtista(true)}
+                            type="radio"
+                            name="tipo"
                             checked={isArtista === true}
-                            required
+                            onChange={() => setIsArtista(true)}
                         />
-                    </div>
-
-                    <div className={styles.nao}>
-                        <label htmlFor='artista_nao'>Não</label>
+                    </label>
+                    <label>
+                        Não
                         <input
-                            type='radio'
-                            id='artista_nao'
-                            name='tipo'
-                            onChange={() => setIsArtista(false)}
+                            type="radio"
+                            name="tipo"
                             checked={isArtista === false}
-                            required
+                            onChange={() => setIsArtista(false)}
                         />
-                    </div>
+                    </label>
                 </div>
 
                 <button className={styles.cadastro_botao} type='submit'>Cadastrar</button>

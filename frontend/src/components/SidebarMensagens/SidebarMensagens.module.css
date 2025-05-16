@@ -1,0 +1,51 @@
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+  height: 100vh;
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+
+.titulo {
+  color: #aa66cc;
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+.listaConversas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conversaItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.conversaItem:hover {
+  background-color: #f5f5f5;
+}
+
+.ativa {
+  background-color: #f0e6ff;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.nome {
+  font-weight: 500;
+  color: #333;
+}
