@@ -1,47 +1,79 @@
 package com.pixxl.controller;
 
-
-import com.pixxl.model.ComentarioCli;
 import com.pixxl.model.ComentarioCliImgs;
 import com.pixxl.service.ComentarioCliImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/comentariocliimg")
+@RequestMapping("/api/comentariocliimgs")
 public class ComentarioCliImgsController {
+
+    private final String uploadDir = "uploads/comentarios/";
 
     @Autowired
     private ComentarioCliImgService comentarioCliImgService;
 
-    @GetMapping(value = "/{id}")
+    @PostMapping("/upload")
+    public ResponseEntity<ComentarioCliImgs> uploadImagem(
+            @RequestParam("comentarioId") Long comentarioId,
+            @RequestParam("imagem") MultipartFile imagem) throws IOException {
+
+        String nomeImagem = comentarioCliImgService.salvarImagem(imagem, uploadDir);
+
+        ComentarioCliImgs salvo = comentarioCliImgService.gravarComentarioComImagem(comentarioId, nomeImagem);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(salvo.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(salvo);
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<ComentarioCliImgs> findById(@PathVariable Long id) {
         ComentarioCliImgs comentarioCliImgs = comentarioCliImgService.findById(id);
-        return ResponseEntity.ok().body(comentarioCliImgs);
+        if (comentarioCliImgs != null) {
+            return ResponseEntity.ok(comentarioCliImgs);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ComentarioCliImgs>> findAll() {
+        List<ComentarioCliImgs> lista = comentarioCliImgService.findAll();
+        return ResponseEntity.ok(lista);
     }
 
     @PostMapping
     public ResponseEntity<ComentarioCliImgs> gravarComentarioCliImgs(@RequestBody ComentarioCliImgs comentarioCliImgs) {
-        comentarioCliImgs = comentarioCliImgService.gravarComentarioCliImgs(comentarioCliImgs);
-        URI uri =  ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(comentarioCliImgs.getId()).toUri();
-        return ResponseEntity.created(uri).body(comentarioCliImgs);
+        ComentarioCliImgs salvo = comentarioCliImgService.gravarComentarioCliImgs(comentarioCliImgs);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(salvo.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(salvo);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         comentarioCliImgService.deletar(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<ComentarioCliImgs> update(@PathVariable Long id, @RequestBody ComentarioCliImgs comentarioCliImgs){
+    @PutMapping("/{id}")
+    public ResponseEntity<ComentarioCliImgs> update(@PathVariable Long id, @RequestBody ComentarioCliImgs comentarioCliImgs) {
         ComentarioCliImgs alterado = comentarioCliImgService.update(id, comentarioCliImgs);
-        return ResponseEntity.ok().body(alterado);
+        if (alterado != null) {
+            return ResponseEntity.ok(alterado);
+        }
+        return ResponseEntity.notFound().build();
     }
-
 }
+

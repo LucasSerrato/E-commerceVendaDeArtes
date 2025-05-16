@@ -1,7 +1,6 @@
 package com.pixxl.service;
 
 import com.pixxl.model.Portfolio;
-import com.pixxl.model.Portfolio;
 import com.pixxl.repository.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,35 +10,36 @@ import java.util.Optional;
 
 @Service
 public class PortfolioService {
-    @Autowired
-    PortfolioRepository portfolioRepository;
 
-    public Portfolio findById(Long id){
+    @Autowired
+    private PortfolioRepository portfolioRepository;
+
+    public Portfolio findById(Long id) {
         Optional<Portfolio> portfolio = portfolioRepository.findById(id);
         return portfolio.orElse(null);
     }
 
-    public List<Portfolio> findAll(){
+    public List<Portfolio> findAll() {
         return portfolioRepository.findAll();
     }
 
-    public Portfolio gravarPortfolio(Portfolio portfolio){
+    public Portfolio gravarPortfolio(Portfolio portfolio) {
         return portfolioRepository.save(portfolio);
     }
 
-    public void deletar(Long id) {portfolioRepository.deleteById(id);}
+    public void deletar(Long id) {
+        portfolioRepository.deleteById(id);
+    }
 
-    public Portfolio update(Long id, Portfolio portfolio){
+    public Portfolio update(Long id, Portfolio portfolio) {
         Portfolio alterado = findById(id);
-        if (alterado!=null){
+        if (alterado != null) {
             alterado.setBio(portfolio.getBio());
             alterado.setPrazo(portfolio.getPrazo());
             alterado.setPreco(portfolio.getPreco());
             alterado.setTipo_arte(portfolio.getTipo_arte());
-
-            return  portfolioRepository.save(alterado);
+            return portfolioRepository.save(alterado);
         }
         return null;
     }
-
 }
