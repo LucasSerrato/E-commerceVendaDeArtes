@@ -13,10 +13,11 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { logado, logout, usuario } = useContext(AuthContext);
-  const role = usuario?.role || "cliente";
+  const role = usuario?.role || "usuario";
   const [open, setOpen] = useState(false);
   const menuRef = useRef();
   const [clientColor, setClientColor] = useState('');
+
 
   useEffect(() => {
     if (role === "cliente") {
