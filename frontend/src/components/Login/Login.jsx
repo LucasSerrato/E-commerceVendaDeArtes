@@ -59,7 +59,7 @@ function Login() {
 
                 <button className={styles.login_botao} type="submit">Entrar</button>
 
-                <p>Não tem conta? <Link to="/cadastro">Clique aqui</Link>para fazer cadastro</p>
+                <p>Não tem conta? <Link to="/cadastro">Clique aqui</Link> para fazer cadastro</p>
             </form>
         </section>
     );

@@ -93,7 +93,7 @@ function Cadastro() {
                 </div>
 
                 <button className={styles.cadastro_botao} type='submit'>Cadastrar</button>
-                <p>Já possui cadastro? <a href='/login'>Clique aqui</a>para fazer login</p>
+                <p>Já possui cadastro? <a href='/login'>Clique aqui</a> para fazer login</p>
             </form>
         </section>
     );
