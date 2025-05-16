@@ -59,10 +59,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: row;
-    gap: 30px;
+    flex-direction: column;
     width: 90%;
-
     label {
         margin-top: 1rem;
     }
@@ -73,7 +71,7 @@
         padding: 10px 10px;
         border-radius: 10px;
         height: 40px;
-        width: 100%;
+        width: 35%;
     }
 
     textarea {
