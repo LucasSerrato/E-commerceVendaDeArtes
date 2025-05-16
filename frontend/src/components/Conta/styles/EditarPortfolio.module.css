@@ -99,6 +99,12 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+
+    h2 {
+       text-align: center;
+       margin-bottom: 2rem;
+    }
+
 }
 
 .content {
@@ -107,7 +113,15 @@
     border-radius: 8px;
     width: 90%;
     max-width: 400px;
-    text-align: center;
+}
+
+.label {
+    text-align: left;
+}
+
+.input {
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .textarea {
@@ -119,6 +133,13 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: none;
+    margin-bottom: 2rem;
+}
+
+.bio_btn {
+    display: flex;
+    justify-self: center;
+    align-items: center;
 }
 
 /* MODAL DELETE  */
