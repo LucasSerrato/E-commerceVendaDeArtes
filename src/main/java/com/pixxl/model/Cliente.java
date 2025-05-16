@@ -22,14 +22,18 @@ public class Cliente {
     @Column(nullable = false)
     private boolean artista;  // <-- NOVO CAMPO
 
+    @Column
+    private String imagem;
+
     public Cliente() {}
 
-    public Cliente(Long id, String nome, String email, String senha, boolean artista) {
+    public Cliente(Long id, String nome, String email, String senha, boolean artista, String imagem) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.artista = artista;
+        this.imagem = imagem;
     }
 
     // Getters e Setters
@@ -53,4 +57,12 @@ public class Cliente {
     public boolean isArtista() { return artista; }
 
     public void setArtista(boolean artista) { this.artista = artista; }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
 }

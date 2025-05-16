@@ -11,7 +11,6 @@ public class ComissaoDTO {
 
     public ComissaoDTO(Comissao comissao) {
         this.mensagem = comissao.getMensagem();
-        this.valorFormatado = formatarParaReal(comissao.getValor());
     }
 
     private String formatarParaReal(Double valor) {

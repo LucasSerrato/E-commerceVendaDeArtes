@@ -10,7 +10,6 @@ public class Comissao {
     private Long id;
 
     private String mensagem;
-    private Double valor;
     private LocalDate data;
 
     // Getters e Setters
@@ -19,9 +18,6 @@ public class Comissao {
 
     public String getMensagem() { return mensagem; }
     public void setMensagem(String mensagem) { this.mensagem = mensagem; }
-
-    public Double getValor() { return valor; }
-    public void setValor(Double valor) { this.valor = valor; }
 
     public LocalDate getData() { return data; }
     public void setData(LocalDate data) { this.data = data; }

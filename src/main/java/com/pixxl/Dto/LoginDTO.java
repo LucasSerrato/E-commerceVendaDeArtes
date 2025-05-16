@@ -4,6 +4,7 @@ package com.pixxl.Dto;
 public class LoginDTO {
     private String email;
     private String senha;
+    private String imagen;
 
     // Getters e Setters
     public String getEmail() {
@@ -20,5 +21,13 @@ public class LoginDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

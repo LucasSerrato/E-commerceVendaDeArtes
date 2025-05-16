@@ -2,45 +2,94 @@ package com.pixxl.controller;
 
 import com.pixxl.model.Cliente;
 import com.pixxl.service.ClienteService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/clientes")
-@CrossOrigin(origins = "*") // permite requisições do front-end
+@CrossOrigin(origins = "*")
 public class ClienteController {
-    @Autowired private ClienteService service;
 
-    // Cadastrar cliente
+    private final String uploadDir = "uploads/clientes/";
+
+    @Autowired
+    private ClienteService service;
+
+    @PostMapping("/upload")
+    public ResponseEntity<Cliente> uploadImagem(
+            @PathVariable Long id,
+            @RequestParam("imagem") MultipartFile imagem) throws IOException {
+
+        Cliente cliente = service.buscarPorId(id);
+        if (cliente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String nomeImagem = service.salvarImagem(imagem, uploadDir);
+        cliente.setImagem(nomeImagem);
+        Cliente atualizado = service.salvar(cliente);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+        return ResponseEntity.created(uri).body(atualizado);
+    }
+
     @PostMapping
-    public ResponseEntity<Cliente> cadastrarCliente(
-            @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
         try {
-            Cliente salvo = service.salvar(cliente);
+            Cliente salvo = service.cadastrar(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
 
-    // Listar todos os clientes
     @GetMapping
-    public List<Cliente> listarClientes() {
-        return service.listarTodos();
+    public ResponseEntity<List<Cliente>> listarClientes() {
+        return ResponseEntity.ok(service.listarTodos());
     }
 
-    // Login básico com e-mail e senha
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
+        Cliente cliente = service.buscarPorId(id);
+        if (cliente != null) {
+            return ResponseEntity.ok(cliente);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
+        Cliente atualizado = service.atualizar(id, cliente);
+        if (atualizado != null) {
+            return ResponseEntity.ok(atualizado);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
+        Cliente cliente = service.buscarPorId(id);
+        if (cliente != null) {
+            service.deletarPorId(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Cliente> login(@RequestBody Cliente loginRequest) {
         if (loginRequest.getEmail() == null || loginRequest.getSenha() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.badRequest().build();
         }
 
         Cliente cliente = service.buscarPorEmail(loginRequest.getEmail());
-
         if (cliente != null && cliente.getSenha().equals(loginRequest.getSenha())) {
             return ResponseEntity.ok(cliente);
         } else {
@@ -48,23 +97,17 @@ public class ClienteController {
         }
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<Cliente> buscarPorEmail(@PathVariable String email) {
         Cliente cliente = service.buscarPorEmail(email);
-        if (cliente != null) {
-            return ResponseEntity.ok(cliente);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return cliente != null ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
     }
 
-    @PatchMapping("/{email}")
-    public ResponseEntity<Cliente> atualizarNome(
-            @PathVariable String email, @RequestBody Cliente atualizacao) {
+    @PatchMapping("/email/{email}")
+    public ResponseEntity<Cliente> atualizarNome(@PathVariable String email, @RequestBody Cliente atualizacao) {
         Cliente clienteExistente = service.buscarPorEmail(email);
-
         if (clienteExistente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
 
         clienteExistente.setNome(atualizacao.getNome());
@@ -73,16 +116,15 @@ public class ClienteController {
         return ResponseEntity.ok(atualizado);
     }
 
-    @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deletarCliente(@PathVariable String email) {
+    @DeleteMapping("/email/{email}")
+    public ResponseEntity<Void> deletarPorEmail(@PathVariable String email) {
         Cliente cliente = service.buscarPorEmail(email);
-
         if (cliente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.notFound().build();
         }
 
-        service.deletar(
-                cliente);
-        return ResponseEntity.noContent().build(); // 204 - sucesso
+        service.deletar(cliente);
+        return ResponseEntity.noContent().build();
     }
 }
+
