@@ -21,16 +21,19 @@ public class PortfolioImgsController {
     @Autowired
     private PortfolioImgsService portfolioImgsService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<Portfolio_imgs> uploadImagem(@RequestParam("imagem") MultipartFile imagem) throws IOException {
-        String nomeImagem = portfolioImgsService.salvarImagem(imagem, uploadDir);
-        Portfolio_imgs salvo = portfolioImgsService.gravarImagem(nomeImagem);
+    @PostMapping("/{id}/upload")
+    public ResponseEntity<Portfolio_imgs> uploadImagem(
+            @PathVariable Long id,
+            @RequestParam("imagem") MultipartFile imagem) throws IOException {
+
+        Portfolio_imgs salvo = portfolioImgsService.salvarImagemNoPortfolio(id, imagem);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(salvo.getId()).toUri();
 
         return ResponseEntity.created(uri).body(salvo);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Portfolio_imgs> findById(@PathVariable Long id) {

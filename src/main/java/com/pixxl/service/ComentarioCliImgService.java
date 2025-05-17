@@ -25,13 +25,12 @@ public class ComentarioCliImgService {
     @Autowired
     private ComentarioCliService comentarioCliService;
 
-    public ComentarioCliImgs gravarComentarioComImagem(Long comentarioId, String nomeImagem) {
+    public ComentarioCliImgs salvarImagemNoComentario(Long comentarioId, MultipartFile file, String uploadDir) throws IOException {
         ComentarioCli comentario = comentarioCliService.findById(comentarioId);
-        ComentarioCliImgs cliImg = new ComentarioCliImgs(comentario, nomeImagem);
-        return comentarioCliImgsRepository.save(cliImg);
-    }
+        if (comentario == null) {
+            throw new RuntimeException("Comentário não encontrado para o ID: " + comentarioId);
+        }
 
-    public String salvarImagem(MultipartFile file, String uploadDir) throws IOException {
         File pasta = new File(uploadDir);
         if (!pasta.exists()) pasta.mkdirs();
 
@@ -39,7 +38,11 @@ public class ComentarioCliImgService {
         Path caminho = Paths.get(uploadDir, nomeArquivo);
         Files.copy(file.getInputStream(), caminho);
 
-        return nomeArquivo;
+        ComentarioCliImgs cliImg = new ComentarioCliImgs();
+        cliImg.setComentario(comentario);
+        cliImg.setImagem(nomeArquivo);
+
+        return comentarioCliImgsRepository.save(cliImg);
     }
 
     public ComentarioCliImgs findById(Long id){

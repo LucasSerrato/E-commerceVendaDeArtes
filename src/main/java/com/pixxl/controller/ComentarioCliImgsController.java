@@ -21,14 +21,12 @@ public class ComentarioCliImgsController {
     @Autowired
     private ComentarioCliImgService comentarioCliImgService;
 
-    @PostMapping("/upload")
+    @PostMapping("/{id}/upload")
     public ResponseEntity<ComentarioCliImgs> uploadImagem(
-            @RequestParam("comentarioId") Long comentarioId,
+            @PathVariable Long id,
             @RequestParam("imagem") MultipartFile imagem) throws IOException {
 
-        String nomeImagem = comentarioCliImgService.salvarImagem(imagem, uploadDir);
-
-        ComentarioCliImgs salvo = comentarioCliImgService.gravarComentarioComImagem(comentarioId, nomeImagem);
+        ComentarioCliImgs salvo = comentarioCliImgService.salvarImagemNoComentario(id, imagem, uploadDir);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(salvo.getId()).toUri();

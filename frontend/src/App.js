@@ -20,6 +20,7 @@ import PainelArtista from "./components/PainelArtista/PainelArtista";
 import PainelCliente from "./components/PainelCliente/PainelCliente";
 import Comissao from "./components/Comissao/Comissao";
 import Post from "./components/Post/Post";
+import Pesquisa from "./components/Pesquisa/Pesquisa";
 import Mensagens from "./components/Mensagens/Mensagens";
 import SidebarMensagens from "./components/SidebarMensagens/SidebarMensagens";
 import Portfolio from "./components/Portfolio/Portfolio";
@@ -88,6 +89,7 @@ function App() {
         <Route path="/post" element={<Post />} />
         <Route path="/mensagens" element={<Mensagens/>} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/pesquisa" element={<Pesquisa />} />
         <Route path="/sidebar_mensagens" element={<SidebarMensagens />} />
       </Routes>
       <Footer />
