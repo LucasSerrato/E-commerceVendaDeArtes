@@ -329,3 +329,97 @@
         transform: translateY(20px);
     }
 }
+
+@media (max-width: 600px) {
+
+  .painelArtista_container {
+    flex-direction: column;
+    width: 95%;
+    gap: 1rem;
+  }
+
+  .pedidos_card,
+  .pagamento_card,
+  .trabalhoFim_card,
+  .conclusao_card,
+  .concluidos_card {
+    margin: 2rem 0;
+    padding: 1rem;
+  }
+
+  .pedidos_card h2,
+  .pagamento_card h2,
+  .trabalhoFim_card h2,
+  .conclusao_card h2,
+  .concluidos_card h2 {
+    font-size: 18px;
+    padding: 10px;
+  }
+
+  .pedidos_card h3,
+  .pagamento_card h3,
+  .trabalhoFim_card h3,
+  .conclusao_card h3,
+  .concluidos_card h3 {
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  .botoes {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .aceitar, .cancelar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .modal {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .modal h3 {
+    font-size: 20px;
+  }
+
+  .form_modal textarea {
+    padding-bottom: 3rem;
+  }
+
+  .enviar_botao {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .painelArtista_container {
+    flex-direction: column;
+    width: 90%;
+    gap: 1.5rem;
+  }
+
+  .botoes {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .aceitar, .cancelar {
+    width: 45px;
+    height: 45px;
+  }
+
+  .modal {
+    width: 80%;
+  }
+
+  .enviar_botao {
+    font-size: 15px;
+  }
+}
+
+

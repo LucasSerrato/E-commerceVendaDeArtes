@@ -2,46 +2,33 @@ package com.pixxl.controller;
 
 import com.pixxl.model.Cliente;
 import com.pixxl.service.ClienteService;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/clientes")
 @CrossOrigin(origins = "*")
 public class ClienteController {
+    @Autowired private ClienteService service;
 
-    private final String uploadDir = "uploads/clientes/";
-
-    @Autowired
-    private ClienteService service;
-
-    @PostMapping("/upload")
-    public ResponseEntity<Cliente> uploadImagem(
-            @PathVariable Long id,
-            @RequestParam("imagem") MultipartFile imagem) throws IOException {
-
-        Cliente cliente = service.buscarPorId(id);
-        if (cliente == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        String nomeImagem = service.salvarImagem(imagem, uploadDir);
-        cliente.setImagem(nomeImagem);
-        Cliente atualizado = service.salvar(cliente);
-
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
-        return ResponseEntity.created(uri).body(atualizado);
+    @PostMapping("/upload/{id}")
+    public ResponseEntity<Cliente> uploadImagem(@PathVariable Long id,
+                                                @RequestParam("imagem") MultipartFile imagem) throws IOException {
+        Cliente atualizado = service.salvarImagem(id, imagem);
+        return ResponseEntity.ok(atualizado);
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> cadastrarCliente(
+            @RequestBody Cliente cliente) {
         try {
             Cliente salvo = service.cadastrar(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
@@ -64,8 +51,24 @@ public class ClienteController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/imagem/{nomeImagem}")
+    public ResponseEntity<byte[]> obterImagem(@PathVariable String nomeImagem)
+            throws IOException {
+        File imagem = new File("uploads/clientes/" + nomeImagem);
+        if (!imagem.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        byte[] conteudo = Files.readAllBytes(imagem.toPath());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(
+                MediaType.IMAGE_JPEG); // ou IMAGE_PNG dependendo do tipo
+        return new ResponseEntity<>(conteudo, headers, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
+    public ResponseEntity<Cliente> atualizarCliente(
+            @PathVariable Long id, @RequestBody Cliente cliente) {
         Cliente atualizado = service.atualizar(id, cliente);
         if (atualizado != null) {
             return ResponseEntity.ok(atualizado);
@@ -100,11 +103,13 @@ public class ClienteController {
     @GetMapping("/email/{email}")
     public ResponseEntity<Cliente> buscarPorEmail(@PathVariable String email) {
         Cliente cliente = service.buscarPorEmail(email);
-        return cliente != null ? ResponseEntity.ok(cliente) : ResponseEntity.notFound().build();
+        return cliente != null ? ResponseEntity.ok(cliente)
+                : ResponseEntity.notFound().build();
     }
 
     @PatchMapping("/email/{email}")
-    public ResponseEntity<Cliente> atualizarNome(@PathVariable String email, @RequestBody Cliente atualizacao) {
+    public ResponseEntity<Cliente> atualizarNome(
+            @PathVariable String email, @RequestBody Cliente atualizacao) {
         Cliente clienteExistente = service.buscarPorEmail(email);
         if (clienteExistente == null) {
             return ResponseEntity.notFound().build();
@@ -127,4 +132,3 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 }
-

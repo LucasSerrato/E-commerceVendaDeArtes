@@ -239,6 +239,13 @@
   transition: 0.2s;
 }
 
+.avatar {
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
 /* MENU PERFIL */
 .perfilWrapper,
 .perfilWrapper_roxo {
