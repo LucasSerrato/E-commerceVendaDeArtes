@@ -1,7 +1,9 @@
 package com.pixxl.service;
 
+import com.pixxl.model.Portfolio;
 import com.pixxl.model.Portfolio_imgs;
 import com.pixxl.repository.PortfolioImgsRepository;
+import com.pixxl.repository.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,11 +23,36 @@ public class PortfolioImgsService {
     @Autowired
     private PortfolioImgsRepository portfolioImgsRepository;
 
-    public Portfolio_imgs gravarImagem(String nomeImagem) {
+    @Autowired
+    private PortfolioRepository portfolioRepository;
+
+    private final String uploadDir = "uploads/portfolio/";
+
+    public Portfolio_imgs salvarImagemNoPortfolio(Long portfolioId, MultipartFile file) throws IOException {
+
+        Optional<Portfolio> optionalPortfolio = portfolioRepository.findById(portfolioId);
+        if (!optionalPortfolio.isPresent()) {
+            throw new RuntimeException("Portfolio não encontrado para o id: " + portfolioId);
+        }
+        Portfolio portfolio = optionalPortfolio.get();
+
+
+        File pasta = new File(uploadDir);
+        if (!pasta.exists()) pasta.mkdirs();
+
+        String nomeArquivo = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path caminho = Paths.get(uploadDir, nomeArquivo);
+        Files.copy(file.getInputStream(), caminho);
+
+
         Portfolio_imgs imagem = new Portfolio_imgs();
-        imagem.setImagem(nomeImagem);
+        imagem.setImagem(nomeArquivo);
+        imagem.setPortfolio(portfolio);
+
         return portfolioImgsRepository.save(imagem);
     }
+
+
 
     public String salvarImagem(MultipartFile file, String uploadDir) throws IOException {
         File pasta = new File(uploadDir);

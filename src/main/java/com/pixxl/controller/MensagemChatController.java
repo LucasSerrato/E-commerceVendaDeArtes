@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
@@ -23,26 +22,9 @@ public class MensagemChatController {
     private MensagensChatService mensagensChatService;
 
     @PostMapping("/{id}/imagem")
-    public ResponseEntity<Void> uploadImagem(@PathVariable Long id, @RequestParam("imagem") MultipartFile imagem) throws IOException {
-        MensagensChat mensagem = mensagensChatService.findById(id);
-        if (mensagem == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-
-        File pasta = new File(uploadDir);
-        if (!pasta.exists()) pasta.mkdirs();
-
-
-        String nomeArquivo = System.currentTimeMillis() + "_" + imagem.getOriginalFilename();
-        File destino = new File(uploadDir + nomeArquivo);
-        imagem.transferTo(destino);
-
-
-        mensagem.setImagem(nomeArquivo);
-        mensagensChatService.gravarMensagensChat(mensagem);
-
-        return ResponseEntity.ok().build();
+    public ResponseEntity<MensagensChat> uploadImagem(@PathVariable Long id, @RequestParam("imagem") MultipartFile imagem) throws IOException {
+        MensagensChat salvo = mensagensChatService.salvarImagemNaMensagem(id, imagem, uploadDir);
+        return ResponseEntity.ok(salvo);
     }
 
     @GetMapping("/{id}")
@@ -77,3 +59,4 @@ public class MensagemChatController {
         return ResponseEntity.noContent().build();
     }
 }
+
