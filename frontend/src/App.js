@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -36,64 +36,69 @@ import Editar from "./components/Conta/Editar";
 import "./styles/global.css";
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState(""); // <-- Adicionado
+
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        {/* Rota principal (pagina inicial) */}
-        <Route
-          path="/"
-          element={
-            <>
-              <HeroSection />
-              <FeatureSection />
-              <HowItWorksSection />
-              <FAQ />
-            </>
-          }
-        />
+      <Router>
+        <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} /> {/* <-- Modificado */}
+        <Routes>
+          {/* Rota principal (pagina inicial) */}
+          <Route
+              path="/"
+              element={
+                <>
+                  <HeroSection />
+                  <FeatureSection />
+                  <HowItWorksSection />
+                  <FAQ />
+                </>
+              }
+          />
 
-        {/* Página Home - opcional, igual à principal */}
-        <Route
-          path="/home"
-          element={
-            <>
-              <HeroSection />
-              <FeatureSection />
-              <HowItWorksSection />
-              <FAQ />
-            </>
-          }
-        />
+          {/* Página Home - opcional, igual à principal */}
+          <Route
+              path="/home"
+              element={
+                <>
+                  <HeroSection />
+                  <FeatureSection />
+                  <HowItWorksSection />
+                  <FAQ />
+                </>
+              }
+          />
 
-        {/* Rotas da conta do usuário */}
-        <Route path="/conta" element={<ContaLayout />}>
-          <Route index element={<Navigate to="perfil" replace />} />
-          <Route path="perfil" element={<Perfil />} />
-          <Route path="editar_portfolio" element={<EditarPortfolio />} />
-          <Route path="ver_posts" element={<VerPost />} />
-          <Route path="pagamentos" element={<Pagamentos />} />
-          <Route path="suporte" element={<Suporte />} />
-          <Route path="add_novo" element={<AdiconarNovo />} />
-          <Route path="editar" element={<Editar />} />
-        </Route>
+          {/* Rotas da conta do usuário */}
+          <Route path="/conta" element={<ContaLayout />}>
+            <Route index element={<Navigate to="perfil" replace />} />
+            <Route path="perfil" element={<Perfil />} />
+            <Route path="editar_portfolio" element={<EditarPortfolio />} />
+            <Route path="ver_posts" element={<VerPost />} />
+            <Route path="pagamentos" element={<Pagamentos />} />
+            <Route path="suporte" element={<Suporte />} />
+            <Route path="add_novo" element={<AdiconarNovo />} />
+            <Route path="editar" element={<Editar />} />
+          </Route>
 
-        {/* Outras rotas */}
-        <Route path="/artistas_clientes" element={<ArtistasEclientes />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/ver_arte" element={<VerArte />} />
-        <Route path="/painel_artista" element={<PainelArtista />} />
-        <Route path="/painel_cliente" element={<PainelCliente />} />
-        <Route path="/comissao" element={<Comissao />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/mensagens" element={<Mensagens/>} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/pesquisa" element={<Pesquisa />} />
-        <Route path="/sidebar_mensagens" element={<SidebarMensagens />} />
-      </Routes>
-      <Footer />
-    </Router>
+          {/* Outras rotas */}
+          <Route
+              path="/artistas_clientes"
+              element={<ArtistasEclientes searchTerm={searchTerm} />} // <-- Modificado
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/ver_arte" element={<VerArte />} />
+          <Route path="/painel_artista" element={<PainelArtista />} />
+          <Route path="/painel_cliente" element={<PainelCliente />} />
+          <Route path="/comissao" element={<Comissao />} />
+          <Route path="/post" element={<Post />} />
+          <Route path="/mensagens" element={<Mensagens />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/pesquisa" element={<Pesquisa />} />
+          <Route path="/sidebar_mensagens" element={<SidebarMensagens />} />
+        </Routes>
+        <Footer />
+      </Router>
   );
 }
 

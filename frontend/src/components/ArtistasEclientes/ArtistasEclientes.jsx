@@ -6,7 +6,7 @@ import OnePiece from '../../assets/imgs/Op_art.png';
 import Jinx from '../../assets/imgs/jinx.jpg';
 import Spidersona from '../../assets/imgs/spidersona.jpg';
 import African from '../../assets/imgs/african.jpg';
-import Background from '../../assets/imgs/background.jpg'
+import Background from '../../assets/imgs/background.jpg';
 import Perfil from '../../assets/imgs/profile.jpg';
 import JuPerfil from '../../assets/imgs/ju_desenhos.jpg';
 import CorpoInteiro from '../../assets/imgs/black_character.png';
@@ -15,19 +15,66 @@ import MeioCorpo from '../../assets/imgs/half_body.jpg';
 import ThreeD from '../../assets/imgs/3d.jpg';
 import Retrato from '../../assets/imgs/portrait_asain.jpg';
 
-function ArtistasEclientes() {
-
-    // FUNCAO PARA O BOTAO TOGGLE
+function ArtistasEclientes({ searchTerm }) {
     const [isOn, setIsOn] = useState(false);
+    const [filtro, setFiltro] = useState("Todos");
 
-    const toggle = () => {
-        setIsOn(prev => !prev);
-    };
+    const toggle = () => setIsOn(prev => !prev);
 
-    const getRandomColor = () => {
-        const cores = ["red", "blue", "pink", "purple", "orange", "brown", "green", "voilet", "lightgreen", "yellow", "beige"];
-        return cores[Math.floor(Math.random() * cores.length)];
-    }
+    const artistas = [
+        {
+            tipo: "Corpo Inteiro",
+            imagem: CorpoInteiro,
+            perfilImg: Perfil,
+            nome: "pearls.art",
+            preco: "R$100",
+            prazo: "10 dias"
+        },
+        {
+            tipo: "Meio corpo",
+            imagem: MeioCorpo,
+            perfilImg: JuPerfil,
+            nome: "ju.desenhos",
+            preco: "R$100",
+            prazo: "10 dias"
+        },
+        {
+            tipo: "Illustração",
+            imagem: Illustracao,
+            perfilImg: JuPerfil,
+            nome: "ju.desenhos",
+            preco: "R$170",
+            prazo: "20 dias"
+        },
+        {
+            tipo: "3D",
+            imagem: ThreeD,
+            perfilImg: ThreeD,
+            nome: "bia_artes",
+            preco: "R$200",
+            prazo: "20 dias"
+        },
+        {
+            tipo: "Retrato",
+            imagem: Retrato,
+            perfilImg: Retrato,
+            nome: "pedro.jj",
+            preco: "R$60",
+            prazo: "5 dias"
+        }
+    ];
+
+    const artistasFiltrados = artistas.filter((artista) => {
+        const correspondeTipo = filtro === "Todos" || artista.tipo.toLowerCase() === filtro.toLowerCase();
+        const termo = searchTerm.toLowerCase();
+
+        const correspondePesquisa =
+            artista.nome.toLowerCase().includes(termo) ||
+            artista.tipo.toLowerCase().includes(termo) ||
+            artista.preco.toLowerCase().includes(termo);
+
+        return correspondeTipo && correspondePesquisa;
+    });
 
     return (
         <section className={styles.artistas_container}>
@@ -39,12 +86,16 @@ function ArtistasEclientes() {
 
             <div className={styles.filtros}>
                 <nav className={`${styles.navTabs} ${isOn ? styles.hidden : ''}`}>
-                    <button type="button">Todos</button>
-                    <button type="button">Corpo Inteiro</button>
-                    <button type="button">Meio corpo</button>
-                    <button type="button">Illustração</button>
-                    <button type="button">Retrato</button>
-                    <button type="button">3D</button>
+                    {["Todos", "Corpo Inteiro", "Meio corpo", "Illustração", "Retrato", "3D"].map((tipo) => (
+                        <button
+                            key={tipo}
+                            type="button"
+                            onClick={() => setFiltro(tipo)}
+                            className={filtro === tipo ? styles.active : ""}
+                        >
+                            {tipo}
+                        </button>
+                    ))}
                 </nav>
 
                 <div className={styles.switchContainer} onClick={toggle}>
@@ -58,228 +109,33 @@ function ArtistasEclientes() {
             </div>
 
             {isOn ? (
-
-                // SOLICITAÇÕES DOS CLIENTES SECTION
                 <section className={styles.post_grid}>
-
-                    <div className={styles.post_card}>
-                        <div className={styles.perfil}>
-                            <div className={styles.cor_perfil} style={{ backgroundColor: getRandomColor() }}></div>
-                            <span>joao.carlos</span>
-                        </div>
-                        <p>Estou em busca de um desenho de anime do studio ghibli minha e da minha esposa nesse estilo:</p>
-
-                        <a href={ghibliArt} target="_blank" rel="noopener noreferrer">
-                            <img src={ghibliArt} alt="imagem de referencia" />
-                        </a> <br />
-
-                        <Link to="/chat" className={styles.botao_aceitar}>
-                            Aceitar
-                        </Link>
-                    </div>
-
-                    <div className={styles.post_card}>
-                        <div className={styles.perfil}>
-                            <div className={styles.cor_perfil} style={{ backgroundColor: getRandomColor() }}></div>
-                            <span>clara</span>
-                        </div>
-                        <p>Estou em busca de uma artista 3D para fazer um character sheet do meu OC. Vou pagar R$100 para isso</p>
-
-                        <a href={Jinx} target="_blank" rel="noopener noreferrer">
-                            <img src={Jinx} alt="imagem de referencia" />
-                        </a> <br />
-
-                        <Link to="/chat" className={styles.botao_aceitar}>
-                            Aceitar
-                        </Link>
-                    </div>
-
-                    <div className={styles.post_card}>
-                        <div className={styles.perfil}>
-                            <div className={styles.cor_perfil} style={{ backgroundColor: getRandomColor() }}></div>
-                            <span>anna.a</span>
-                        </div>
-                        <p>Estou procurando algum artista para desenhar a minha personagem com espressões diferentes no estilo de One piece:</p>
-
-                        <a href={OnePiece} target="_blank" rel="noopener noreferrer">
-                            <img src={OnePiece} alt="imagem de referencia" />
-                        </a> <br />
-
-                        <Link to="/chat" className={styles.botao_aceitar}>
-                            Aceitar
-                        </Link>
-                    </div>
-
-                    <div className={styles.post_card}>
-                        <div className={styles.perfil}>
-                            <div className={styles.cor_perfil} style={{ backgroundColor: getRandomColor() }}></div>
-                            <span>ju.ju</span>
-                        </div>
-                        <p>Estou em busca de um desenho da minha amg não tenho estilo especifico, o meu orçamento é ate $50</p> <br />
-
-                        <Link to="/chat" className={styles.botao_aceitar}>
-                            Aceitar
-                        </Link>
-                    </div>
-
-                    <div className={styles.post_card}>
-                        <div className={styles.perfil}>
-                            <div className={styles.cor_perfil} style={{ backgroundColor: getRandomColor() }}></div>
-                            <span>britoo</span>
-                        </div>
-                        <p>Alguma artista para fazer um desenho nesse estilo? </p> <br />
-
-                        <a href={African} target="_blank" rel="noopener noreferrer">
-                            <img src={African} alt="imagem de referencia" />
-                        </a> <br />
-
-                        <Link to="/chat" className={styles.botao_aceitar}>
-                            Aceitar
-                        </Link>
-                    </div>
-
-                    <div className={styles.post_card}>
-                        <div className={styles.perfil}>
-                            <div className={styles.cor_perfil} style={{ backgroundColor: getRandomColor() }}></div>
-                            <span>britoo</span>
-                        </div>
-                        <p>Quero fazer meu Spidersona, alguem interessada? </p> <br />
-
-                        <a href={Spidersona} target="_blank" rel="noopener noreferrer">
-                            <img src={Spidersona} alt="imagem de referencia" />
-                        </a> <br />
-
-                        <Link to="/chat" className={styles.botao_aceitar}>
-                            Aceitar
-                        </Link>
-                    </div>
-
-                    <div className={styles.post_card}>
-                        <div className={styles.perfil}>
-                            <div className={styles.cor_perfil} style={{ backgroundColor: getRandomColor() }}></div>
-                            <span>britoo</span>
-                        </div>
-                        <p>Estou procurando um artista que seja bom com fundos </p> <br />
-
-                        <a href={Background} target="_blank" rel="noopener noreferrer">
-                            <img src={Background} alt="imagem de referencia" />
-                        </a> <br />
-
-                        <Link to="/chat" className={styles.botao_aceitar}>
-                            Aceitar
-                        </Link>
-                    </div>
-
+                    {/* Cards de solicitações dos clientes */}
                 </section>
             ) : (
-
-                // DESCUBRA ARTISTAS SECTION
                 <section className={styles.artista_grid}>
-
-                    <Link to="/ver_arte">
-                        <div className={styles.artista_card}>
-                            <div className={styles.imagem_container}>
-                                <img src={CorpoInteiro} alt="imagem da artista" />
-                                <h4>Corpo Inteiro</h4>
-                            </div>
-
-                            <div className={styles.artista}>
-                                <div className={styles.artista_perfil}>
-                                    <img src={Perfil} alt="perfil artista" />
-                                    <span>pearls.art</span>
+                    {artistasFiltrados.map((artista, index) => (
+                        <Link to="/ver_arte" key={index}>
+                            <div className={styles.artista_card}>
+                                <div className={styles.imagem_container}>
+                                    <img src={artista.imagem} alt="imagem da artista" />
+                                    <h4>{artista.tipo}</h4>
                                 </div>
-                                <div className={styles.valor}>
-                                    <p>de</p>
-                                    <span>R$100</span>
-                                </div>
-                            </div>
-                            <h3>10 dias</h3>
-                        </div>
-                    </Link>
 
-                    <Link to="/ver_arte">
-                        <div className={styles.artista_card}>
-                            <div className={styles.imagem_container}>
-                                <img src={MeioCorpo} alt="imagem da artista" />
-                                <h4>Meio Corpo</h4>
-                            </div>
-
-                            <div className={styles.artista}>
-                                <div className={styles.artista_perfil}>
-                                    <img src={JuPerfil} alt="perfil artista" />
-                                    <span>ju.desenhos</span>
+                                <div className={styles.artista}>
+                                    <div className={styles.artista_perfil}>
+                                        <img src={artista.perfilImg} alt="perfil artista" />
+                                        <span>{artista.nome}</span>
+                                    </div>
+                                    <div className={styles.valor}>
+                                        <p>de</p>
+                                        <span>{artista.preco}</span>
+                                    </div>
                                 </div>
-                                <div className={styles.valor}>
-                                    <p>de</p>
-                                    <span>R$100</span>
-                                </div>
+                                <h3>{artista.prazo}</h3>
                             </div>
-                            <h3>10 dias</h3>
-                        </div>
-                    </Link>
-
-                    <Link to="/ver_arte">
-                        <div className={styles.artista_card}>
-                            <div className={styles.imagem_container}>
-                                <img src={Illustracao} alt="imagem da artista" />
-                                <h4>Illustração</h4>
-                            </div>
-
-                            <div className={styles.artista}>
-                                <div className={styles.artista_perfil}>
-                                    <img src={JuPerfil} alt="perfil artista" />
-                                    <span>ju.desenhos</span>
-                                </div>
-                                <div className={styles.valor}>
-                                    <p>de</p>
-                                    <span>R$170</span>
-                                </div>
-                            </div>
-                            <h3>20 dias</h3>
-                        </div>
-                    </Link>
-
-                    <Link to="/ver_arte">
-                        <div className={styles.artista_card}>
-                            <div className={styles.imagem_container}>
-                                <img src={ThreeD} alt="imagem da artista" />
-                                <h4>3D</h4>
-                            </div>
-
-                            <div className={styles.artista}>
-                                <div className={styles.artista_perfil}>
-                                    <img src={ThreeD} alt="perfil artista" />
-                                    <span>bia_artes</span>
-                                </div>
-                                <div className={styles.valor}>
-                                    <p>de</p>
-                                    <span>R$200</span>
-                                </div>
-                            </div>
-                            <h3>20 dias</h3>
-                        </div>
-                    </Link>
-
-                    <Link to="/ver_arte">
-                        <div className={styles.artista_card}>
-                            <div className={styles.imagem_container}>
-                                <img src={Retrato} alt="imagem da artista" />
-                                <h4>Retrato</h4>
-                            </div>
-
-                            <div className={styles.artista}>
-                                <div className={styles.artista_perfil}>
-                                    <img src={Retrato} alt="perfil artista" />
-                                    <span>pedro.jj</span>
-                                </div>
-                                <div className={styles.valor}>
-                                    <p>de</p>
-                                    <span>R$60</span>
-                                </div>
-                            </div>
-                            <h3>5 dias</h3>
-                        </div>
-                    </Link>
+                        </Link>
+                    ))}
                 </section>
             )}
         </section>
