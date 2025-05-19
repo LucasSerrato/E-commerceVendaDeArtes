@@ -248,6 +248,12 @@
   border-radius: 50%;
 }
 
+.data_post {
+  font-size: 0.8rem;
+  margin-left: 10px;
+  color: gray;
+}
+
 .botao_aceitar {
   background-color: #f8f8f8;
   border: 2px solid #dd93ff;

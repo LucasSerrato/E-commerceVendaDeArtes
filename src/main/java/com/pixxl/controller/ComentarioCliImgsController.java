@@ -1,8 +1,12 @@
 package com.pixxl.controller;
 
+import com.pixxl.Dto.ComentarioCliDTO;
 import com.pixxl.model.ComentarioCliImgs;
 import com.pixxl.service.ComentarioCliImgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,10 +14,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/comentariocliimgs")
+@CrossOrigin(origins = "*")
 public class ComentarioCliImgsController {
 
     private final String uploadDir = "uploads/comentarios/";
@@ -47,6 +55,25 @@ public class ComentarioCliImgsController {
     public ResponseEntity<List<ComentarioCliImgs>> findAll() {
         List<ComentarioCliImgs> lista = comentarioCliImgService.findAll();
         return ResponseEntity.ok(lista);
+    }
+
+    @GetMapping("/imagem/{nomeImagem}")
+    public ResponseEntity<byte[]> getImagem(@PathVariable String nomeImagem) throws IOException {
+        Path caminhoImagem = Paths.get(uploadDir + nomeImagem);
+        byte[] imagem = Files.readAllBytes(caminhoImagem);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(imagem, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/dados")
+    public ResponseEntity<List<ComentarioCliDTO>> getDetalhado() {
+        List<ComentarioCliDTO> dtos = comentarioCliImgService.findAll()
+                .stream()
+                .map(ComentarioCliDTO::new)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping

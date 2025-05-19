@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/comentariocli")
+@CrossOrigin(origins = "*")
 public class ComentarioCliController {
 
     @Autowired

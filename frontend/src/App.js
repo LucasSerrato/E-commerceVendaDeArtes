@@ -67,6 +67,8 @@ function App() {
 
         {/* Outras rotas */}
         <Route path="/artistas_clientes" element={<ArtistasEclientes />} />
+        <Route path="/artistas_clientes/solicitacoes" element={<ArtistasEclientes />} />
+        <Route path="/artistas_clientes" element={<Navigate to="/artistas_clientes" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/ver_arte" element={<VerArte />} />
