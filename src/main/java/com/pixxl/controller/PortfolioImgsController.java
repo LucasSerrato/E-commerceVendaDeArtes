@@ -84,6 +84,12 @@ public class PortfolioImgsController {
         return ResponseEntity.ok(imagens);
     }
 
+    @GetMapping("/filtro")
+    public ResponseEntity<List<Portfolio_imgs>> filtrarPorTipoArte(@RequestParam(required = false) String tipo) {
+        List<Portfolio_imgs> imagensFiltradas = portfolioImgsService.findByTipoArte(tipo);
+        return ResponseEntity.ok(imagensFiltradas);
+    }
+
     @PostMapping
     public ResponseEntity < Portfolio_imgs > gravarPortfolioImg(@RequestBody Portfolio_imgs portfolio_imgs) {
         Portfolio_imgs salvo = portfolioImgsService.gravarPortfolioImgs(portfolio_imgs);

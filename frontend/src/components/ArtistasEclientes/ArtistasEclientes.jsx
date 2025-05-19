@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function ArtistasEclientes() {
   const [imagensArtista, setImagensArtista] = useState([]);
+  const [filtroSelecionado, setFiltroSelecionado] = useState("Todos");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -35,6 +36,7 @@ function ArtistasEclientes() {
       .then((data) => {
         const shuffledData = shuffleArray(data);
         setImagensArtista(shuffledData);
+        setFiltroSelecionado("Todos"); // resetar filtro ao mudar de aba
       })
       .catch((err) => {
         console.error("Erro ao buscar imagens:", err);
@@ -50,6 +52,15 @@ function ArtistasEclientes() {
     return newArr;
   };
 
+  // Filtrar imagens baseado no filtroSelecionado (ignora maiúsculas/minúsculas)
+  const imagensFiltradas = imagensArtista.filter((imgData) => {
+    if (isOn) return true; // sem filtro nas solicitações
+    if (filtroSelecionado === "Todos") return true; // mostra todas
+    return (
+      imgData.portfolio?.tipo_arte?.toLowerCase() === filtroSelecionado.toLowerCase()
+    );
+  });
+
   return (
     <section className={styles.artistas_container}>
       <h2>
@@ -60,12 +71,49 @@ function ArtistasEclientes() {
 
       <div className={styles.filtros}>
         <nav className={`${styles.navTabs} ${isOn ? styles.hidden : ""}`}>
-          <button type="button">Todos</button>
-          <button type="button">Corpo Inteiro</button>
-          <button type="button">Meio corpo</button>
-          <button type="button">Ilustração</button>
-          <button type="button">Retrato</button>
-          <button type="button">3D</button>
+          {/* Botões de filtro: ao clicar atualiza filtroSelecionado */}
+          <button
+            type="button"
+            className={filtroSelecionado === "Todos" ? styles.active : ""}
+            onClick={() => setFiltroSelecionado("Todos")}
+          >
+            Todos
+          </button>
+          <button
+            type="button"
+            className={filtroSelecionado === "Corpo Inteiro" ? styles.active : ""}
+            onClick={() => setFiltroSelecionado("Corpo Inteiro")}
+          >
+            Corpo Inteiro
+          </button>
+          <button
+            type="button"
+            className={filtroSelecionado === "Meio corpo" ? styles.active : ""}
+            onClick={() => setFiltroSelecionado("Meio corpo")}
+          >
+            Meio corpo
+          </button>
+          <button
+            type="button"
+            className={filtroSelecionado === "Ilustração" ? styles.active : ""}
+            onClick={() => setFiltroSelecionado("Ilustração")}
+          >
+            Ilustração
+          </button>
+          <button
+            type="button"
+            className={filtroSelecionado === "Retrato" ? styles.active : ""}
+            onClick={() => setFiltroSelecionado("Retrato")}
+          >
+            Retrato
+          </button>
+          <button
+            type="button"
+            className={filtroSelecionado === "3D" ? styles.active : ""}
+            onClick={() => setFiltroSelecionado("3D")}
+          >
+            3D
+          </button>
         </nav>
 
         <div className={styles.switchContainer} onClick={toggle}>
@@ -124,7 +172,7 @@ function ArtistasEclientes() {
       ) : (
         // Descubra artistas
         <section className={styles.artista_grid}>
-          {imagensArtista.map((imgData) =>
+          {imagensFiltradas.map((imgData) =>
             imgData.portfolio ? (
               <Link to="/ver_arte" key={imgData.id}>
                 <div className={styles.artista_card}>
@@ -163,3 +211,4 @@ function ArtistasEclientes() {
 }
 
 export default ArtistasEclientes;
+
