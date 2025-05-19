@@ -1,6 +1,7 @@
 import styles from "./Comissao.module.css";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import ImgSelecionada from "../../assets/imgs/illustration_dragon.jpg";
 
 function Comissao() {
@@ -8,6 +9,8 @@ function Comissao() {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [descricao, setDescricao] = useState("");
   const { usuario } = useContext(AuthContext);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const buscarNomeUsuario = async () => {
@@ -72,8 +75,8 @@ function Comissao() {
       }
 
       alert("Solicitação enviada com sucesso!");
-      setDescricao("");
-      removeImage();
+      navigate("/painel_cliente");
+
     } catch (error) {
       console.error("Erro ao enviar:", error);
       alert("Erro ao enviar solicitação.");

@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,52 +28,58 @@ public class PortfolioImgsService {
     @Autowired
     private PortfolioRepository portfolioRepository;
 
-    private final String uploadDir = "uploads/portfolio/";
+    private final String uploadDir = System.getProperty("user.dir") + "/uploads/portfolio/";
 
-    public Portfolio_imgs salvarImagemNoPortfolio(Long portfolioId, MultipartFile file) throws IOException {
-
-        Optional<Portfolio> optionalPortfolio = portfolioRepository.findById(portfolioId);
+    public List < Portfolio_imgs > salvarVariasImagensNoPortfolio(Long portfolioId, MultipartFile[] arquivos) throws IOException {
+        Optional < Portfolio > optionalPortfolio = portfolioRepository.findById(portfolioId);
         if (!optionalPortfolio.isPresent()) {
             throw new RuntimeException("Portfolio não encontrado para o id: " + portfolioId);
         }
+
         Portfolio portfolio = optionalPortfolio.get();
-
-
         File pasta = new File(uploadDir);
         if (!pasta.exists()) pasta.mkdirs();
 
-        String nomeArquivo = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path caminho = Paths.get(uploadDir, nomeArquivo);
-        Files.copy(file.getInputStream(), caminho);
+        List < Portfolio_imgs > imagensSalvas = new ArrayList < > ();
 
+        for (MultipartFile file: arquivos) {
+            if (file == null || file.isEmpty()) continue;
 
-        Portfolio_imgs imagem = new Portfolio_imgs();
-        imagem.setImagem(nomeArquivo);
-        imagem.setPortfolio(portfolio);
+            String nomeLimpo = file.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-_]", "_");
+            String nomeArquivo = UUID.randomUUID() + "_" + nomeLimpo;
 
-        return portfolioImgsRepository.save(imagem);
-    }
+            Path caminho = Paths.get(uploadDir, nomeArquivo);
+            Files.copy(file.getInputStream(), caminho, StandardCopyOption.REPLACE_EXISTING);
 
+            Portfolio_imgs imagem = new Portfolio_imgs();
+            imagem.setImagem(nomeArquivo);
+            imagem.setPortfolio(portfolio);
 
+            imagensSalvas.add(portfolioImgsRepository.save(imagem));
+        }
 
-    public String salvarImagem(MultipartFile file, String uploadDir) throws IOException {
-        File pasta = new File(uploadDir);
-        if (!pasta.exists()) pasta.mkdirs();
-
-        String nomeArquivo = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path caminho = Paths.get(uploadDir, nomeArquivo);
-        Files.copy(file.getInputStream(), caminho);
-
-        return nomeArquivo;
+        return imagensSalvas;
     }
 
     public Portfolio_imgs findById(Long id) {
-        Optional<Portfolio_imgs> portfolioImgs = portfolioImgsRepository.findById(id);
+        Optional < Portfolio_imgs > portfolioImgs = portfolioImgsRepository.findById(id);
         return portfolioImgs.orElse(null);
     }
 
-    public List<Portfolio_imgs> findAll() {
+    public List < Portfolio_imgs > findAll() {
         return portfolioImgsRepository.findAll();
+    }
+
+    public List < Portfolio_imgs > findImagensByArtistaId(Long artistaId) {
+        List < Portfolio > portfolios = portfolioRepository.findByArtistaId(artistaId);
+        List < Portfolio_imgs > todasImagens = new ArrayList < > ();
+
+        for (Portfolio portfolio: portfolios) {
+            List < Portfolio_imgs > imagens = portfolioImgsRepository.findByPortfolioId(portfolio.getId());
+            todasImagens.addAll(imagens);
+        }
+
+        return todasImagens;
     }
 
     public Portfolio_imgs gravarPortfolioImgs(Portfolio_imgs portfolio_imgs) {
@@ -90,5 +98,8 @@ public class PortfolioImgsService {
         }
         return null;
     }
-}
 
+    public List < Portfolio_imgs > findByPortfolioId(Long portfolioId) {
+        return portfolioImgsRepository.findByPortfolioId(portfolioId);
+    }
+}

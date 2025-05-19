@@ -3,7 +3,6 @@ package com.pixxl.controller;
 import com.pixxl.model.Comissao;
 import com.pixxl.service.ComissaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,15 +13,11 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/api/comissoes")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ComissaoController {
 
     @Autowired
     private ComissaoService comissaoService;
-
-    // Diretório absoluto para upload, vindo do application.properties
-    @Value("${upload.dir}")
-    private String uploadDir;
 
     @PostMapping(consumes = {"multipart/form-data"})
     public ResponseEntity<?> criarComissaoComImagem(
@@ -31,40 +26,43 @@ public class ComissaoController {
             @RequestParam("mensagem") String mensagem,
             @RequestParam("imagem") MultipartFile imagem) {
 
-        // Garante que uploadDir é um caminho absoluto
-        File uploadFolder = new File(uploadDir).getAbsoluteFile();
+        // Define a pasta onde os arquivos serão salvos (relativa ao diretório do projeto)
+        File uploadFolder = new File("uploads/comissao").getAbsoluteFile();
 
-        // Criar diretório se não existir
+        // Cria a pasta se ela não existir
         if (!uploadFolder.exists() && !uploadFolder.mkdirs()) {
             return ResponseEntity.internalServerError()
                     .body("Não foi possível criar diretório de uploads em: " + uploadFolder.getAbsolutePath());
         }
 
+        // Verifica se a imagem foi enviada corretamente
         if (imagem == null || imagem.isEmpty()) {
             return ResponseEntity.badRequest()
                     .body("Arquivo de imagem está vazio ou não foi enviado.");
         }
 
         try {
-            // Nome do arquivo seguro, removendo espaços e caracteres perigosos
+            // Gera um nome seguro e único para o arquivo
             String nomeArquivo = System.currentTimeMillis() + "_" +
                     imagem.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-]", "_");
 
+            // Define o caminho do arquivo a ser salvo
             File arquivoDestino = new File(uploadFolder, nomeArquivo);
 
-            // Salvar arquivo fisicamente
+            // Salva o arquivo fisicamente no disco
             imagem.transferTo(arquivoDestino);
 
-            // Criar objeto Comissao e definir campos
+            // Cria e preenche o objeto da comissão
             Comissao comissao = new Comissao();
             comissao.setNomeUsuario(nomeUsuario);
             comissao.setDescricao(descricao);
             comissao.setMensagem(mensagem);
-            // Salva caminho relativo, por exemplo: "1747509980249_nome.jpg"
-            comissao.setCaminhoImagem(nomeArquivo);
+            comissao.setCaminhoImagem("comissao/" + nomeArquivo); // caminho relativo para exibição
 
+            // Salva no banco de dados
             Comissao salva = comissaoService.salvar(comissao);
 
+            // Retorna resposta com sucesso
             return ResponseEntity.created(URI.create("/api/comissoes/" + salva.getId()))
                     .body(salva);
 

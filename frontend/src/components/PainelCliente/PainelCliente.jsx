@@ -6,7 +6,7 @@ import ImgRef from '../../assets/imgs/back_illus.jpg';
 import React, { useState } from 'react';
 
 function PainelCliente() {
-    // FUNÇÃO PARA MODAL E BOTAO ACEITAR E CANCELAR 
+    // FUNÇÃO PARA MODAL E BOTAO ACEITAR E CANCELAR
     const [showModal, setShowModal] = useState(false);
     const [pedidoAtivo, setPedidoAtivo] = useState(true);
 

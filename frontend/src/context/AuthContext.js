@@ -10,11 +10,12 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     const email = localStorage.getItem("userEmail");
     const nome = localStorage.getItem("userNome");
+    const id = localStorage.getItem("userId");
     const role = localStorage.getItem("userRole");
 
     if (token && email) {
       setLogado(true);
-      setUsuario({ email, nome, role });
+      setUsuario({ id, email, nome, role });
     }
   }, []);
 
@@ -22,9 +23,11 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("token", "token-ficticio");
     localStorage.setItem("userEmail", userData.email);
     localStorage.setItem("userNome", userData.nome);
+    localStorage.setItem("userId", userData.id);
     localStorage.setItem("userRole", userData.artista ? "artista" : "cliente");
 
     setUsuario({
+      id: userData.id,
       email: userData.email,
       nome: userData.nome,
       role: userData.artista ? "artista" : "cliente",

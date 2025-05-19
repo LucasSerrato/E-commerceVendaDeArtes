@@ -1,192 +1,246 @@
 .edit_container {
-    padding: 5rem 0 2rem 5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    gap: 1rem;
-    width: 100%;
-    height: 100vh;
+  padding: 5rem 0 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 1rem;
+  width: 40rem;
+  height: fit-content;
+  min-height: 100vh;
 }
 
 /* BOTAO ADICIONAR ARTE E BIOGRAFIA */
 .item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 500;
-    font-size: 14px;
-    padding: 12px 0;
-    cursor: pointer;
-    border-bottom: 1px solid black;
-    color: black;
-    font-size: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 12px 0;
+  cursor: pointer;
+  border-bottom: 1px solid black;
+  color: black;
+  font-size: 16px;
 }
 
 .item i {
-    font-size: 14px;
+  font-size: 14px;
 }
-
 
 /* CAMPO EDITAR */
-.editar_card_container {
-    margin-top: 2rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-}
-
 .editar_card {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 5rem;
-    width: 35rem;
-    height: 7.5rem;
-    border-radius: 10px;
-    padding: 1.5rem 3rem;
-    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 7rem;
+  width: 35rem;
+  height: 7.5rem;
+  border-radius: 10px;
+  padding: 1.5rem 3rem;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
 
-
-    img {
-        object-fit: contain;
-        height: 70px;
-    }
+  img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
 }
-.card_info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
 
-    h4,span {
-        color: black;
-        font-size: 16px; 
-        font-weight: 500;  
-    }
-    p {
-        color: #646464;
-        font-size: 14px;
-    }
+.card_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  p {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.card_info h4,
+.card_info span {
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.card_info p {
+  color: #646464;
+  font-size: 14px;
 }
 
 .card_btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
 }
 
 .card_btn i {
-    padding: 1rem;
-    border-radius: 50%;
-    border: 1px solid;
+  padding: 1rem;
+  border-radius: 50%;
+  border: 1px solid;
+  cursor: pointer;
 }
+
 .card_btn i:hover {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 
 /* MODAL BIOGRAFIA */
 .overlay_modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 
-    h2 {
-       text-align: center;
-       margin-bottom: 2rem;
-    }
-
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 }
 
 .content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
 }
 
 .label {
-    text-align: left;
+  text-align: left;
 }
 
 .input {
-    width: 100%;
-    margin-bottom: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 .textarea {
-    width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: none;
-    margin-bottom: 2rem;
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  margin-bottom: 2rem;
 }
 
 .bio_btn {
-    display: flex;
-    justify-self: center;
-    align-items: center;
+  display: flex;
+  justify-self: center;
+  align-items: center;
 }
 
 /* MODAL DELETE  */
 .delete_modal {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .botao_modal {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .cancelar_btn {
-    background: #ccc;
-    border: none;
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s;
+  background: #ccc;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .cancelar_btn:hover {
-    background: #bbb;
-    color: white;
-    border: none;
+  background: #bbb;
+  color: white;
+  border: none;
 }
 
 .confirm_delete_btn {
-    background: #ff1f1f;
-    color: white;
-    border: none;
-    padding: 0.5rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background 0.2s;
+  background: #ff1f1f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .confirm_delete_btn:hover {
-    background: #bc1616;
-    border: none;
-    color: white;
+  background: #bc1616;
+  border: none;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .editar_card_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 50%;
+    gap: 2rem;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .editar_card {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    padding: 2rem;
+    gap: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .editar_card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .card_info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .card_btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
 }

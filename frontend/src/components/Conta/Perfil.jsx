@@ -5,23 +5,26 @@ import { useNavigate } from "react-router-dom";
 
 function Perfil() {
   const { usuario, login, logout } = useContext(AuthContext);
+
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+
   const [profileImage, setProfileImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [randomColor] = useState(
-    `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`
-  );
   const [showModal, setShowModal] = useState(false);
+  const [randomColor] = useState(
+    `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`,
+  );
   const [nome, setNome] = useState(usuario?.nome || "");
   const [email, setEmail] = useState(usuario?.email || "");
   const [mensagemSucesso, setMensagemSucesso] = useState("");
 
+  // DADOS DO PERFIL
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/clientes/email/${usuario.email}`
+          `http://localhost:8080/api/clientes/email/${usuario.email}`,
         );
         if (response.ok) {
           const data = await response.json();
@@ -30,7 +33,7 @@ function Perfil() {
           setProfileImage(
             data.imagem
               ? `http://localhost:8080/api/clientes/imagem/${data.imagem}`
-              : null
+              : null,
           );
         } else {
           console.error("Falha ao buscar dados do usuário");
@@ -45,6 +48,7 @@ function Perfil() {
     }
   }, [usuario?.email]);
 
+  // TROCAR DE IMAGEM
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -60,6 +64,7 @@ function Perfil() {
     }
   };
 
+  // UPDATE DADOS DO PERFIL
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
@@ -73,7 +78,7 @@ function Perfil() {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nome }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -93,7 +98,7 @@ function Perfil() {
           {
             method: "POST",
             body: formData,
-          }
+          },
         );
 
         if (uploadResponse.ok) {
@@ -112,11 +117,11 @@ function Perfil() {
 
         if (updatedUser.imagem) {
           setProfileImage(
-            `http://localhost:8080/api/clientes/imagem/${updatedUser.imagem}`
+            `http://localhost:8080/api/clientes/imagem/${updatedUser.imagem}`,
           );
         }
 
-        // Mensagem única de sucesso
+        // Mensagem de sucesso
         setMensagemSucesso("Perfil atualizado com sucesso!");
         setTimeout(() => setMensagemSucesso(""), 3000);
       }
@@ -126,14 +131,15 @@ function Perfil() {
     }
   };
 
+  // APAGAR CONTA
   const confirmDelete = async () => {
     setShowModal(false);
     try {
       const response = await fetch(
-        `http://localhost:8080/api/clientes/email/${email}`,
+        `http://localhost:8080/api/clientes/${usuario.id}`,
         {
           method: "DELETE",
-        }
+        },
       );
 
       if (response.ok) {
@@ -141,6 +147,8 @@ function Perfil() {
         logout();
         navigate("/");
       } else {
+        const errText = await response.text();
+        console.error("Erro ao apagar conta:", errText);
         alert("Erro ao apagar a conta.");
       }
     } catch (error) {
@@ -191,6 +199,7 @@ function Perfil() {
         <div className={styles.sucesso_alerta}>{mensagemSucesso}</div>
       )}
 
+      {/* FORM DADOS DO PERFIL */}
       <form className={styles.perfil_form} onSubmit={handleUpdateProfile}>
         <label>Nome do usuário</label>
         <input
@@ -209,6 +218,7 @@ function Perfil() {
         Apagar conta
       </button>
 
+      {/* MODAL APAGAR CONTA */}
       {showModal && (
         <div className={styles.apagar_modal_overlay}>
           <div className={styles.apagar_modal}>

@@ -3,10 +3,12 @@ package com.pixxl.service;
 import com.pixxl.model.AceitarComissao;
 import com.pixxl.repository.AceitarComissaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AceitarComissaoService {
 
     @Autowired

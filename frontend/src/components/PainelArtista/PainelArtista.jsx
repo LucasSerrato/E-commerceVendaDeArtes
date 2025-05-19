@@ -116,7 +116,7 @@ function PainelArtista() {
 
                 {/* PAINEL TRABALHO FINAL */}
                 <div className={styles.trabalhoFim_card}>
-                    <h2>Trabalho final</h2>
+                    <h2>Em processo</h2>
                     <h3>Pedidos com entregas parciais ou em processo</h3>
                     <span>Você pode atualizar o progresso aqui</span>
                     <div className={styles.card_caixa}>
@@ -145,7 +145,7 @@ function PainelArtista() {
 
                 {/* PAINEL CONCLUÍDOS */}
                 <div className={styles.concluidos_card}>
-                    <h2>Concluídos</h2>
+                    <h2>Histórico</h2>
                     <h3>Trabalhos já finalizados</h3>
                     <span>Aqui ficam os pedidos já concluídos</span>
                     <div className={styles.card_caixa}>
