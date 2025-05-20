@@ -6,7 +6,7 @@ function FeatureSection() {
             {/* Vídeo em background */}
             <div className={styles.videoBackground}>
                 <iframe
-                    src="https://www.youtube.com/embed/7FqliO0xhKc?autoplay=1&mute=1&loop=1&playlist=7FqliO0xhKc"
+                    src="https://www.youtube.com/embed/Kpf4zf0D9mQ?autoplay=1&mute=1&loop=1&playlist=Kpf4zf0D9mQ"
                     title="Pixxl Video"
                     frameBorder="0"
                     allow="autoplay; fullscreen"
