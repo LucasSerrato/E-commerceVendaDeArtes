@@ -5,29 +5,34 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function Comissao() {
   const { usuario } = useContext(AuthContext);
-  const { id } = useParams(); // id do portfolio
+  const { id } = useParams(); // id do artista (portfolio)
 
   const [image, setImage] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
+  const [clienteId, setClienteId] = useState(null);
   const [descricao, setDescricao] = useState("");
-  const [portfolio, setPortfolio] = useState(null); // Dados do portfolio
-  const [imgPreview, setImgPreview] = useState(""); // uma imagem do portfolio
+  const [portfolio, setPortfolio] = useState(null);
+  const [imgPreview, setImgPreview] = useState("");
 
   const navigate = useNavigate();
 
+  // Busca dados do portfólio e imagens relacionadas do artista
   useEffect(() => {
     const fetchDados = async () => {
       try {
         const resPortfolio = await fetch(
           `http://localhost:8080/api/portfolio/${id}`
         );
+        if (!resPortfolio.ok) throw new Error("Erro ao buscar portfólio");
         const dataPortfolio = await resPortfolio.json();
         setPortfolio(dataPortfolio);
 
         const resImgs = await fetch(
           `http://localhost:8080/api/portfolioimgs/por-portfolio/${id}`
         );
+        if (!resImgs.ok) throw new Error("Erro ao buscar imagens do portfólio");
         const imagens = await resImgs.json();
+
         if (imagens.length > 0) {
           setImgPreview(
             `http://localhost:8080/api/portfolioimgs/imagem/${imagens[0].imagem}`
@@ -41,16 +46,18 @@ function Comissao() {
     if (id) fetchDados();
   }, [id]);
 
+  // Busca dados do usuário logado para preencher nome e clienteId
   useEffect(() => {
     const buscarNomeUsuario = async () => {
       try {
         const response = await fetch(
           `http://localhost:8080/api/clientes/email/${usuario.email}`
         );
-        if (!response.ok) throw new Error("Erro ao buscar nome do usuário");
+        if (!response.ok) throw new Error("Erro ao buscar dados do usuário");
 
         const user = await response.json();
         setNomeUsuario(user.nome);
+        setClienteId(user.id);
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
@@ -59,6 +66,7 @@ function Comissao() {
     if (usuario && usuario.email) buscarNomeUsuario();
   }, [usuario]);
 
+  // Lida com o arquivo de imagem selecionado ou arrastado
   const handleFile = (file) => {
     if (file && file.type.startsWith("image/")) {
       setImage({ file, url: URL.createObjectURL(file) });
@@ -67,6 +75,7 @@ function Comissao() {
     }
   };
 
+  // Remove a imagem selecionada e libera o URL criado
   const removeImage = () => {
     if (image) {
       URL.revokeObjectURL(image.url);
@@ -74,6 +83,7 @@ function Comissao() {
     setImage(null);
   };
 
+  // Envia o formulário para o backend com multipart/form-data
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -82,11 +92,18 @@ function Comissao() {
       return;
     }
 
+    if (!clienteId) {
+      alert("Erro interno: clienteId não carregado.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("nomeUsuario", nomeUsuario);
     formData.append("descricao", descricao);
-    formData.append("mensagem", descricao);
+    formData.append("mensagem", descricao); // mensagem igual à descrição
     formData.append("imagem", image.file);
+    formData.append("portfolioId", id);
+    formData.append("clienteId", clienteId);
 
     try {
       const response = await fetch("http://localhost:8080/api/comissoes", {
@@ -100,7 +117,6 @@ function Comissao() {
 
       const novaComissao = await response.json();
 
-      // Salva o id da comissão no localStorage para uso no painel
       localStorage.setItem("comissaoId", novaComissao.id);
 
       alert("Solicitação enviada com sucesso!");

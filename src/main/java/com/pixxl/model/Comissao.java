@@ -19,18 +19,29 @@ public class Comissao {
 
     private String caminhoImagem; // caminho da imagem salva
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "artista_id")
+    private Cliente artista;
+
     @Column(name = "data", nullable = false)
     private LocalDateTime data;
 
     public Comissao() {
     }
 
-    public Comissao(String nomeUsuario, String mensagem, String descricao, String caminhoImagem) {
+    public Comissao(String nomeUsuario, String mensagem, String descricao, String caminhoImagem, Cliente cliente, Cliente artista) {
         this.nomeUsuario = nomeUsuario;
         this.mensagem = mensagem;
         this.descricao = descricao;
         this.caminhoImagem = caminhoImagem;
+        this.cliente = cliente;
+        this.artista = artista;
     }
+
 
     // Preenche a data antes de salvar no banco
     @PrePersist
@@ -56,6 +67,22 @@ public class Comissao {
     public LocalDateTime getData() { return data; }
     public void setData(LocalDateTime data) { this.data = data; }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Cliente getArtista() {
+        return artista;
+    }
+
+    public void setArtista(Cliente artista) {
+        this.artista = artista;
+    }
+
     @Override
     public String toString() {
         return "Comissao{" +
@@ -64,6 +91,7 @@ public class Comissao {
                 ", mensagem='" + mensagem + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", caminhoImagem='" + caminhoImagem + '\'' +
+                ", cliente=" + cliente +
                 ", data=" + data +
                 '}';
     }

@@ -30,7 +30,19 @@ public class ComissaoService {
         Optional<Comissao> comissao = repository.findById(id);
         return comissao.orElse(null);
     }
+
     public void deletar(Long id) {
         repository.deleteById(id);
     }
+
+
+    public List<Comissao> listarPorClienteId(Long clienteId) {
+        return repository.findByClienteId(clienteId);
+    }
+
+
+    public List<Comissao> listarPorArtistaId(Long artistaId) {
+        return repository.findByArtistaId(artistaId);
+    }
 }
+

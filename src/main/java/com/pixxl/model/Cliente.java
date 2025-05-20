@@ -20,7 +20,7 @@ public class Cliente {
     private String senha;
 
     @Column(nullable = false)
-    private boolean artista;  // <-- NOVO CAMPO
+    private boolean artista;
 
     @Column
     private String imagem;
