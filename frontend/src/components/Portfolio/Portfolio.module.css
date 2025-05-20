@@ -219,6 +219,19 @@
   color: #eef8f2;
 }
 
+.aviso_sem_portfolio {
+  text-align: center;
+  font-size: 0.5rem;
+  color: #555;
+  font-weight: 100;
+}
+.aviso_sem_portfolio p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+
 /* Responsividade */
 @media (min-width: 600px) {
   .slide_track img {

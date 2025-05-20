@@ -20,7 +20,6 @@ function Navbar() {
   const [imagemPerfil, setImagemPerfil] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-
   useEffect(() => {
     if (role === "cliente") {
       // Gerar uma vez por sessão
@@ -114,8 +113,14 @@ function Navbar() {
                 if (e.key === "Enter") {
                   e.preventDefault();
                   const termo = searchTerm.trim();
-                  if (termo !== "") {
-                    navigate(`/artistas_clientes?busca=${encodeURIComponent(termo)}`);
+                  if (termo === "") {
+                    // Se o campo estiver vazio, redireciona para /artistas_clientes?busca=
+                    navigate(`/artistas_clientes?busca=`);
+                  } else {
+                    // Caso contrário, mantém o termo de busca
+                    navigate(
+                      `/artistas_clientes?busca=${encodeURIComponent(termo)}`
+                    );
                   }
                 }
               }}

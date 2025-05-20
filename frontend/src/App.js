@@ -71,10 +71,10 @@ function App() {
         <Route path="/artistas_clientes" element={<Navigate to="/artistas_clientes" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/ver_arte" element={<VerArte />} />
+        <Route path="/ver_arte/:id" element={<VerArte />} />
         <Route path="/painel_artista" element={<PainelArtista />} />
         <Route path="/painel_cliente" element={<PainelCliente />} />
-        <Route path="/comissao" element={<Comissao />} />
+        <Route path="/comissao/:id" element={<Comissao />} />
         <Route path="/post" element={<Post />} />
         <Route path="/mensagens" element={<Mensagens />} />
         <Route path="/portfolio" element={<Portfolio />} />

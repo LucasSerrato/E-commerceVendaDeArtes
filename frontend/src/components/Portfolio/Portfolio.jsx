@@ -156,39 +156,52 @@ function Portfolio() {
   return (
     <section className={styles.portfoilio_container}>
       <div className={styles.portfolio}>
-        <div className={styles.portfolio_perfil}>
-          <img
-            src={imagemPerfil || "/default-profile.png"}
-            alt="Perfil Artista"
-          />{" "}
-          <span className={styles.nome_perfil}>{nome}</span>
-          <div className={styles.perfil_bio}>
-            <p>{bio}</p>
-            <a href={link} target="_blank" rel="noopener noreferrer">
-              {link}
-              <i
-                className="fas fa-external-link-alt"
-                style={{ marginLeft: "8px" }}
-              ></i>
-            </a>
+        {portfolioCards.length === 0 ? (
+          <div className={styles.aviso_sem_portfolio}>
+            <p>🎨 Você ainda não possui portfólios cadastrados.</p>
+            <p>Adicione seu primeiro portfólio para mostrar sua arte!</p>
           </div>
-        </div>
-
-        {portfolioCards.map((card, idx) => (
-          <div className={styles.portfolio_card} key={idx}>
-            <h2 className={styles.titulo}>{card.tipo_arte}</h2>
-            <div className={styles.detalhes}>
-              <h3>{card.prazo} dias</h3>
-              <p>
-                de <span>R$ {card.preco}</span>
-              </p>
+        ) : (
+          <>
+            <div className={styles.portfolio_perfil}>
+              <img
+                src={imagemPerfil || "/default-profile.png"}
+                alt="Perfil Artista"
+              />
+              <span className={styles.nome_perfil}>{nome}</span>
+              {bio && (
+                <div className={styles.perfil_bio}>
+                  <p>{bio}</p>
+                  {link && (
+                    <a href={link} target="_blank" rel="noopener noreferrer">
+                      {link}
+                      <i
+                        className="fas fa-external-link-alt"
+                        style={{ marginLeft: "8px" }}
+                      ></i>
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
-            {renderCarousel(card.key, card.imagens)}
-            <Link to="/comissao" className={styles.botao_card}>
-              Comissionar &#10148;
-            </Link>
-          </div>
-        ))}
+
+            {portfolioCards.map((card, idx) => (
+              <div className={styles.portfolio_card} key={idx}>
+                <h2 className={styles.titulo}>{card.tipo_arte}</h2>
+                <div className={styles.detalhes}>
+                  <h3>{card.prazo} dias</h3>
+                  <p>
+                    de <span>R$ {card.preco}</span>
+                  </p>
+                </div>
+                {renderCarousel(card.key, card.imagens)}
+                <Link to="/comissao" className={styles.botao_card}>
+                  Comissionar &#10148;
+                </Link>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </section>
   );

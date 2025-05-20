@@ -72,6 +72,12 @@ public class PortfolioImgsController {
         return ResponseEntity.ok(imagens);
     }
 
+    @GetMapping("/por-portfolio/{id}")
+    public ResponseEntity<List<Portfolio_imgs>> getImagensPorPortfolio(@PathVariable Long id) {
+        return ResponseEntity.ok(portfolioImgsService.getImagensPorPortfolio(id));
+    }
+
+
     @GetMapping
     public ResponseEntity < List < Portfolio_imgs >> findAll() {
         List < Portfolio_imgs > portfolio_imgsList = portfolioImgsService.findAll();
@@ -82,12 +88,6 @@ public class PortfolioImgsController {
     public ResponseEntity < List < Portfolio_imgs >> findImagensByArtistaId(@PathVariable Long artistaId) {
         List < Portfolio_imgs > imagens = portfolioImgsService.findImagensByArtistaId(artistaId);
         return ResponseEntity.ok(imagens);
-    }
-
-    @GetMapping("/filtro")
-    public ResponseEntity<List<Portfolio_imgs>> filtrarPorTipoArte(@RequestParam(required = false) String tipo) {
-        List<Portfolio_imgs> imagensFiltradas = portfolioImgsService.findByTipoArte(tipo);
-        return ResponseEntity.ok(imagensFiltradas);
     }
 
     @PostMapping

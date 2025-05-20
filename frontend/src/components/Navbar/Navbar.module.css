@@ -1,358 +1,314 @@
 .navbarRoxo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-  background-color: #9e00e782;
-  position: absolute;
-  width: 100%;
-  top: 0;
-  color: white;
-  z-index: 10;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     padding: 20px 0;
+     background-color: #9e00e782;
+     position: absolute;
+     width: 100%;
+     top: 0;
+     color: white;
+     z-index: 10;
+     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
 }
-
-/* Estilo da navbar das outras páginas */
-.navbarBranco {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-  background-color: #fdfaff;
-  color: black;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 10;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
+/* Estilo da navbar */
+ .navbarBranco {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     padding: 20px 0;
+     background-color: #fdfaff;
+     color: black;
+     position: sticky;
+     top: 0;
+     width: 100%;
+     z-index: 10;
+     border-bottom: 1px solid #ddd;
+     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.144);
 }
-
-.navbar_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 50px;
+ .navbar_container {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     padding: 0 50px;
 }
-
 /* LOGO */
-.logo_container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+ .logo_container {
+     display: flex;
+     align-items: center;
+     gap: 10px;
 }
-
-.logoLink {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: inherit;
+ .logoLink {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     text-decoration: none;
+     color: inherit;
 }
-
-.logoTitle {
-  font-size: 27px;
-  font-weight: bold;
-  margin: 0;
+ .logoTitle {
+     font-size: 27px;
+     font-weight: bold;
+     margin: 0;
 }
-
-.corBranco {
-  color: white;
+ .corBranco {
+     color: white;
 }
-
-.corRoxo {
-  color: #580081;
+ .corRoxo {
+     color: #580081;
 }
-
 /* IMAGEM DO LOGO */
-.logo {
-  width: 40px;
+ .logo {
+     width: 40px;
 }
-
 /* BARRA DE PESQUISA */
-.pesquisar {
-  display: flex;
-  align-items: center;
-  background-color: transparent;
-  border: 2px solid #ebc5fc;
-  border-radius: 30px;
-  padding: 0 15px;
-  width: 40%;
+ .pesquisar {
+     display: flex;
+     align-items: center;
+     background-color: transparent;
+     border: 2px solid #ebc5fc;
+     border-radius: 30px;
+     padding: 0 15px;
+     width: 40%;
 }
-
-.buscar_icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
+ .buscar_icon {
+     width: 20px;
+     height: 20px;
+     margin-right: 10px;
 }
-
-.pesquisar_input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  width: 100%;
-  background-color: #fdfaff;
+ .pesquisar_input {
+     padding: 0.8rem;
+     border: none;
+     outline: none;
+     font-size: 14px;
+     width: 100%;
+     background-color: #fdfaff;
 }
-
-.pesquisar_input::placeholder {
-  color: #ebc5fc;
-  background-color: #fdfaff;
+ .pesquisar_input::placeholder {
+     color: #ebc5fc;
+     background-color: #fdfaff;
 }
-
 /* Botões alinhados à direita */
-.button_container {
-  display: flex;
-  gap: 30px;
+ .button_container {
+     display: flex;
+     gap: 30px;
 }
-
-.loginButton {
-  background-color: #9e00e7;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 14px;
-  text-decoration: none;
-  transition: 0.3s;
-  font-size: 15px;
-  font-weight: 600;
+ .loginButton {
+     background-color: #9e00e7;
+     color: white;
+     padding: 8px 16px;
+     border-radius: 30px;
+     font-size: 14px;
+     text-decoration: none;
+     transition: 0.3s;
+     font-size: 15px;
+     font-weight: 600;
 }
-
-.loginButton:hover {
-  background-color: white;
-  color: #9b30ff;
+ .loginButton:hover {
+     background-color: white;
+     color: #9b30ff;
 }
-
-.registerButton,
-.registerButton_roxo {
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 14px;
-  text-decoration: none;
-  transition: 0.3s;
-  font-size: 15px;
-  font-weight: 600;
+ .registerButton, .registerButton_roxo {
+     padding: 8px 16px;
+     border-radius: 30px;
+     font-size: 14px;
+     text-decoration: none;
+     transition: 0.3s;
+     font-size: 15px;
+     font-weight: 600;
 }
-
-.registerButton {
-  color: white;
-  border: 2px solid white;
+ .registerButton {
+     color: white;
+     border: 2px solid white;
 }
-.registerButton_roxo {
-  color: #9b30ff;
-  border: 2px solid #9b30ff;
+ .registerButton_roxo {
+     color: #9b30ff;
+     border: 2px solid #9b30ff;
 }
-.registerButton:hover {
-  background-color: white;
-  color: #9b30ff;
+ .registerButton:hover {
+     background-color: white;
+     color: #9b30ff;
 }
-.registerButton_roxo:hover {
-  background-color: #9b30ff;
-  color: white;
+ .registerButton_roxo:hover {
+     background-color: #9b30ff;
+     color: white;
 }
-
 /* NAVBAR DO CLIENTE E ARTISTA*/
-.nav_cli_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+ .nav_cli_container {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     gap: 20px;
 }
-
-.icon_msg {
-  width: 30px;
-  height: 30px;
-  padding: 2px;
-  margin-right: 8px;
-  vertical-align: middle;
+ .icon_msg {
+     width: 30px;
+     height: 30px;
+     padding: 2px;
+     margin-right: 8px;
+     vertical-align: middle;
 }
-.msg_icon_branco:hover {
-  background-color: rgba(255, 255, 255, 0.289);
-  border-radius: 50%;
-  padding: 2px;
-  width: 33px;
-  height: 33px;
+ .msg_icon_branco:hover {
+     background-color: rgba(255, 255, 255, 0.289);
+     border-radius: 50%;
+     padding: 2px;
+     width: 33px;
+     height: 33px;
 }
-.msg_icon_roxo:hover {
-  background-color: #9e00e70c;
-  border-radius: 50%;
-  padding: 2px;
-  width: 33px;
-  height: 33px;
+ .msg_icon_roxo:hover {
+     background-color: #9e00e70c;
+     border-radius: 50%;
+     padding: 2px;
+     width: 33px;
+     height: 33px;
 }
-
-.post_btn_branco,
-.post_btn_roxo {
-  display: flex;
-  padding: 7px;
-  align-items: center;
-  gap: 10px;
-  border-radius: 30px;
+ .post_btn_branco, .post_btn_roxo {
+     display: flex;
+     padding: 7px;
+     align-items: center;
+     gap: 10px;
+     border-radius: 30px;
 }
-
-.post_btn_branco:hover {
-  background-color: rgba(255, 255, 255, 0.289);
+ .post_btn_branco:hover {
+     background-color: rgba(255, 255, 255, 0.289);
 }
-.post_btn_roxo:hover {
-  background-color: #9e00e70c;
+ .post_btn_roxo:hover {
+     background-color: #9e00e70c;
 }
-.iconAddBranco {
-  color: white;
-  font-size: 25px;
+ .iconAddBranco {
+     color: white;
+     font-size: 25px;
 }
-.iconAddRoxo {
-  color: #6a0dad;
-  font-size: 25px;
+ .iconAddRoxo {
+     color: #6a0dad;
+     font-size: 25px;
 }
-.textoBranco {
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
+ .textoBranco {
+     color: white;
+     font-size: 18px;
+     font-weight: 600;
 }
-.textoRoxo {
-  color: #6a0dad;
-  font-size: 18px;
-  font-weight: 600;
+ .textoRoxo {
+     color: #6a0dad;
+     font-size: 18px;
+     font-weight: 600;
 }
-
-.painel_btn_branco,
-.painel_btn_roxo {
-  display: flex;
-  padding: 7px;
-  align-items: center;
-  gap: 10px;
-  border-radius: 25px;
+ .painel_btn_branco, .painel_btn_roxo {
+     display: flex;
+     padding: 7px;
+     align-items: center;
+     gap: 10px;
+     border-radius: 25px;
 }
-.painel_btn_branco:hover {
-  background-color: rgba(255, 255, 255, 0.289);
+ .painel_btn_branco:hover {
+     background-color: rgba(255, 255, 255, 0.289);
 }
-.painel_btn_roxo:hover {
-  background-color: #9e00e70c;
+ .painel_btn_roxo:hover {
+     background-color: #9e00e70c;
 }
-
-.perfilArtist {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-  transition: 0.2s;
+ .perfilArtist {
+     width: 30px;
+     height: 30px;
+     border-radius: 50%;
+     object-fit: cover;
+     cursor: pointer;
+     transition: 0.2s;
 }
-
-.avatar {
-  border-radius: 100%;
-  width: 30px;
-  height: 30px;
-  object-fit: cover;
+ .avatar {
+     border-radius: 100%;
+     width: 30px;
+     height: 30px;
+     object-fit: cover;
 }
-
 /* MENU PERFIL */
-.perfilWrapper,
-.perfilWrapper_roxo {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  border-radius: 50%;
+ .perfilWrapper, .perfilWrapper_roxo {
+     position: relative;
+     display: flex;
+     align-items: center;
+     padding: 5px;
+     border-radius: 50%;
 }
-.perfilWrapper:hover {
-  background-color: rgba(255, 255, 255, 0.289);
+ .perfilWrapper:hover {
+     background-color: rgba(255, 255, 255, 0.289);
 }
-
-.perfilWrapper_roxo:hover {
-  background-color: #9e00e70c;
+ .perfilWrapper_roxo:hover {
+     background-color: #9e00e70c;
 }
-
-.perfil {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
+ .perfil {
+     width: 30px;
+     height: 30px;
+     border-radius: 50%;
+     cursor: pointer;
 }
-
-.perfilMenu {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  background-color: white;
-  border-radius: 10px 0 10px 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  z-index: 999;
-  padding: 10px 15px;
-  min-width: 140px;
+ .perfilMenu {
+     position: absolute;
+     top: 50px;
+     right: 0;
+     background-color: white;
+     border-radius: 10px 0 10px 10px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+     z-index: 999;
+     padding: 10px 15px;
+     min-width: 140px;
 }
-
-.perfilMenu a,
-.perfilMenu button {
-  display: block;
-  padding: 8px 0;
-  color: #444;
-  text-decoration: none;
-  border: none;
-  background: none;
-  font-size: 18px;
-  font-weight: 600;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
+ .perfilMenu a, .perfilMenu button {
+     display: block;
+     padding: 8px 0;
+     color: #444;
+     text-decoration: none;
+     border: none;
+     background: none;
+     font-size: 18px;
+     font-weight: 600;
+     width: 100%;
+     text-align: left;
+     cursor: pointer;
 }
-
-.perfilMenu a:hover,
-.perfilMenu button:hover {
-  background-color: #f3f3f3;
-  border: none;
-  border-radius: 0;
+ .perfilMenu a:hover, .perfilMenu button:hover {
+     background-color: #f3f3f3;
+     border: none;
+     border-radius: 0;
 }
-
-.perfilMenu button:last-child {
-  color: red;
+ .perfilMenu button:last-child {
+     color: red;
 }
-
 /* Responsives */
-@media (max-width: 800px) {
-  .logoTitle {
-    visibility: hidden;
-    font-size: xx-small;
-  }
-
-  .pesquisar {
-    width: 30%;
-  }
-
-  .registerButton {
-    visibility: hidden;
-    font-size: xx-small;
-  }
-  .registerButton_roxo {
-    visibility: hidden;
-    font-size: xx-small;
-  }
-
-  .loginButton {
-    position: absolute;
-  }
+ @media (max-width: 800px) {
+     .logoTitle {
+         visibility: hidden;
+         font-size: xx-small;
+    }
+     .pesquisar {
+         width: 30%;
+    }
+     .registerButton {
+         visibility: hidden;
+         font-size: xx-small;
+    }
+     .registerButton_roxo {
+         visibility: hidden;
+         font-size: xx-small;
+    }
+     .loginButton {
+         position: absolute;
+    }
 }
-
-@media (max-width: 600px) {
-  .logoTitle {
-    visibility: hidden;
-    font-size: xx-small;
-  }
-
-  .pesquisar {
-    width: 30%;
-  }
-
-  .registerButton {
-    visibility: hidden;
-    font-size: xx-small;
-  }
-
-  .registerButton_roxo {
-    visibility: hidden;
-    font-size: xx-small;
-  }
-  .loginButton {
-    position: absolute;
-  }
+ @media (max-width: 600px) {
+     .logoTitle {
+         visibility: hidden;
+         font-size: xx-small;
+    }
+     .pesquisar {
+         width: 30%;
+    }
+     .registerButton {
+         visibility: hidden;
+         font-size: xx-small;
+    }
+     .registerButton_roxo {
+         visibility: hidden;
+         font-size: xx-small;
+    }
+     .loginButton {
+         position: absolute;
+    }
 }

@@ -1,323 +1,274 @@
 .artistas_container {
-  padding: 40px 30px;
-  background-color: white;
-  min-height: 100vh;
+     padding: 40px 30px;
+     background-color: white;
+     min-height: 100vh;
 }
-
-.artistas_container h2 {
-  margin-bottom: 3rem;
-  text-align: center;
-  color: #c66bf1;
-  font-weight: lighter;
-  font-size: 20px;
+ .artistas_container h2 {
+     margin-bottom: 3rem;
+     text-align: center;
+     color: #c66bf1;
+     font-weight: lighter;
+     font-size: 20px;
 }
-
 /* Nav filtros */
-.filtros {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+ .filtros {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     flex-wrap: wrap;
 }
-
-.navTabs {
-  display: flex;
-  gap: 1.5rem;
+ .navTabs {
+     display: flex;
+     gap: 1.5rem;
 }
-
-.filtros nav {
-  display: flex;
-  gap: 50px;
-  padding: 1rem;
+ .filtros nav {
+     display: flex;
+     gap: 50px;
+     padding: 1rem;
 }
-
-.filtros button {
-  text-decoration: none;
-  color: #404040;
-  position: relative;
-  background-color: transparent;
+ .filtros button {
+     text-decoration: none;
+     color: #404040;
+     position: relative;
+     background-color: transparent;
 }
-
-.filtros button::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -5px;
-  left: 0;
-  background-color: #6c6c6c;
-  transition: width 0.3s ease;
+ .filtros button::after {
+     content: "";
+     position: absolute;
+     width: 0;
+     height: 2px;
+     bottom: -5px;
+     left: 0;
+     background-color: #6c6c6c;
+     transition: width 0.3s ease;
 }
-
-.filtros button:hover::after {
-  width: 100%;
+ .filtros button:hover::after {
+     width: 100%;
 }
-
-.filtros button:hover {
-  border: none;
+ .filtros button:hover {
+     border: none;
 }
-
-.hidden {
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
+ .hidden {
+     visibility: hidden;
+     height: 0;
+     overflow: hidden;
 }
-
 /* Botao ligar */
-.switchContainer {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+ .switchContainer {
+     display: flex;
+     align-items: center;
+     cursor: pointer;
 }
-
-.switch {
-  width: 37px;
-  height: 20px;
-  background-color: #ccc;
-  border-radius: 9999px;
-  position: relative;
-  transition: background-color 0.3s ease;
-  margin-right: 10px;
+ .switch {
+     width: 37px;
+     height: 20px;
+     background-color: #ccc;
+     border-radius: 9999px;
+     position: relative;
+     transition: background-color 0.3s ease;
+     margin-right: 10px;
 }
-
-.switch.on {
-  background-color: #9e00e7;
+ .switch.on {
+     background-color: #9e00e7;
 }
-
-.slider {
-  width: 15px;
-  height: 15px;
-  background-color: white;
-  border-radius: 50%;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  transition: transform 0.3s ease;
+ .slider {
+     width: 15px;
+     height: 15px;
+     background-color: white;
+     border-radius: 50%;
+     position: absolute;
+     top: 2px;
+     left: 2px;
+     transition: transform 0.3s ease;
 }
-
-.switch.on .slider {
-  transform: translateX(18px);
+ .switch.on .slider {
+     transform: translateX(18px);
 }
-
-.label {
-  color: #404040;
-  font-size: 16px;
+ .label {
+     color: #404040;
+     font-size: 16px;
 }
-
-/* Artistas e Posts Grid Section */
-.artista_grid,
-.post_grid {
-  column-gap: 1.5rem;
-  padding: 1rem 0;
+/* Artistas Posts Grid Section */
+ .artista_grid, .post_grid {
+     column-gap: 1.5rem;
+     padding: 1rem 0;
 }
-
-.post_grid {
-  column-count: 3;
+ .post_grid {
+     column-count: 3;
 }
-
-.artista_grid {
-  column-count: 4;
+ .artista_grid {
+     column-count: 4;
 }
-
 /* Artistas Grid Section */
-.artista_card {
-  padding: 1rem;
-  box-shadow: 0 6px 5px rgba(0, 0, 0, 0.11);
-  text-align: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  height: fit-content;
-
-  h3 {
-    text-align: right;
-    font-weight: 500;
-  }
-}
-
-.imagem_container {
-  position: relative;
-
-  img {
-    display: block;
-    width: 100%;
-    object-fit: contain;
-  }
-
-  h4 {
-    position: absolute;
-    bottom: 0px;
-    font-size: 25px;
-    padding: 5px 40px 5px 10px;
-    width: fit-content;
-    background-color: #33004b;
-    color: white;
-  }
-}
-
-.artista_card:hover {
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.104);
-}
-
-.artista {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
-  width: 100%;
-
-  .artista_perfil {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
-    color: #181818;
-    font-size: 15px;
-    font-weight: bold;
-
-    img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
+ .artista_card {
+     padding: 1rem;
+     box-shadow: 0 6px 5px rgba(0, 0, 0, 0.11);
+     text-align: center;
+     gap: 0.5rem;
+     margin-bottom: 1.5rem;
+     overflow: hidden;
+     height: fit-content;
+     h3 {
+         text-align: right;
+         font-weight: 500;
     }
-  }
-
-  .valor {
-    display: flex;
-    gap: 10px;
-    margin-left: auto;
-
-    span {
-      font-weight: bolder;
-    }
-  }
 }
-
+ .imagem_container {
+     position: relative;
+     img {
+         display: block;
+         width: 100%;
+         object-fit: cover;
+    }
+     h4 {
+         position: absolute;
+         bottom: 0px;
+         font-size: 25px;
+         padding: 5px 40px 5px 10px;
+         width: fit-content;
+         background-color: #33004b;
+         color: white;
+    }
+}
+ .artista_card:hover {
+     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.104);
+}
+ .artista {
+     display: flex;
+     align-items: center;
+     margin-bottom: 0.5rem;
+     width: 100%;
+     .artista_perfil {
+         display: flex;
+         gap: 15px;
+         margin-top: 20px;
+         color: #181818;
+         font-size: 15px;
+         font-weight: bold;
+         img {
+             width: 35px;
+             height: 35px;
+             border-radius: 50%;
+             object-fit: cover;
+        }
+    }
+     .valor {
+         display: flex;
+         gap: 10px;
+         margin-left: auto;
+         span {
+             font-weight: bolder;
+        }
+    }
+}
 /* Posts Grid Section */
-.post_card {
-  background-color: white;
-  flex-direction: column;
-  border-radius: 15px;
-  box-shadow: 0 6px 5px rgba(0, 0, 0, 0.11);
-  padding: 1.2rem;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-  height: fit-content;
+ .post_card {
+     background-color: white;
+     flex-direction: column;
+     border-radius: 15px;
+     box-shadow: 0 6px 5px rgba(0, 0, 0, 0.11);
+     padding: 1.2rem;
+     gap: 0.5rem;
+     margin-bottom: 1.5rem;
+     overflow: hidden;
+     height: fit-content;
 }
-
-.post_card:hover {
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.104);
+ .post_card:hover {
+     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.104);
 }
-
-.post_card img {
-  display: flex;
-  justify-self: center;
-  align-self: center;
-  width: 70%;
-  max-height: auto;
-  object-fit: contain;
+ .post_card img {
+     display: flex;
+     justify-self: center;
+     align-self: center;
+     width: 70%;
+     max-height: auto;
+     object-fit: contain;
 }
-
-.perfil {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-
-  span {
-    text-decoration: underline;
-    color: #181818;
-    font-size: 15px;
-    font-weight: bold;
-  }
-
-  span:hover {
-    text-decoration: none;
-    color: #1f1f1fea;
-  }
+ .perfil {
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     margin-bottom: 0.5rem;
+     h6 {
+         text-decoration: underline;
+         color: #181818;
+         font-size: 15px;
+         font-weight: bold;
+    }
+     h6:hover {
+         text-decoration: none;
+         color: #1f1f1fea;
+    }
+     .data_post {
+         margin-left: auto;
+         font-size: 1rem;
+         color: gray;
+         text-decoration: none;
+    }
 }
-
-.post_card p {
-  margin-top: 15px;
-  margin-bottom: 10px;
-  font-size: 18px;
+ .post_card p {
+     margin-top: 15px;
+     margin-bottom: 10px;
+     font-size: 18px;
 }
-
-.cor_perfil {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
+ .cor_perfil {
+     width: 35px;
+     height: 35px;
+     border-radius: 50%;
 }
-
-.data_post {
-  font-size: 0.8rem;
-  margin-left: 10px;
-  color: gray;
+ .botao_aceitar {
+     background-color: #f8f8f8;
+     border: 2px solid #dd93ff;
+     border-radius: 15px;
+     color: #9900e0;
+     padding: 8px;
+     width: 100%;
+     font-size: 20px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
 }
-
-.botao_aceitar {
-  background-color: #f8f8f8;
-  border: 2px solid #dd93ff;
-  border-radius: 15px;
-  color: #9900e0;
-  padding: 8px;
-  width: 100%;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ .botao_aceitar:hover {
+     border: none;
+     background-color: #9900e0;
+     color: white;
 }
-
-.botao_aceitar:hover {
-  border: none;
-  background-color: #9900e0;
-  color: white;
-}
-
 /* Responsives */
-@media (max-width: 1000px) {
-  .artista_grid,
-  .post_grid {
-    column-count: 2;
-  }
-
-  .filtros {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .filtros nav {
-    flex-direction: row;
-    gap: 22px;
-  }
-
-  .imagem_container h4 {
-    font-size: 15px;
-  }
+ @media (max-width: 1000px) {
+     .artista_grid, .post_grid {
+         column-count: 2;
+    }
+     .filtros {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         width: 100%;
+    }
+     .filtros nav {
+         flex-direction: row;
+         gap: 22px;
+    }
+     .imagem_container h4 {
+         font-size: 15px;
+    }
 }
-
-@media (max-width: 100px) {
-  .artista_grid,
-  .post_grid {
-    column-count: 1;
-  }
-
-  .filtros {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: rgb(38, 0, 255);
-  }
-
-  .filtros nav {
-    flex-direction: row;
-    gap: 10px;
-    font-size: x-small;
-  }
-
-  .imagem_container h4 {
-    font-size: 10px;
-  }
+ @media (max-width: 100px) {
+     .artista_grid, .post_grid {
+         column-count: 1;
+    }
+     .filtros {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         width: 100%;
+         background-color: rgb(38, 0, 255);
+    }
+     .filtros nav {
+         flex-direction: row;
+         gap: 10px;
+         font-size: x-small;
+    }
+     .imagem_container h4 {
+         font-size: 10px;
+    }
 }

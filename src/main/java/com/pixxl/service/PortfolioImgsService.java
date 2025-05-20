@@ -70,10 +70,6 @@ public class PortfolioImgsService {
         return portfolioImgsRepository.findAll();
     }
 
-    public List<Portfolio_imgs> findByTipoArte(String tipo) {
-        return portfolioImgsRepository.findByTipoArte(tipo);
-    }
-
     public List < Portfolio_imgs > findImagensByArtistaId(Long artistaId) {
         List < Portfolio > portfolios = portfolioRepository.findByArtistaId(artistaId);
         List < Portfolio_imgs > todasImagens = new ArrayList < > ();
@@ -106,4 +102,9 @@ public class PortfolioImgsService {
     public List < Portfolio_imgs > findByPortfolioId(Long portfolioId) {
         return portfolioImgsRepository.findByPortfolioId(portfolioId);
     }
+
+    public List<Portfolio_imgs> getImagensPorPortfolio(Long id) {
+        return portfolioImgsRepository.findByPortfolioId(id);
+    }
+
 }

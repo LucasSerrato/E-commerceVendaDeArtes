@@ -7,6 +7,8 @@ function ArtistasEclientes() {
   const [filtroSelecionado, setFiltroSelecionado] = useState("Todos");
   const location = useLocation();
   const navigate = useNavigate();
+  // Estado para pesquisa
+  const [pesquisa, setPesquisa] = useState("");
 
   // Função para pegar query param 'busca' da URL
   const getQueryParam = (param) => {
@@ -14,15 +16,12 @@ function ArtistasEclientes() {
     return searchParams.get(param) || "";
   };
 
-  // Estado para pesquisa, inicializado com valor da URL (se tiver)
-  const [pesquisa, setPesquisa] = useState(getQueryParam("busca"));
-
   // Verifica se a rota atual é a de solicitações dos clientes
   const isOn = location.pathname.includes("solicitacoes");
 
   // Trocar entre artistas e solicitações usando navegação
   const toggle = () => {
-    // Ao trocar de aba, limpa a pesquisa (ou mantém? Se quiser manter, ajuste aqui)
+    // Ao trocar de aba, limpa a pesquisa
     setPesquisa("");
     navigate(isOn ? "/artistas_clientes" : "/artistas_clientes/solicitacoes");
   };
@@ -30,8 +29,17 @@ function ArtistasEclientes() {
   // Cores aleatórias para o perfil dos clientes
   const getRandomColor = () => {
     const cores = [
-      "red", "blue", "pink", "purple", "orange", "brown",
-      "green", "voilet", "lightgreen", "yellow", "beige",
+      "red",
+      "blue",
+      "pink",
+      "purple",
+      "orange",
+      "brown",
+      "green",
+      "violet",
+      "lightgreen",
+      "yellow",
+      "beige",
     ];
     return cores[Math.floor(Math.random() * cores.length)];
   };
@@ -55,8 +63,7 @@ function ArtistasEclientes() {
   }, [isOn]);
 
   useEffect(() => {
-    const novaPesquisa = getQueryParam("busca");
-    setPesquisa(novaPesquisa);
+    setPesquisa(getQueryParam("busca"));
   }, [location.search]);
 
   const shuffleArray = (array) => {
@@ -109,16 +116,6 @@ function ArtistasEclientes() {
       </h2>
 
       <div className={styles.filtros}>
-        {/* Barra de pesquisa */}
-        <div className={styles.searchBox}>
-          <input
-            type="text"
-            placeholder="Pesquisar artista, tipo de arte..."
-            value={pesquisa}
-            onChange={(e) => setPesquisa(e.target.value)}
-          />
-        </div>
-
         <nav className={`${styles.navTabs} ${isOn ? styles.hidden : ""}`}>
           {/* Botões de filtro: ao clicar atualiza filtroSelecionado */}
           <button
@@ -130,7 +127,9 @@ function ArtistasEclientes() {
           </button>
           <button
             type="button"
-            className={filtroSelecionado === "Corpo Inteiro" ? styles.active : ""}
+            className={
+              filtroSelecionado === "Corpo Inteiro" ? styles.active : ""
+            }
             onClick={() => setFiltroSelecionado("Corpo Inteiro")}
           >
             Corpo Inteiro
@@ -178,22 +177,19 @@ function ArtistasEclientes() {
       {isOn ? (
         // Solicitacoes dos clientes
         <section className={styles.post_grid}>
-          {imagensFiltradas.map((post) => (
+          {imagensArtista.map((post) => (
             <div className={styles.post_card} key={post.id}>
               <div className={styles.perfil}>
                 <div
                   className={styles.cor_perfil}
                   style={{ backgroundColor: getRandomColor() }}
                 ></div>
-                <span>{post.nomeUsuario}</span>
+                <h6>{post.nomeUsuario}</h6>
                 <span className={styles.data_post}>
                   {post.data
                     ? new Intl.DateTimeFormat("pt-BR", {
                         day: "2-digit",
                         month: "2-digit",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
                       }).format(new Date(post.data))
                     : "Data indisponível"}
                 </span>
@@ -223,7 +219,10 @@ function ArtistasEclientes() {
         <section className={styles.artista_grid}>
           {imagensFiltradas.map((imgData) =>
             imgData.portfolio ? (
-              <Link to="/ver_arte" key={imgData.id}>
+              <Link
+                to={`/ver_arte/${imgData.portfolio.artista?.id}?portfolio=${imgData.portfolio?.id}`}
+                key={imgData.id}
+              >
                 <div className={styles.artista_card}>
                   <div className={styles.imagem_container}>
                     <img
@@ -260,4 +259,3 @@ function ArtistasEclientes() {
 }
 
 export default ArtistasEclientes;
-

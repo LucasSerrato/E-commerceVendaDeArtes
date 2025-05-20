@@ -1,15 +1,45 @@
 import styles from "./Comissao.module.css";
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import ImgSelecionada from "../../assets/imgs/illustration_dragon.jpg";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Comissao() {
+  const { usuario } = useContext(AuthContext);
+  const { id } = useParams(); // id do portfolio
+
   const [image, setImage] = useState(null);
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [descricao, setDescricao] = useState("");
-  const { usuario } = useContext(AuthContext);
+  const [portfolio, setPortfolio] = useState(null); // Dados do portfolio
+  const [imgPreview, setImgPreview] = useState(""); // Uma imagem do portfolio
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchDados = async () => {
+      try {
+        const resPortfolio = await fetch(
+          `http://localhost:8080/api/portfolio/${id}`
+        );
+        const dataPortfolio = await resPortfolio.json();
+        setPortfolio(dataPortfolio);
+
+        const resImgs = await fetch(
+          `http://localhost:8080/api/portfolioimgs/por-portfolio/${id}`
+        );
+        const imagens = await resImgs.json();
+        if (imagens.length > 0) {
+          setImgPreview(
+            `http://localhost:8080/api/portfolioimgs/imagem/${imagens[0].imagem}`
+          );
+        }
+      } catch (err) {
+        console.error("Erro ao buscar dados do portfólio:", err);
+      }
+    };
+
+    if (id) fetchDados();
+  }, [id]);
 
   useEffect(() => {
     const buscarNomeUsuario = async () => {
@@ -26,17 +56,12 @@ function Comissao() {
       }
     };
 
-    if (usuario && usuario.email) {
-      buscarNomeUsuario();
-    }
+    if (usuario && usuario.email) buscarNomeUsuario();
   }, [usuario]);
 
   const handleFile = (file) => {
     if (file && file.type.startsWith("image/")) {
-      setImage({
-        file,
-        url: URL.createObjectURL(file),
-      });
+      setImage({ file, url: URL.createObjectURL(file) });
     } else {
       alert("Por favor, selecione um arquivo de imagem válido.");
     }
@@ -89,13 +114,15 @@ function Comissao() {
   return (
     <section className={styles.comissao_container}>
       <form className={styles.form_comissao} onSubmit={handleSubmit}>
-        <div className={styles.infoDa_solicitacao}>
-          <img src={ImgSelecionada} alt="imagem da solicitação selecionada" />
-          <h4>Ilustração</h4>
-          <p>
-            de <span>R$100</span>
-          </p>
-        </div>
+        {portfolio && (
+          <div className={styles.infoDa_solicitacao}>
+            <img src={imgPreview} alt="Imagem do portfólio" />
+            <h4>{portfolio.tipo_arte}</h4>
+            <p>
+              de <span>R${portfolio.preco}</span>
+            </p>
+          </div>
+        )}
 
         <div className={styles.right_left}>
           <div className={styles.right}>
@@ -177,4 +204,3 @@ function Comissao() {
 }
 
 export default Comissao;
-
