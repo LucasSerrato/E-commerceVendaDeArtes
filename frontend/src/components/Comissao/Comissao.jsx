@@ -11,7 +11,7 @@ function Comissao() {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [descricao, setDescricao] = useState("");
   const [portfolio, setPortfolio] = useState(null); // Dados do portfolio
-  const [imgPreview, setImgPreview] = useState(""); // Uma imagem do portfolio
+  const [imgPreview, setImgPreview] = useState(""); // uma imagem do portfolio
 
   const navigate = useNavigate();
 

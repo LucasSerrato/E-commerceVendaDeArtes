@@ -34,7 +34,7 @@ function Portfolio() {
             `http://localhost:8080/api/clientes/imagem/${clienteData.imagem}`,
           );
         } else {
-          // Define uma imagem padrão ou deixa vazio
+          // define uma imagem padrão ou deixa vazio
           setImagemPerfil("/default-profile.png");
         }
 

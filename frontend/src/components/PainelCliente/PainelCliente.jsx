@@ -43,7 +43,7 @@ function PainelCliente() {
     })
       .then((res) => {
         if (!res.ok) throw new Error("Erro ao cancelar a comissão");
-        // Sucesso: remove do estado e do localStorage
+        // sucesso: remove do estado e do localStorage
         localStorage.removeItem("comissaoId");
         setComissao(null);
         setError(null);

@@ -6,7 +6,7 @@ function VerPost() {
   const [comentarioSelecionado, setComentarioSelecionado] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Buscar comentários
+  // buscar comentários
   useEffect(() => {
     fetch("http://localhost:8080/api/comentariocliimgs/dados")
       .then((res) => res.json())

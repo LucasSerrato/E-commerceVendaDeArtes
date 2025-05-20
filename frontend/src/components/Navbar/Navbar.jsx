@@ -268,7 +268,7 @@ function Navbar() {
                           navigate("/");
                           setTimeout(() => {
                             window.location.reload();
-                          }); // Espera 100ms após a navegação para recarregar
+                          }); // espera 100ms após a navegação para recarregar
                         }, 600);
                       }}
                     >

@@ -232,7 +232,7 @@
 }
 
 
-/* Responsividade */
+/* Responsive */
 @media (min-width: 600px) {
   .slide_track img {
     max-width: 50%;

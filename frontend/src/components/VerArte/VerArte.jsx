@@ -17,6 +17,7 @@ function VerArte() {
   const [link, setLink] = useState("");
   const [imagemPerfil, setImagemPerfil] = useState("/default-profile.png");
 
+  // portfolio selecionado
   const selectedPortfolio = useMemo(() => {
     return (
       portfolios.find((p) => p.id.toString() === selectedPortfolioId) || null

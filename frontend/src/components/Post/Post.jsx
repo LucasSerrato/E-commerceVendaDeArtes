@@ -60,7 +60,7 @@ function Post() {
         );
       }
 
-      // Redirecionar após sucesso
+      // redirecionar após sucesso
       navigate("/artistas_clientes/solicitacoes");
     } catch (error) {
       console.error("Erro ao criar publicação:", error);

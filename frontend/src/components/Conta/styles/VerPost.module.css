@@ -110,7 +110,6 @@
 }
  .modalButtons button:first-child {
      background-color: #d9534f;
-    /* vermelho */
      color: white;
 }
  .modalButtons button:first-child:hover {
@@ -118,10 +117,8 @@
 }
  .modalButtons button:last-child {
      background-color: #6c757d;
-    /* cinza */
      color: white;
 }
  .modalButtons button:last-child:hover {
      background-color: #5a6268;
 }
- 

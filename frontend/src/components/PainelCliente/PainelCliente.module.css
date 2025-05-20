@@ -344,7 +344,7 @@
     background-color: white;
 }
 
-/* RESPONSIVO: MOBILE FIRST */
+/* RESPONSIVO */
 @media (max-width: 600px) {
   .painelCliente_container {
     flex-direction: column;

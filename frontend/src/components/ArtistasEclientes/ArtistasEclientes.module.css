@@ -233,7 +233,7 @@
      background-color: #9900e0;
      color: white;
 }
-/* Responsives */
+/* media Responsives */
  @media (max-width: 1000px) {
      .artista_grid, .post_grid {
          column-count: 2;

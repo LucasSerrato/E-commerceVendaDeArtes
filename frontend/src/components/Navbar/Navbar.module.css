@@ -271,7 +271,7 @@
  .perfilMenu button:last-child {
      color: red;
 }
-/* Responsives */
+/* responsives */
  @media (max-width: 800px) {
      .logoTitle {
          visibility: hidden;

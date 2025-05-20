@@ -316,7 +316,7 @@
      font-size: 1.2rem;
      font-weight: 500;
 }
-/* Responsividade */
+/* Responsive */
  @media (min-width: 600px) {
      .slide_track img {
          max-width: 50%;

@@ -44,7 +44,7 @@ function ArtistasEclientes() {
     return cores[Math.floor(Math.random() * cores.length)];
   };
 
-  // Buscar imagens (artistas ou solicitações)
+  // Buscar imagens da artistas ou solicitações
   useEffect(() => {
     const url = isOn
       ? "http://localhost:8080/api/comentariocliimgs/dados" // solicitações dos clientes
