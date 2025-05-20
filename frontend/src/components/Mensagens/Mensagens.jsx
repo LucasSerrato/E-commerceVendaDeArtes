@@ -21,7 +21,7 @@ export default function Mensagens() {
       const mock = [
         { id: 2, nome: "ju.desenhos", avatar: "/imgs/ju_avatar.png" },
         { id: 3, nome: "pearls.art", avatar: "/imgs/pearls_avatar.png" },
-        { id: 4, nome: "joao.artes", avatar: "/imgs/joao_avatar.png" }
+        { id: 4, nome: "joao.artes", avatar: "/imgs/joao_avatar.png" },
       ];
       setConversas(mock);
       setConversaAtivaId(mock[0]?.id ?? null);
@@ -32,7 +32,10 @@ export default function Mensagens() {
   /* ---------- util: identifica se texto é nome de arquivo de imagem ---------- */
   const isImagem = (texto) =>
       typeof texto === "string" &&
-      (texto.endsWith(".jpg") || texto.endsWith(".jpeg") || texto.endsWith(".png"));
+      (texto.endsWith(".jpg") ||
+          texto.endsWith(".jpeg") ||
+          texto.endsWith(".png") ||
+          texto.endsWith(".webp"));
 
   /* ---------- GET: mensagens da conversa ---------- */
   const buscarMensagens = async (idConversa) => {
@@ -45,7 +48,7 @@ export default function Mensagens() {
           data.map((msg) => ({
             id: msg.id,
             texto: msg.imagem ?? msg.mensagem,
-            autor: msg.remetente.id === meuId ? "cliente" : "artista"
+            autor: msg.remetente.id === meuId ? "cliente" : "artista",
           }))
       );
     } catch (err) {
@@ -82,18 +85,21 @@ export default function Mensagens() {
         destinatarioId: conversaAtivaId,
         conversaId: conversaAtivaId,
         mensagem: novaMensagem,
-        imagem: null
+        imagem: null,
       };
 
       const res = await fetch(`${API}/api/mensagemchat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dto)
+        body: JSON.stringify(dto),
       });
       if (!res.ok) throw new Error("Falha ao enviar mensagem");
 
       const salvo = await res.json();
-      setMensagens((prev) => [...prev, { id: salvo.id, texto: salvo.mensagem, autor: "cliente" }]);
+      setMensagens((prev) => [
+        ...prev,
+        { id: salvo.id, texto: salvo.mensagem, autor: "cliente" },
+      ]);
       setNovaMensagem("");
     } catch (err) {
       console.error(err);
@@ -113,12 +119,12 @@ export default function Mensagens() {
         destinatarioId: conversaAtivaId,
         conversaId: conversaAtivaId,
         mensagem: "",
-        imagem: null
+        imagem: null,
       };
       const resMsg = await fetch(`${API}/api/mensagemchat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dto)
+        body: JSON.stringify(dto),
       });
       if (!resMsg.ok) throw new Error("Falha ao criar mensagem");
 
@@ -138,7 +144,7 @@ export default function Mensagens() {
 
       setMensagens((prev) => [
         ...prev,
-        { id: msgComImagem.id, texto: msgComImagem.imagem, autor: "cliente" }
+        { id: msgComImagem.id, texto: msgComImagem.imagem, autor: "cliente" },
       ]);
     } catch (err) {
       console.error(err);
@@ -146,6 +152,14 @@ export default function Mensagens() {
     } finally {
       // limpa input file (opcional)
       e.target.value = "";
+    }
+  };
+
+  /* ---------- captura tecla Enter no input ---------- */
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // evita quebra de linha
+      enviarMensagem();
     }
   };
 
@@ -192,6 +206,7 @@ export default function Mensagens() {
                       type="text"
                       value={novaMensagem}
                       onChange={(e) => setNovaMensagem(e.target.value)}
+                      onKeyDown={handleKeyDown} // <---- AQUI
                       placeholder="Enviar mensagem..."
                   />
                   <button onClick={enviarMensagem}>Enviar</button>
