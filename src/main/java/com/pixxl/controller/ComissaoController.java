@@ -77,6 +77,7 @@ public class ComissaoController {
             comissao.setCliente(cliente);
             comissao.setArtista(artista);
             comissao.setCaminhoImagem("comissao/" + nomeArquivo);
+            comissao.setPortfolio(portfolio);
 
             Comissao salva = comissaoService.salvar(comissao);
 

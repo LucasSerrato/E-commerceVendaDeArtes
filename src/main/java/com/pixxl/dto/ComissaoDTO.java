@@ -13,7 +13,8 @@ public class ComissaoDTO {
     private LocalDateTime data;
     private List<String> imagens;
     private Long clienteId;
-    private ArtistaResumoDTO artista;  // CORRIGIDO
+    private ArtistaResumoDTO artista;
+    private PortfolioResumoDTO portfolio;
 
     public ComissaoDTO(Comissao comissao) {
         this.id = comissao.getId();
@@ -35,6 +36,14 @@ public class ComissaoDTO {
         if (comissao.getArtista() != null && comissao.getArtista().isArtista()) {
             this.artista = new ArtistaResumoDTO(comissao.getArtista());
         }
+
+        if (comissao.getPortfolio() != null) {
+            this.portfolio = new PortfolioResumoDTO(comissao.getPortfolio());
+        }
+    }
+
+    public PortfolioResumoDTO getPortfolio() {
+        return portfolio;
     }
 
     // Getters

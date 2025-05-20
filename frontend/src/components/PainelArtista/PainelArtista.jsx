@@ -56,56 +56,81 @@
          setShowModal(true);
      };
 
-     const handleCancelar = () => {
-         // Remover pedido ativo da lista (simula cancelar)
-         setPedidos(prev => prev.filter((_, i) => i !== pedidoAtivoIndex));
-         setPedidoAtivoIndex(0);
-     };
+    const handleCancelar = async () => {
+        if (!window.confirm("Tem certeza que deseja cancelar este pedido?")) return;
 
-     const aceitarComissao = async () => {
-         if (!mensagem || !valor) return;
+        const pedido = pedidos[pedidoAtivoIndex];
+        if (!pedido) return;
 
-         try {
-             const pedido = pedidos[pedidoAtivoIndex];
-             if (!pedido) return;
+        try {
+            const response = await fetch(`http://localhost:8080/api/comissoes/${pedido.id}`, {
+                method: "DELETE",
+            });
 
-             const response = await fetch("http://localhost:8080/api/comissoes", {
-                 method: "POST",
-                 headers: {
-                     "Content-Type": "application/json",
-                 },
-                 body: JSON.stringify({
-                     mensagem,
-                     valor,
-                     idCliente: pedido.clienteId,  // supondo que vem assim
-                     idArtista: usuario.id,
-                     comissaoId: pedido.id,        // ou outro campo se precisar
-                 }),
-             });
+            if (!response.ok) {
+                throw new Error("Erro ao cancelar o pedido");
+            }
 
-             if (!response.ok) {
-                 throw new Error("Erro ao enviar comissão");
-             }
+            setPedidos(prev => prev.filter((_, i) => i !== pedidoAtivoIndex));
+            setPedidoAtivoIndex(0);
+        } catch (error) {
+            console.error("Erro ao cancelar o pedido:", error);
+        }
+    };
 
-             setShowModal(false);
-             setShowNotificacao(true);
 
-             // Remove pedido aceito da lista
-             setPedidos(prev => prev.filter((_, i) => i !== pedidoAtivoIndex));
-             setPedidoAtivoIndex(0);
 
-             setTimeout(() => setShowNotificacao(false), 4000);
-             setMensagem('');
-             setValor('');
-         } catch (error) {
-             console.error("Erro ao aceitar comissão:", error);
-         }
-     };
+    const handleSubmitModal = (e) => {
+      e.preventDefault();
+      console.log('Submit modal disparado');
+      aceitarComissao();
+    };
 
-     const handleSubmitModal = (e) => {
-         e.preventDefault();
-         aceitarComissao();
-     };
+    const aceitarComissao = async () => {
+      console.log('Função aceitarComissao iniciada');
+      if (!mensagem || !valor) {
+        console.log('Mensagem ou valor faltando');
+        return;
+      }
+
+      try {
+        const pedido = pedidos[pedidoAtivoIndex];
+        if (!pedido) {
+          console.log('Pedido inválido');
+          return;
+        }
+
+        const response = await fetch("http://localhost:8080/api/aceitarcomissao", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            mensagem,
+            valor: Number(valor),
+            comissao: { id: pedido.id }
+          }),
+        });
+
+        if (!response.ok) {
+          console.log('Resposta não OK:', response.status);
+          throw new Error("Erro ao enviar comissão");
+        }
+
+        console.log('Comissão aceita com sucesso');
+        setShowModal(false);
+        setShowNotificacao(true);
+
+        setPedidos(prev => prev.filter((_, i) => i !== pedidoAtivoIndex));
+        setPedidoAtivoIndex(0);
+
+        setTimeout(() => setShowNotificacao(false), 4000);
+        setMensagem('');
+        setValor('');
+      } catch (error) {
+        console.error("Erro ao aceitar comissão:", error);
+      }
+    };
+
+
 
      // Pedido ativo atual para renderizar
      const pedidoAtivo = pedidos[pedidoAtivoIndex];
@@ -123,7 +148,10 @@
                          {pedidoAtivo ? (
                              <div className={styles.comissao_card}>
                                  <h4>{pedidoAtivo.nomeUsuario || pedidoAtivo.clienteNome || 'Cliente'}</h4>
-                                 <h4>Tipo: <span>{pedidoAtivo.descricao || pedidoAtivo.tipo || 'Ilustração'}</span></h4>
+                                 <h4>
+                                   Tipo: <span>{pedidoAtivo.portfolio?.tipoArte || "Não especificado"}</span>
+                                 </h4>
+
                                  <h4>Mensagem: <br />
                                      <span>{pedidoAtivo.mensagem || pedidoAtivo.descricaoPedido || ''}</span>
                                  </h4>

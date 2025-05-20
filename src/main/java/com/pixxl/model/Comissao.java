@@ -1,5 +1,6 @@
 package com.pixxl.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -27,19 +28,26 @@ public class Comissao {
     @JoinColumn(name = "artista_id")
     private Cliente artista;
 
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
+    @JsonIgnoreProperties("comissoes")
+    private Portfolio portfolio;
+
+
     @Column(name = "data", nullable = false)
     private LocalDateTime data;
 
     public Comissao() {
     }
 
-    public Comissao(String nomeUsuario, String mensagem, String descricao, String caminhoImagem, Cliente cliente, Cliente artista) {
+    public Comissao(String nomeUsuario, String mensagem, String descricao, String caminhoImagem, Cliente cliente, Cliente artista, Portfolio portfolio) {
         this.nomeUsuario = nomeUsuario;
         this.mensagem = mensagem;
         this.descricao = descricao;
         this.caminhoImagem = caminhoImagem;
         this.cliente = cliente;
         this.artista = artista;
+        this.portfolio = portfolio;
     }
 
 
@@ -81,6 +89,14 @@ public class Comissao {
 
     public void setArtista(Cliente artista) {
         this.artista = artista;
+    }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     @Override

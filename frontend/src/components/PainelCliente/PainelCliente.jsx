@@ -34,24 +34,28 @@ function PainelCliente() {
       });
   }, []);
 
-  const cancelarComissao = () => {
-    const id = localStorage.getItem("comissaoId");
-    if (!id) return;
+    const cancelarComissao = () => {
+     const id = localStorage.getItem("comissaoId");
+     if (!id) return;
 
-    fetch(`http://localhost:8080/api/comissoes/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Erro ao cancelar a comissão");
-        // sucesso: remove do estado e do localStorage
-        localStorage.removeItem("comissaoId");
-        setComissao(null);
-        setError(null);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
-  };
+     const confirmacao = window.confirm(
+       "Tem certeza que deseja cancelar esta comissão?"
+     );
+     if (!confirmacao) return;
+
+     fetch(`http://localhost:8080/api/comissoes/${id}`, {
+       method: "DELETE",
+     })
+       .then((res) => {
+         if (!res.ok) throw new Error("Erro ao cancelar a comissão");
+         localStorage.removeItem("comissaoId");
+         setComissao(null);
+         setError(null);
+       })
+       .catch((err) => {
+         setError("Erro ao cancelar: " + err.message);
+       });
+   };
 
   return (
     <div className={styles.caixa}>
