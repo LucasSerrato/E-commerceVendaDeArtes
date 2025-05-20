@@ -444,6 +444,8 @@
     gap: 1.5rem;
   }
 
+
+
   .mensagem_valor {
     flex-direction: column;
     gap: 15px;
@@ -465,3 +467,5 @@
     width: 100%;
   }
 }
+
+

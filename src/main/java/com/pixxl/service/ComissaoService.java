@@ -26,7 +26,11 @@ public class ComissaoService {
         return repository.findAll();
     }
 
-    public Optional<Comissao> buscarPorId(Long id) {
-        return repository.findById(id);
+    public Comissao findById(Long id) {
+        Optional<Comissao> comissao = repository.findById(id);
+        return comissao.orElse(null);
+    }
+    public void deletar(Long id) {
+        repository.deleteById(id);
     }
 }

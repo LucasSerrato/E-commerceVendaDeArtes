@@ -1,167 +1,146 @@
-import styles from './PainelCliente.module.css';
-import UploadIcon from '../../assets/imgs/upload_icon.png';
-import Pix from '../../assets/imgs/icon_pix.png';
-import MasterCard from '../../assets/imgs/mastercard.webp';
-import ImgRef from '../../assets/imgs/back_illus.jpg';
-import React, { useState } from 'react';
+import styles from "./PainelCliente.module.css";
+import { useEffect, useState } from "react";
 
 function PainelCliente() {
-    // FUNÇÃO PARA MODAL E BOTAO ACEITAR E CANCELAR
-    const [showModal, setShowModal] = useState(false);
-    const [pedidoAtivo, setPedidoAtivo] = useState(true);
+  const [comissao, setComissao] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const handleAceitar = () => {
-        setShowModal(true);
+  useEffect(() => {
+    const id = localStorage.getItem("comissaoId");
+
+    if (!id) {
+      setError("Nenhuma comissão encontrada para este usuário.");
+      setComissao(null);
+      return;
     }
 
-    const handleCancelar = () => {
-        setPedidoAtivo(false);
-    }
+    setLoading(true);
+    setError(null);
 
-    return (
-        <section className={styles.caixa}>
+    fetch(`http://localhost:8080/api/comissoes/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao buscar comissão");
+        return res.json();
+      })
+      .then((data) => {
+        setComissao(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setComissao(null);
+        setLoading(false);
+      });
+  }, []);
 
-            <div className={styles.painelCliente_container}>
+  const cancelarComissao = () => {
+    const id = localStorage.getItem("comissaoId");
+    if (!id) return;
 
-                {/* PAINEL PEDIDOS */}
-                <div className={styles.pedidos_card}>
-                    <h2>Pedidos</h2>
-                    <h3>Pedido está aguardando resposta do artista</h3>
-                    <span>Assim que o artista aceitar, o pagamento será liberado</span>
+    fetch(`http://localhost:8080/api/comissoes/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao cancelar a comissão");
+        // Sucesso: remove do estado e do localStorage
+        localStorage.removeItem("comissaoId");
+        setComissao(null);
+        setError(null);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  };
 
-                    <div className={styles.card_caixa}>
+  return (
+    <div className={styles.caixa}>
+      <div className={styles.painelCliente_container}>
+        <div className={styles.pedidos_card}>
+          <h2>Pedido</h2>
 
-                        {pedidoAtivo && (
-                            <div className={styles.comissao_card}>
-                                <h4>joao.carlos</h4>
-                                <h4>Tipo: <span>Illustração</span> </h4>
-                                <h4>Mensagem: <br />
-                                    <span>Oi! Eu vi que você trabalha muito com backgrounds e cenas,
-                                        gostei muito do seu trabalho e quero te comissionar para fazer
-                                        algumas cenas nesse estilo:
-                                    </span>
-                                </h4>
-                                <h4>Imagem (s) de referência:</h4>
-                                <img src={ImgRef} alt="img de referencia" />
-
-                                <button className={styles.cancelar} onClick={handleCancelar}>Cancelar solicitação</button>
-                            </div>
-                        )}
-
-                    </div>
-                </div>
-
-                {/* PAINEL PAGAMENTOS */}
-                <div className={styles.pagamentos_card}>
-                    <h2>Pagamentos</h2>
-                    <h3>Pedido aceito e aguardando a realização do pagamento</h3>
-                    <span>O trabalho começa após a confirmação do pagamento</span>
-
-                    <div className={styles.card_caixa}>
-
-                        {pedidoAtivo && (
-                            <div className={styles.comissao_card}>
-                                <h4>Tipo: <span>Illustração</span> </h4>
-                                <h4>Imagem (s) de referência:</h4>
-                                <img src={ImgRef} alt="img de referencia" />
-
-                                <button className={styles.aceitar} onClick={handleAceitar}>Realizar pagamento</button>
-                                <button className={styles.cancelar} onClick={handleCancelar}>Cancelar solicitação</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* PAINEL TRABALHO */}
-                <div className={styles.trabalhofinal_card}>
-                    <h2>Trabalho</h2>
-                    <h3>Visualização ou download do arquivo entregue</h3>
-                    <span>Verifique se o resultado está como você queria</span>
-
-                    <div className={styles.card_caixa}>
-                        <button
-                            onClick={() => {
-                                const link = document.createElement('a');
-                                link.href = '/trabalho-final.pdf';
-                                link.download = 'trabalho-final.pdf';
-                                link.click();
-                            }}
-                            className={styles.botao_baixar}
-                        >
-                            <img src={UploadIcon} alt='icon baixar' />
-                            baixar
-                        </button>
-                    </div>
-                </div>
-
-                {/* PAINEL CONCLUÍR */}
-                <div className={styles.conclussao_card}>
-                    <h2>Concluír</h2>
-                    <h3>Confirme a finalização do pedido se estiver satisfeito com o resultado</h3>
-                    <span>Se estiver satisfeito, clique em finalizar</span>
-
-                    <div className={styles.card_caixa}>
-                    </div>
-                </div>
-
-                {/* PAINEL HISTÓRICO */}
-                <div className={styles.historico_card}>
-                    <h2>Histórico</h2>
-                    <h3>Pedidos já concluídos</h3>
-                    <span>Acesse arquivos anteriores e detalhes do pedido</span>
-
-                    <div className={styles.card_caixa}>
-                        {!pedidoAtivo && (
-                            <div className={styles.comissao_card}>
-                                <h4>joao.carlos</h4>
-                                <p>Pedido cancelado e arquivado.</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* MODAL */}
-                {showModal && (
-                    <div className={styles.modal_overlay}>
-                        <div className={styles.modal}>
-                            <span onClick={() => setShowModal(false)}>&#10006;</span>
-                            <h3>Pagamento da sua commissão</h3>
-
-                            <div className={styles.mensagem_valor}>
-                                <div className={styles.mensagem}>
-                                    <p>Mensagem da [artista]</p>
-                                    <span>Achei sua comissão muito legal! Estou feliz em trabalhar com você!</span>
-                                </div>
-
-                                <div className={styles.valor}>
-                                    <p>Total</p>
-                                    <span>R$200</span>
-                                </div>
-                            </div>
-
-                            <h4>Selecione sua forma de pagamento</h4>
-                            <div className={styles.pagamentos_botao}>
-                                <button className={styles.pix} onClick={() => setShowModal(false)}>
-                                    <img src={Pix} alt="icon pix" />
-                                    Pix
-                                </button>
-                                <button className={styles.debito} onClick={() => setShowModal(false)}>
-                                    <img src={MasterCard} alt="icon pix" />
-                                    Cartão de Débito
-                                </button>
-                                <button className={styles.credito} onClick={() => setShowModal(false)}>
-                                    <img src={MasterCard} alt="icon pix" />
-                                    Cartão de Crédito
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+          {loading && (
+            <div className={styles.card_caixa}>
+              <span>Carregando comissão...</span>
             </div>
+          )}
 
-        </section>
-    )
+          {error && (
+            <div className={styles.card_caixa} style={{ color: "red" }}>
+              <span>{error}</span>
+            </div>
+          )}
+
+          {!loading && !error && comissao && (
+            <div className={styles.card_caixa}>
+              <h3>Informações da Comissão</h3>
+
+              <div className={styles.comissao_card}>
+                <h4>Usuário:</h4>
+                <span>{comissao.nomeUsuario}</span>
+
+                <h4>Mensagem:</h4>
+                <span>{comissao.mensagem}</span>
+
+                {comissao.caminhoImagem && (
+                  <>
+                    <h4>Imagem da comissão:</h4>
+                    <img
+                      src={`http://localhost:8080/uploads/${comissao.caminhoImagem}`}
+                      alt="Imagem da comissão"
+                      className={styles.comissao_imagem}
+                    />
+                  </>
+                )}
+
+                <button
+                  className={styles.botao_cancelar}
+                  onClick={cancelarComissao}
+                >
+                  Cancelar Comissão
+                </button>
+              </div>
+            </div>
+          )}
+
+          {!loading && !error && !comissao && (
+            <div className={styles.card_caixa}>
+              <span>Nenhuma comissão encontrada.</span>
+            </div>
+          )}
+        </div>
+
+        {/* Outros cards */}
+        <div className={styles.pagamentos_card}>
+          <h2>Pagamento</h2>
+          <div className={styles.card_caixa}>
+            <span>Em breve: status do pagamento.</span>
+          </div>
+        </div>
+
+        <div className={styles.trabalhofinal_card}>
+          <h2>Trabalho Final</h2>
+          <div className={styles.card_caixa}>
+            <span>Em breve: arte finalizada ou rascunho.</span>
+          </div>
+        </div>
+
+        <div className={styles.conclussao_card}>
+          <h2>Conclusão</h2>
+          <div className={styles.card_caixa}>
+            <span>Status de conclusão aparecerá aqui.</span>
+          </div>
+        </div>
+
+        <div className={styles.historico_card}>
+          <h2>Histórico</h2>
+          <div className={styles.card_caixa}>
+            <span>Histórico de atualizações e mensagens aparecerá aqui.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default PainelCliente;
-

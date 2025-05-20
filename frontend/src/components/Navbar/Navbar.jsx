@@ -18,6 +18,8 @@ function Navbar() {
   const menuRef = useRef();
   const [clientColor, setClientColor] = useState("");
   const [imagemPerfil, setImagemPerfil] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+
 
   useEffect(() => {
     if (role === "cliente") {
@@ -106,6 +108,17 @@ function Navbar() {
               type="text"
               placeholder="Descreva sua comissão"
               className={styles.pesquisar_input}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  const termo = searchTerm.trim();
+                  if (termo !== "") {
+                    navigate(`/artistas_clientes?busca=${encodeURIComponent(termo)}`);
+                  }
+                }
+              }}
             />
           </div>
         )}

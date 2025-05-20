@@ -8,11 +8,22 @@ function ArtistasEclientes() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Função para pegar query param 'busca' da URL
+  const getQueryParam = (param) => {
+    const searchParams = new URLSearchParams(location.search);
+    return searchParams.get(param) || "";
+  };
+
+  // Estado para pesquisa, inicializado com valor da URL (se tiver)
+  const [pesquisa, setPesquisa] = useState(getQueryParam("busca"));
+
   // Verifica se a rota atual é a de solicitações dos clientes
   const isOn = location.pathname.includes("solicitacoes");
 
   // Trocar entre artistas e solicitações usando navegação
   const toggle = () => {
+    // Ao trocar de aba, limpa a pesquisa (ou mantém? Se quiser manter, ajuste aqui)
+    setPesquisa("");
     navigate(isOn ? "/artistas_clientes" : "/artistas_clientes/solicitacoes");
   };
 
@@ -43,6 +54,11 @@ function ArtistasEclientes() {
       });
   }, [isOn]);
 
+  useEffect(() => {
+    const novaPesquisa = getQueryParam("busca");
+    setPesquisa(novaPesquisa);
+  }, [location.search]);
+
   const shuffleArray = (array) => {
     let newArr = [...array];
     for (let i = newArr.length - 1; i > 0; i--) {
@@ -52,12 +68,35 @@ function ArtistasEclientes() {
     return newArr;
   };
 
-  // Filtrar imagens baseado no filtroSelecionado (ignora maiúsculas/minúsculas)
+  // Filtrar imagens baseado no filtroSelecionado e no texto da pesquisa (ignora maiúsculas/minúsculas)
   const imagensFiltradas = imagensArtista.filter((imgData) => {
-    if (isOn) return true; // sem filtro nas solicitações
-    if (filtroSelecionado === "Todos") return true; // mostra todas
+    // Se estiver na aba de solicitações (isOn), só filtra pela pesquisa no nomeUsuario e descrição
+    if (isOn) {
+      if (!pesquisa) return true;
+      const termo = pesquisa.toLowerCase();
+      return (
+        imgData.nomeUsuario?.toLowerCase().includes(termo) ||
+        imgData.descricao?.toLowerCase().includes(termo)
+      );
+    }
+
+    // Na aba artistas, primeiro filtra pelo filtroSelecionado (tipo_arte) e depois pela pesquisa
+    if (filtroSelecionado !== "Todos") {
+      if (
+        !imgData.portfolio?.tipo_arte
+          ?.toLowerCase()
+          .includes(filtroSelecionado.toLowerCase())
+      )
+        return false;
+    }
+
+    if (!pesquisa) return true;
+
+    const termo = pesquisa.toLowerCase();
+
     return (
-      imgData.portfolio?.tipo_arte?.toLowerCase() === filtroSelecionado.toLowerCase()
+      imgData.portfolio?.tipo_arte?.toLowerCase().includes(termo) ||
+      imgData.portfolio?.artista?.nome?.toLowerCase().includes(termo)
     );
   });
 
@@ -70,6 +109,16 @@ function ArtistasEclientes() {
       </h2>
 
       <div className={styles.filtros}>
+        {/* Barra de pesquisa */}
+        <div className={styles.searchBox}>
+          <input
+            type="text"
+            placeholder="Pesquisar artista, tipo de arte..."
+            value={pesquisa}
+            onChange={(e) => setPesquisa(e.target.value)}
+          />
+        </div>
+
         <nav className={`${styles.navTabs} ${isOn ? styles.hidden : ""}`}>
           {/* Botões de filtro: ao clicar atualiza filtroSelecionado */}
           <button
@@ -129,7 +178,7 @@ function ArtistasEclientes() {
       {isOn ? (
         // Solicitacoes dos clientes
         <section className={styles.post_grid}>
-          {imagensArtista.map((post) => (
+          {imagensFiltradas.map((post) => (
             <div className={styles.post_card} key={post.id}>
               <div className={styles.perfil}>
                 <div

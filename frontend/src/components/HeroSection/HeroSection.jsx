@@ -1,28 +1,46 @@
+import React, { useState } from "react";
 import styles from './HeroSection.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
-    // AVEGAR O BOTAO PARA A TELA DE ARTISTAS
-    const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
-    return (
-        <section className={styles.hero}>
+  const handleSearch = () => {
+    if (searchTerm.trim() !== "") {
+      navigate(`/artistas_clientes?busca=${encodeURIComponent(searchTerm)}`);
+    }
+  };
 
-            <h1>Plataforma de artistas independentes</h1>
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
-            <div className={styles.searchBox}>
-                <input type="text" placeholder="Descreva sua arte" />
-            </div>
+  return (
+    <section className={styles.hero}>
+      <h1>Plataforma de artistas independentes</h1>
 
-            <button
-                className={styles.button}
-                onClick={() => navigate('/artistas_clientes')}
-            >
-                Descubra artistas
-            </button>
+      <div className={styles.searchBox}>
+        <input
+          type="text"
+          placeholder="Descreva sua arte"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={handleKeyPress}
+        />
+      </div>
 
-        </section>
-    );
+      <button
+        className={styles.button}
+        onClick={() => navigate('/artistas_clientes')}
+      >
+        Descubra artistas
+      </button>
+    </section>
+  );
 }
 
 export default HeroSection;
+

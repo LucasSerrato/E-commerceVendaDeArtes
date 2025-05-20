@@ -77,4 +77,23 @@ public class ComissaoController {
     public ResponseEntity<?> listar() {
         return ResponseEntity.ok(comissaoService.listar());
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Comissao> findById(@PathVariable Long id) {
+        Comissao comissao = comissaoService.findById(id);
+        if (comissao != null) {
+            return ResponseEntity.ok(comissao);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        comissaoService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
