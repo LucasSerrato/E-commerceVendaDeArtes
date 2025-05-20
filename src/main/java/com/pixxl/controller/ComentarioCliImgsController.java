@@ -1,6 +1,6 @@
 package com.pixxl.controller;
 
-import com.pixxl.Dto.ComentarioCliDTO;
+import com.pixxl.dto.ComentarioCliDTO;
 import com.pixxl.model.ComentarioCliImgs;
 import com.pixxl.service.ComentarioCliImgService;
 import org.springframework.beans.factory.annotation.Autowired;

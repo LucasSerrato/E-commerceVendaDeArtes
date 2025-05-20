@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-
 @Entity
 @Table(name = "mensagens_chat")
 public class MensagensChat {
@@ -22,6 +21,9 @@ public class MensagensChat {
     @JoinColumn(name = "destinatario_id", referencedColumnName = "id", nullable = false)
     private Cliente destinatario;
 
+    @Column(name = "conversa_id", nullable = false)
+    private Long conversaId;
+
     @Column(columnDefinition = "TEXT")
     private String mensagem;
 
@@ -34,10 +36,11 @@ public class MensagensChat {
 
     public MensagensChat() {}
 
-    public MensagensChat(Long id, Cliente remetente, Cliente destinatario, String mensagem, String imagem, LocalDateTime dataEnvio) {
+    public MensagensChat(Long id, Cliente remetente, Cliente destinatario, Long conversaId, String mensagem, String imagem, LocalDateTime dataEnvio) {
         this.id = id;
         this.remetente = remetente;
         this.destinatario = destinatario;
+        this.conversaId = conversaId;
         this.mensagem = mensagem;
         this.imagem = imagem;
         this.dataEnvio = dataEnvio;
@@ -65,6 +68,14 @@ public class MensagensChat {
 
     public void setDestinatario(Cliente destinatario) {
         this.destinatario = destinatario;
+    }
+
+    public Long getConversaId() {
+        return conversaId;
+    }
+
+    public void setConversaId(Long conversaId) {
+        this.conversaId = conversaId;
     }
 
     public String getMensagem() {

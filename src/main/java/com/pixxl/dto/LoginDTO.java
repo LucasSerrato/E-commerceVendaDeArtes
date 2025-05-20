@@ -1,5 +1,5 @@
 // src/main/java/com/pixxl/dto/LoginDTO.java
-package com.pixxl.Dto;
+package com.pixxl.dto;
 
 public class LoginDTO {
     private String email;

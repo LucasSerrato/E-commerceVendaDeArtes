@@ -1,6 +1,9 @@
 package com.pixxl.controller;
 
+import com.pixxl.dto.MensagemDTO;
+import com.pixxl.model.Cliente;
 import com.pixxl.model.MensagensChat;
+import com.pixxl.repository.ClienteRepository;
 import com.pixxl.service.MensagensChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +13,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/mensagemchat")
 public class MensagemChatController {
@@ -21,8 +26,14 @@ public class MensagemChatController {
     @Autowired
     private MensagensChatService mensagensChatService;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     @PostMapping("/{id}/imagem")
-    public ResponseEntity<MensagensChat> uploadImagem(@PathVariable Long id, @RequestParam("imagem") MultipartFile imagem) throws IOException {
+    public ResponseEntity<MensagensChat> uploadImagem(
+            @PathVariable Long id,
+            @RequestParam("imagem") MultipartFile imagem
+    ) throws IOException {
         MensagensChat salvo = mensagensChatService.salvarImagemNaMensagem(id, imagem, uploadDir);
         return ResponseEntity.ok(salvo);
     }
@@ -30,26 +41,50 @@ public class MensagemChatController {
     @GetMapping("/{id}")
     public ResponseEntity<MensagensChat> findById(@PathVariable Long id) {
         MensagensChat mensagensChat = mensagensChatService.findById(id);
-        if (mensagensChat != null) {
-            return ResponseEntity.ok(mensagensChat);
-        } else {
+        if (mensagensChat == null) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(mensagensChat);
     }
 
     @GetMapping
     public ResponseEntity<List<MensagensChat>> findAll() {
-        List<MensagensChat> lista = mensagensChatService.findAll();
-        return ResponseEntity.ok(lista);
+        return ResponseEntity.ok(mensagensChatService.findAll());
+    }
+
+    @GetMapping("/conversa/{conversaId}")
+    public ResponseEntity<List<MensagensChat>> findByConversaId(@PathVariable Long conversaId) {
+        return ResponseEntity.ok(mensagensChatService.findByConversaId(conversaId));
     }
 
     @PostMapping
-    public ResponseEntity<MensagensChat> gravarMensagensChat(@RequestBody MensagensChat mensagensChat) {
+    public ResponseEntity<MensagensChat> gravarMensagensChat(@RequestBody MensagemDTO mensagemDTO) {
+        // Melhor fazer verificação clara e retornar erro HTTP 404 se remetente ou destinatário não existir
+        Cliente remetente = clienteRepository.findById(mensagemDTO.getRemetenteId())
+                .orElseThrow(() -> new RuntimeException("Remetente não encontrado"));
+
+        Cliente destinatario = clienteRepository.findById(mensagemDTO.getDestinatarioId())
+                .orElseThrow(() -> new RuntimeException("Destinatário não encontrado"));
+
+        // Se quiser mensagens de debug, pode logar os IDs recebidos:
+        System.out.println("Remetente ID recebido: " + mensagemDTO.getRemetenteId());
+        System.out.println("Destinatário ID recebido: " + mensagemDTO.getDestinatarioId());
+
+        MensagensChat mensagensChat = new MensagensChat();
+        mensagensChat.setRemetente(remetente);
+        mensagensChat.setDestinatario(destinatario);
+        mensagensChat.setConversaId(mensagemDTO.getConversaId());
+        mensagensChat.setMensagem(mensagemDTO.getMensagem());
+        mensagensChat.setImagem(mensagemDTO.getImagem());
+        mensagensChat.setDataEnvio(LocalDateTime.now());
+
         MensagensChat salvo = mensagensChatService.gravarMensagensChat(mensagensChat);
+
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(salvo.getId())
                 .toUri();
+
         return ResponseEntity.created(uri).body(salvo);
     }
 
@@ -59,4 +94,3 @@ public class MensagemChatController {
         return ResponseEntity.noContent().build();
     }
 }
-
