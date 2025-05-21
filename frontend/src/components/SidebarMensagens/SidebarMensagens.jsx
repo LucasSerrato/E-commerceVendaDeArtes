@@ -1,29 +1,46 @@
 import React from 'react';
 import styles from './SidebarMensagens.module.css';
-import JuPerfil from '../../assets/imgs/ju_desenhos.jpg';
 
-const SidebarMensagens = ({ conversas, onSelecionarConversa, conversaAtivaId }) => {
+const cores = ['#FFB6C1', '#87CEFA', '#90EE90', '#FFD700', '#FFA07A'];
+
+function getCorAleatoria(id: number) {
+  return cores[id % cores.length]; // determinístico por ID
+}
+
+function SidebarMensagens({ conversas, onSelecionarConversa, conversaAtivaId, usuarioAtual }) {
   return (
-    <aside className={styles.sidebar}>
-      <h3 className={styles.titulo}>Mensagens</h3>
-      <ul className={styles.listaConversas}>
-        {conversas.map((conversa) => (
-          <li
-            key={conversa.id}
-            className={`${styles.conversaItem} ${conversa.id === conversaAtivaId ? styles.ativa : ''}`}
-            onClick={() => onSelecionarConversa(conversa.id)}
+    <div className={styles.sidebar}>
+      {conversas.map((conversa) => {
+        const ehArtista = conversa.tipoOutroUsuario === 'ARTISTA'; // Supondo que o backend envie esse campo
+        const imagemUrl = `http://localhost:8080/uploads/portfolio/${conversa.imagemOutroUsuario}`;
+        const corFundo = getCorAleatoria(conversa.idOutroUsuario);
+
+        return (
+          <div
+            key={conversa.conversaId}
+            className={`${styles.conversa} ${conversa.conversaId === conversaAtivaId ? styles.ativa : ''}`}
+            onClick={() => onSelecionarConversa(conversa.conversaId)}
           >
-            <img
-              src={JuPerfil}
-              alt={conversa.nome}
-              className={styles.avatar}
-            />
-            <span className={styles.nome}>{conversa.nome}</span>
-          </li>
-        ))}
-      </ul>
-    </aside>
+            {ehArtista ? (
+              <img
+                src={imagemUrl}
+                alt={conversa.nomeOutroUsuario}
+                className={styles.avatar}
+              />
+            ) : (
+              <div
+                className={styles.avatarCliente}
+                style={{ backgroundColor: corFundo }}
+              >
+                {conversa.nomeOutroUsuario.charAt(0).toUpperCase()}
+              </div>
+            )}
+            <p>{conversa.nomeOutroUsuario}</p>
+          </div>
+        );
+      })}
+    </div>
   );
-};
+}
 
 export default SidebarMensagens;

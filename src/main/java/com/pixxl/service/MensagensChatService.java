@@ -1,5 +1,7 @@
 package com.pixxl.service;
 
+import com.pixxl.dto.ConversaDTO;
+import com.pixxl.model.Cliente;
 import com.pixxl.model.MensagensChat;
 import com.pixxl.repository.MensagensChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -66,4 +70,30 @@ public class MensagensChatService {
         mensagem.setImagem(nomeArquivo);
         return mensagensChatRepository.save(mensagem);
     }
+
+    public List<ConversaDTO> buscarConversasDoUsuario(Long usuarioId) {
+        List<MensagensChat> ultimasMensagens = mensagensChatRepository.findUltimasMensagensPorUsuario(usuarioId);
+        List<ConversaDTO> resultado = new ArrayList<>();
+
+        for (MensagensChat msg : ultimasMensagens) {
+            Cliente outroUsuario = getOutroUsuario(msg, usuarioId);
+
+            ConversaDTO dto = new ConversaDTO();
+            dto.setConversaId(msg.getConversaId());
+            dto.setIdOutroUsuario(outroUsuario.getId());
+            dto.setNomeOutroUsuario(outroUsuario.getNome());
+            dto.setImagemOutroUsuario(outroUsuario.getImagem());
+            resultado.add(dto);
+        }
+
+        return resultado;
+    }
+
+    private Cliente getOutroUsuario(MensagensChat mensagem, Long usuarioId) {
+        return mensagem.getRemetente().getId().equals(usuarioId)
+                ? mensagem.getDestinatario()
+                : mensagem.getRemetente();
+    }
+
+
 }

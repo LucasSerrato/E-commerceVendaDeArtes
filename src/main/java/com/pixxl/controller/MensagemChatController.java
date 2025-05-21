@@ -1,5 +1,6 @@
 package com.pixxl.controller;
 
+import com.pixxl.dto.ConversaDTO;
 import com.pixxl.dto.MensagemDTO;
 import com.pixxl.model.Cliente;
 import com.pixxl.model.MensagensChat;
@@ -16,7 +17,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/mensagemchat")
 public class MensagemChatController {
@@ -56,6 +57,14 @@ public class MensagemChatController {
     public ResponseEntity<List<MensagensChat>> findByConversaId(@PathVariable Long conversaId) {
         return ResponseEntity.ok(mensagensChatService.findByConversaId(conversaId));
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<ConversaDTO>> getConversasDoUsuario(@PathVariable Long usuarioId) {
+        List<ConversaDTO> conversas = mensagensChatService.buscarConversasDoUsuario(usuarioId);
+        return ResponseEntity.ok(conversas);
+    }
+
+
 
     @PostMapping
     public ResponseEntity<MensagensChat> gravarMensagensChat(@RequestBody MensagemDTO mensagemDTO) {

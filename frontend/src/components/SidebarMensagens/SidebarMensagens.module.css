@@ -1,51 +1,57 @@
 .sidebar {
-  width: 250px;
-  background-color: #fff;
-  border-right: 1px solid #e0e0e0;
-  height: 100vh;
-  padding: 20px 10px;
-  box-sizing: border-box;
+  width: 20%;
+  background-color: white;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
 }
 
-.titulo {
-  color: #aa66cc;
-  font-size: 18px;
-  margin-bottom: 20px;
-  padding-left: 10px;
-}
-
-.listaConversas {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.conversaItem {
+.conversa {
   display: flex;
   align-items: center;
   padding: 10px;
-  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.conversaItem:hover {
-  background-color: #f5f5f5;
+.conversa:hover {
+  background-color: #e6e6e6;
 }
 
-.ativa {
-  background-color: #f0e6ff;
+.conversa p {
+  margin-left: 10px;
+  font-weight: 500;
 }
 
 .avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 12px;
   object-fit: cover;
 }
 
-.nome {
-  font-weight: 500;
-  color: #333;
+.avatarPlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.ativa {
+  background-color: #d0ebff;
+}
+
+.avatarCliente {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,0 +1,624 @@
+import { useEffect, useState, useRef } from "react";
+import SidebarMensagens from "../SidebarMensagens/SidebarMensagens";
+import styles from "./Mensagens.module.css";
+
+const API = "http://localhost:8080";
+
+export default function Mensagens() {
+  /* ---------- states ---------- */
+  const [conversas, setConversas] = useState([]);
+  const [conversaAtivaId, setConversaAtivaId] = useState(null);
+  const [mensagens, setMensagens] = useState([]);
+  const [novaMensagem, setNovaMensagem] = useState("");
+  const bottomRef = useRef(null);
+
+  const meuId = 1; // TODO: trocar pelo ID real do usuário autenticado
+
+  /* ---------- carregar lista de conversas ---------- */
+  useEffect(() => {
+    const fetchConversas = async () => {
+      // 🔥 troque por endpoint real quando tiver
+      const mock = [
+        { id: 2, nome: "ju.desenhos", avatar: "/imgs/ju_avatar.png" },
+        { id: 3, nome: "pearls.art", avatar: "/imgs/pearls_avatar.png" },
+        { id: 4, nome: "joao.artes", avatar: "/imgs/joao_avatar.png" },
+      ];
+      setConversas(mock);
+      setConversaAtivaId(mock[0]?.id ?? null);
+    };
+    fetchConversas();
+  }, []);
+
+  /* ---------- util: identifica se texto é nome de arquivo de imagem ---------- */
+  const isImagem = (texto) =>
+      typeof texto === "string" &&
+      (texto.endsWith(".jpg") ||
+          texto.endsWith(".jpeg") ||
+          texto.endsWith(".png") ||
+          texto.endsWith(".webp"));
+
+  /* ---------- GET: mensagens da conversa ---------- */
+  const buscarMensagens = async (idConversa) => {
+    try {
+      const res = await fetch(`${API}/api/mensagemchat/conversa/${idConversa}`);
+      if (!res.ok) throw new Error("Falha ao buscar mensagens");
+      const data = await res.json();
+
+      setMensagens(
+          data.map((msg) => ({
+            id: msg.id,
+            texto: msg.imagem ?? msg.mensagem,
+            autor: msg.remetente.id === meuId ? "cliente" : "artista",
+          }))
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  /* ---------- troca de conversa ---------- */
+  useEffect(() => {
+    if (conversaAtivaId) buscarMensagens(conversaAtivaId);
+  }, [conversaAtivaId]);
+
+  /* ---------- polling a cada 3 s ---------- */
+  useEffect(() => {
+    const t = setInterval(() => {
+      if (conversaAtivaId && document.visibilityState === "visible") {
+        buscarMensagens(conversaAtivaId);
+      }
+    }, 3000);
+    return () => clearInterval(t);
+  }, [conversaAtivaId]);
+
+  /* ---------- autoscroll para a última mensagem ---------- */
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [mensagens]);
+
+  /* ---------- POST: enviar texto ---------- */
+  const enviarMensagem = async () => {
+    if (!novaMensagem.trim()) return;
+    try {
+      const dto = {
+        remetenteId: meuId,
+        destinatarioId: conversaAtivaId,
+        conversaId: conversaAtivaId,
+        mensagem: novaMensagem,
+        imagem: null,
+      };
+
+      const res = await fetch(`${API}/api/mensagemchat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dto),
+      });
+      if (!res.ok) throw new Error("Falha ao enviar mensagem");
+
+      const salvo = await res.json();
+      setMensagens((prev) => [
+        ...prev,
+        { id: salvo.id, texto: salvo.mensagem, autor: "cliente" },
+      ]);
+      setNovaMensagem("");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao enviar mensagem.");
+    }
+  };
+
+  /* ---------- upload de imagem ---------- */
+  const handleUploadImagem = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      /* 1. Cria mensagem vazia */
+      const dto = {
+        remetenteId: meuId,
+        destinatarioId: conversaAtivaId,
+        conversaId: conversaAtivaId,
+        mensagem: "",
+        imagem: null,
+      };
+      const resMsg = await fetch(`${API}/api/mensagemchat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dto),
+      });
+      if (!resMsg.ok) throw new Error("Falha ao criar mensagem");
+
+      const msgCriada = await resMsg.json();
+
+      /* 2. Faz upload da imagem */
+      const fd = new FormData();
+      fd.append("imagem", file);
+
+      const resImg = await fetch(
+          `${API}/api/mensagemchat/${msgCriada.id}/imagem`,
+          { method: "POST", body: fd }
+      );
+      if (!resImg.ok) throw new Error("Falha ao enviar imagem");
+
+      const msgComImagem = await resImg.json();
+
+      setMensagens((prev) => [
+        ...prev,
+        { id: msgComImagem.id, texto: msgComImagem.imagem, autor: "cliente" },
+      ]);
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao enviar imagem.");
+    } finally {
+      // limpa input file (opcional)
+      e.target.value = "";
+    }
+  };
+
+  /* ---------- captura tecla Enter no input ---------- */
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // evita quebra de linha
+      enviarMensagem();
+    }
+  };
+
+  /* ---------- render ---------- */
+  return (
+      <div className={styles.containerMensagens}>
+        <SidebarMensagens
+            conversas={conversas}
+            onSelecionarConversa={setConversaAtivaId}
+            conversaAtivaId={conversaAtivaId}
+        />
+
+        <div className={styles.chatBox}>
+          {conversaAtivaId ? (
+              <>
+                {/* corpo do chat */}
+                <div className={styles.chatBody}>
+                  {mensagens.map((msg) => (
+                      <div
+                          key={msg.id}
+                          className={
+                            msg.autor === "cliente"
+                                ? styles.mensagemCliente
+                                : styles.mensagemArtista
+                          }
+                      >
+                        {isImagem(msg.texto) ? (
+                            <img
+                                src={`${API}/uploads/mensagens/${msg.texto}`}
+                                alt="Imagem enviada"
+                                style={{ maxWidth: "200px", borderRadius: "10px" }}
+                            />
+                        ) : (
+                            <p>{msg.texto}</p>
+                        )}
+                      </div>
+                  ))}
+                  <div ref={bottomRef} />
+                </div>
+
+                {/* input + botões */}
+                <div className={styles.inputBox}>
+                  <input
+                      type="text"
+                      value={novaMensagem}
+                      onChange={(e) => setNovaMensagem(e.target.value)}
+                      onKeyDown={handleKeyDown} // <---- AQUI
+                      placeholder="Enviar mensagem..."
+                  />
+                  <button onClick={enviarMensagem}>Enviar</button>
+                  <input type="file" onChange={handleUploadImagem} />
+                </div>
+              </>
+          ) : (
+              <div className={styles.nenhumaConversa}>Selecione uma conversa</div>
+          )}
+        </div>
+      </div>
+  );
+}
+
+
+  import { useEffect, useState, useRef } from "react";
+  import { useLocation } from "react-router-dom";
+  import SidebarMensagens from "../SidebarMensagens/SidebarMensagens";
+  import styles from "./Mensagens.module.css";
+
+  const API = "http://localhost:8080";
+
+  export default function Mensagens() {
+    /* ---------- states ---------- */
+    const [conversas, setConversas] = useState([]);
+    const [conversaAtivaId, setConversaAtivaId] = useState(null);
+    const [mensagens, setMensagens] = useState([]);
+    const [novaMensagem, setNovaMensagem] = useState("");
+    const [enviando, setEnviando] = useState(false);
+
+    const bottomRef = useRef(null);
+
+    const meuId = JSON.parse(localStorage.getItem("usuario"))?.id;
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const clienteIdURL = searchParams.get("id");
+    const clienteNomeURL = searchParams.get("nome");
+
+
+    /* ---------- util: identifica se texto é nome de arquivo de imagem ---------- */
+    const isImagem = (texto) =>
+        typeof texto === "string" &&
+        (texto.endsWith(".jpg") ||
+            texto.endsWith(".jpeg") ||
+            texto.endsWith(".png") ||
+            texto.endsWith(".webp"));
+
+    /* ---------- GET: mensagens da conversa ---------- */
+    const buscarMensagens = async (idConversa) => {
+      try {
+        const res = await fetch(`${API}/api/mensagemchat/conversa/${idConversa}`);
+        if (!res.ok) throw new Error("Falha ao buscar mensagens");
+        const data = await res.json();
+
+        setMensagens(
+            data.map((msg) => ({
+              id: msg.id,
+              texto: msg.imagem ?? msg.mensagem,
+              autor: msg.remetente.id === meuId ? "cliente" : "artista",
+            }))
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    /* ---------- troca de conversa ---------- */
+    useEffect(() => {
+      if (conversaAtivaId) buscarMensagens(conversaAtivaId);
+    }, [conversaAtivaId]);
+
+    /* ---------- polling a cada 3 s ---------- */
+    useEffect(() => {
+      const t = setInterval(() => {
+        if (conversaAtivaId && document.visibilityState === "visible") {
+          buscarMensagens(conversaAtivaId);
+        }
+      }, 3000);
+      return () => clearInterval(t);
+    }, [conversaAtivaId]);
+
+    /* ---------- autoscroll para a última mensagem ---------- */
+    useEffect(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [mensagens]);
+
+    /* ---------- POST: enviar texto ---------- */
+    const enviarMensagem = async () => {
+      if (!novaMensagem.trim()) return;
+      setEnviando(true);
+      try {
+        const dto = {
+          remetenteId: meuId,
+          destinatarioId: conversaAtivaId,
+          conversaId: conversaAtivaId,
+          mensagem: novaMensagem,
+          imagem: null,
+        };
+
+        const res = await fetch(`${API}/api/mensagemchat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dto),
+        });
+
+        if (!res.ok) throw new Error("Falha ao enviar mensagem");
+
+        const salvo = await res.json();
+        setMensagens((prev) => [
+          ...prev,
+          { id: salvo.id, texto: salvo.mensagem, autor: "cliente" },
+        ]);
+        setNovaMensagem("");
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao enviar mensagem.");
+      } finally {
+        setEnviando(false);
+      }
+    };
+
+
+    /* ---------- upload de imagem ---------- */
+    const handleUploadImagem = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      try {
+        /* 1. Cria mensagem vazia */
+        const dto = {
+          remetenteId: meuId,
+          destinatarioId: conversaAtivaId,
+          conversaId: conversaAtivaId,
+          mensagem: "",
+          imagem: null,
+        };
+        const resMsg = await fetch(`${API}/api/mensagemchat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dto),
+        });
+        if (!resMsg.ok) throw new Error("Falha ao criar mensagem");
+
+        const msgCriada = await resMsg.json();
+
+        /* 2. Faz upload da imagem */
+        const fd = new FormData();
+        fd.append("imagem", file);
+
+        const resImg = await fetch(
+            `${API}/api/mensagemchat/${msgCriada.id}/imagem`,
+            { method: "POST", body: fd }
+        );
+        if (!resImg.ok) throw new Error("Falha ao enviar imagem");
+
+        const msgComImagem = await resImg.json();
+
+        setMensagens((prev) => [
+          ...prev,
+          { id: msgComImagem.id, texto: msgComImagem.imagem, autor: "cliente" },
+        ]);
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao enviar imagem.");
+      } finally {
+        // limpa input file (opcional)
+        e.target.value = "";
+      }
+    };
+
+    /* ---------- captura tecla Enter no input ---------- */
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault(); // evita quebra de linha
+        enviarMensagem();
+      }
+    };
+
+    /* ---------- render ---------- */
+    return (
+        <div className={styles.containerMensagens}>
+          <SidebarMensagens
+            conversas={Array.isArray(conversas) ? conversas : []}
+            onSelecionarConversa={setConversaAtivaId}
+            conversaAtivaId={conversaAtivaId}
+          />
+
+
+          <div className={styles.chatBox}>
+              {mensagens.length === 0 && (
+                <p className={styles.vazio}>Nenhuma mensagem ainda.</p>
+              )}
+
+            {conversaAtivaId ? (
+                <>
+                  {/* corpo do chat */}
+                  <div className={styles.chatBody}>
+                    {mensagens.map((msg) => (
+                        <div
+                            key={msg.id}
+                            className={
+                              msg.autor === "cliente"
+                                  ? styles.mensagemCliente
+                                  : styles.mensagemArtista
+                            }
+                        >
+                          {isImagem(msg.texto) ? (
+                              <img
+                                  src={`${API}/uploads/mensagens/${msg.texto}`}
+                                  alt="Imagem enviada"
+                                  style={{ maxWidth: "200px", borderRadius: "10px" }}
+                              />
+                          ) : (
+                              <p>{msg.texto}</p>
+                          )}
+                        </div>
+                    ))}
+                    <div ref={bottomRef} />
+                  </div>
+
+                  {/* input + botões */}
+                  <div className={styles.inputBox}>
+                    <input
+                        type="text"
+                        value={novaMensagem}
+                        onChange={(e) => setNovaMensagem(e.target.value)}
+                        onKeyDown={handleKeyDown} // <---- AQUI
+                        placeholder="Enviar mensagem..."
+                    />
+                    <button onClick={enviarMensagem}>Enviar</button>
+                    <input type="file" onChange={handleUploadImagem} />
+                  </div>
+                </>
+            ) : (
+                <div className={styles.nenhumaConversa}>Selecione uma conversa</div>
+            )}
+          </div>
+        </div>
+    );
+  }
+
+
+.containerMensagens {
+  display: flex;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.chatBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+.chatBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Mensagens do cliente (usuário logado) */
+.mensagemCliente {
+  align-self: flex-end;
+  max-width: 70%;
+  background-color: #dcf8c6;
+  color: #333;
+  padding: 10px 15px;
+  border-radius: 18px 18px 0 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+/* Mensagens do artista (outro usuário) */
+.mensagemArtista {
+  align-self: flex-start;
+  max-width: 70%;
+  background-color: #ffffff;
+  color: #6a1b9a;
+  padding: 10px 15px;
+  border-radius: 18px 18px 18px 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+.inputBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.inputBox input[type="text"] {
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.inputBox button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #6a1b9a;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.inputBox button:hover {
+  background-color: #50156f;
+}
+
+.inputBox input[type="file"] {
+  cursor: pointer;
+}
+
+.nenhumaConversa {
+  text-align: center;
+  color: #888;
+  margin-top: 50px;
+  font-size: 1.1rem;
+}
+
+
+
+import React from 'react';
+import styles from './SidebarMensagens.module.css';
+import JuPerfil from '../../assets/imgs/ju_desenhos.jpg';
+
+const SidebarMensagens = ({ conversas, onSelecionarConversa, conversaAtivaId }) => {
+  return (
+    <aside className={styles.sidebar}>
+      <h3 className={styles.titulo}>Mensagens</h3>
+      <ul className={styles.listaConversas}>
+        {conversas.map((conversa) => (
+          <li
+            key={conversa.id}
+            className={`${styles.conversaItem} ${conversa.id === conversaAtivaId ? styles.ativa : ''}`}
+            onClick={() => onSelecionarConversa(conversa.id)}
+          >
+            <img
+              src={JuPerfil}
+              alt={conversa.nome}
+              className={styles.avatar}
+            />
+            <span className={styles.nome}>{conversa.nome}</span>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  );
+};
+
+export default SidebarMensagens;
+
+
+.sidebar {
+  width: 250px;
+  background-color: #fff;
+  border-right: 1px solid #e0e0e0;
+  height: 100vh;
+  padding: 20px 10px;
+  box-sizing: border-box;
+}
+
+.titulo {
+  color: #aa66cc;
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+.listaConversas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conversaItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.conversaItem:hover {
+  background-color: #f5f5f5;
+}
+
+.ativa {
+  background-color: #f0e6ff;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.nome {
+  font-weight: 500;
+  color: #333;
+}
+

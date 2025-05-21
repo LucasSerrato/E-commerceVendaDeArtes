@@ -1,6 +1,8 @@
 import styles from "./ArtistasEclientes.module.css";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { urlToFile } from "../../utils/fileUtils";  // ajuste o caminho conforme sua estrutura
+
 
 function ArtistasEclientes() {
   const [imagensArtista, setImagensArtista] = useState([]);
@@ -9,6 +11,20 @@ function ArtistasEclientes() {
   const navigate = useNavigate();
   // Estado para pesquisa
   const [pesquisa, setPesquisa] = useState("");
+
+  const enviarMensagemAceite = async (post) => {
+    // Envia a mensagem de aceite aqui (exemplo)
+    await fetch("http://localhost:8080/api/mensagemchat", {
+      method: "POST",
+      body: JSON.stringify({ id: post.id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Depois de enviar, navegar para a página de mensagens
+    navigate(`/mensagens?id=${post.id}&nome=${encodeURIComponent(post.nomeUsuario)}`);
+  };
 
   // Função para pegar query param 'busca' da URL
   const getQueryParam = (param) => {
@@ -208,9 +224,14 @@ function ArtistasEclientes() {
                 </a>
               )}
               <br />
-              <Link to="/mensagens" className={styles.botao_aceitar}>
+              <button
+                className={styles.botao_aceitar}
+                onClick={() => enviarMensagemAceite(post)}
+              >
                 Aceitar
-              </Link>
+              </button>
+
+
             </div>
           ))}
         </section>
