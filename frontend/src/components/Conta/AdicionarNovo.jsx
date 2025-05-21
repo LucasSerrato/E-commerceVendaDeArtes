@@ -100,7 +100,8 @@ function AdiconarNovo() {
 
   return (
     <section className={styles.addicionar_container}>
-      <form onSubmit={handleSubmit}>
+      <form className={styles.form_add} onSubmit={handleSubmit}>
+          <h2>Adicionar portfolio</h2>
         <label>Tipo de arte</label>
         <input
           type="text"
@@ -153,7 +154,7 @@ function AdiconarNovo() {
         </div>
 
         <button type="submit" className={styles.addicionar_btn}>
-          Salvar alterações
+          Adicionar
         </button>
       </form>
 
