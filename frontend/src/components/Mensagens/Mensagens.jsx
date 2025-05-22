@@ -44,10 +44,14 @@ const comentarioId = parseInt(new URLSearchParams(location.search).get("id"), 10
         if (!res.ok) throw new Error("Erro ao buscar comentário");
 
         const data = await res.json();
+
+        // Armazena tanto as informações do cliente quanto o ID
         setSolicitacaoCliente({
           nomeUsuario: data.cliente.nome,
           descricao: data.descricao,
+          clienteId: data.cliente.id // Adiciona o ID do cliente aqui
         });
+
       } catch (err) {
         console.error(err);
       }
@@ -162,7 +166,7 @@ const enviarMensagemAceite = async () => {
 
     const dto = {
       remetenteId: meuId,
-      destinatarioId: conversaAtivaId,
+      destinatarioId: solicitacaoCliente.clienteId,
       conversaId: conversaAtivaId,
       mensagem: texto,
       imagem: null
@@ -187,7 +191,7 @@ const enviarMensagemAceite = async () => {
     for (const img of imagensDestaque.slice(0, 2)) { // limita a 2 imagens, por exemplo
       const imagemDto = {
         remetenteId: meuId,
-        destinatarioId: conversaAtivaId,
+        destinatarioId: solicitacaoCliente.clienteId,
         conversaId: conversaAtivaId,
         mensagem: "",
         imagem: null
@@ -232,7 +236,7 @@ const enviarMensagemAceite = async () => {
     try {
       const dto = {
         remetenteId: meuId,
-        destinatarioId: conversaAtivaId,
+        destinatarioId: solicitacaoCliente.clienteId,
         conversaId: conversaAtivaId,
         mensagem: novaMensagem,
         imagem: null,
@@ -248,7 +252,7 @@ const enviarMensagemAceite = async () => {
       const salvo = await res.json();
       setMensagens((prev) => [
         ...prev,
-        { id: salvo.id, texto: salvo.mensagem, autor: "cliente" },
+        { id: salvo.id, texto: salvo.mensagem, autor: "eu" },
       ]);
       setNovaMensagem("");
     } catch (err) {
@@ -266,7 +270,7 @@ const enviarMensagemAceite = async () => {
       /* 1. Cria mensagem vazia */
       const dto = {
         remetenteId: meuId,
-        destinatarioId: conversaAtivaId,
+        destinatarioId: solicitacaoCliente.clienteId,
         conversaId: conversaAtivaId,
         mensagem: "",
         imagem: null,
@@ -294,7 +298,7 @@ const enviarMensagemAceite = async () => {
 
       setMensagens((prev) => [
         ...prev,
-        { id: msgComImagem.id, texto: msgComImagem.imagem, autor: "cliente" },
+        { id: msgComImagem.id, texto: msgComImagem.imagem, autor: "eu" },
       ]);
     } catch (err) {
       console.error(err);
