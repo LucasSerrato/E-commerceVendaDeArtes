@@ -34,5 +34,6 @@ public interface MensagensChatRepository extends JpaRepository<MensagensChat, Lo
 """)
     List<MensagensChat> findUltimasMensagensPorUsuario(@Param("usuarioId") Long usuarioId);
 
+    List<MensagensChat> findByConversaId(Long conversaId);
 
 }

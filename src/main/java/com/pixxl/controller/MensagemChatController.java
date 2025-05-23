@@ -5,6 +5,7 @@ import com.pixxl.dto.MensagemDTO;
 import com.pixxl.model.Cliente;
 import com.pixxl.model.MensagensChat;
 import com.pixxl.repository.ClienteRepository;
+import com.pixxl.repository.MensagensChatRepository;
 import com.pixxl.service.MensagensChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -102,4 +103,13 @@ public class MensagemChatController {
         mensagensChatService.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/conversa/{conversaId}")
+    public ResponseEntity<Void> deletarConversa(@PathVariable Long conversaId) {
+        mensagensChatService.deletarPorConversaId(conversaId);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
 }

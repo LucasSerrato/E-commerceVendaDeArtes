@@ -13,17 +13,17 @@ function ArtistasEclientes() {
   const [pesquisa, setPesquisa] = useState("");
 
   const enviarMensagemAceite = async (post) => {
-    // Envia a mensagem de aceite aqui (exemplo)
+    // Envia a mensagem de aceite, incluindo clienteId no body se quiser
     await fetch("http://localhost:8080/api/mensagemchat", {
       method: "POST",
-      body: JSON.stringify({ id: post.id }),
+      body: JSON.stringify({ id: post.id, clienteId: post.clienteId }),
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    // Depois de enviar, navegar para a página de mensagens
-    navigate(`/mensagens?id=${post.id}&nome=${encodeURIComponent(post.nomeUsuario)}`);
+    // Navega para mensagens, incluindo clienteId na query
+    navigate(`/mensagens?id=${post.id}&nome=${encodeURIComponent(post.nomeUsuario)}&clienteId=${post.clienteId}`);
   };
 
   // Função para pegar query param 'busca' da URL

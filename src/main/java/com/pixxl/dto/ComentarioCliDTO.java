@@ -10,12 +10,14 @@ public class ComentarioCliDTO {
     private String imagem;
     private String nomeUsuario;
     private LocalDateTime data;
+    private Long clienteId;
 
     public ComentarioCliDTO(ComentarioCliImgs c) {
         this.id = c.getId();
         this.descricao = c.getComentario().getDescricao();
         this.imagem = c.getImagem();
         this.nomeUsuario = c.getComentario().getCliente().getNome();
+        this.clienteId = c.getComentario().getCliente().getId();
         this.data = c.getComentario().getDataPost();
     }
 
@@ -60,5 +62,13 @@ public class ComentarioCliDTO {
 
     public void setData(LocalDateTime data) {
         this.data = data;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 }

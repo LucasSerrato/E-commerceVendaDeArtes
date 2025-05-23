@@ -1,8 +1,12 @@
+
+
 .containerMensagens {
   display: flex;
-  height: 80vh;
-  background-color: white;
+  height: 80vh; /* Altura fixa */
+  max-height: 80vh; /* Garante que não ultrapasse */
   width: 100%;
+  background-color: white;
+  overflow: hidden; /* Impede qualquer scroll aqui */
 }
 
 .chatBox {
@@ -12,7 +16,7 @@ background-color: white;
   flex-direction: column;
   padding: 20px;
   border-left: 1px solid #ddd;
-  width: 10%;
+  min-height: 0;
 }
 
 .chatBody {
@@ -22,6 +26,7 @@ background-color: white;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-height: 0;
 }
 
 /* Mensagens do cliente (usuário logado) */
@@ -55,6 +60,7 @@ background-color: white;
   gap: 10px;
   padding: 10px;
   border-top: 1px solid #ddd;
+  min-height: 0;
 }
 
 .inputBox input[type="text"] {

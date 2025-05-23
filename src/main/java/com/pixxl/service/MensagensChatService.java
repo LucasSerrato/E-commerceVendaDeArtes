@@ -83,6 +83,7 @@ public class MensagensChatService {
             dto.setIdOutroUsuario(outroUsuario.getId());
             dto.setNomeOutroUsuario(outroUsuario.getNome());
             dto.setImagemOutroUsuario(outroUsuario.getImagem());
+            dto.setOutroUsuarioEhArtista(outroUsuario.isArtista());  // seta o boolean aqui
             resultado.add(dto);
         }
 
@@ -94,6 +95,12 @@ public class MensagensChatService {
                 ? mensagem.getDestinatario()
                 : mensagem.getRemetente();
     }
+
+    public void deletarPorConversaId(Long conversaId) {
+        List<MensagensChat> mensagens = mensagensChatRepository.findByConversaId(conversaId);
+        mensagensChatRepository.deleteAll(mensagens);
+    }
+
 
 
 }
