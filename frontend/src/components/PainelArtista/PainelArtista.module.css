@@ -4,6 +4,17 @@
     margin-top: 0;
 }
 
+.alertaQuantidade {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin: 10px 0;
+    border: 1px solid #ffeeba;
+    font-weight: 500;
+}
+
+
 .painelArtista_container {
     display: flex;
     align-self: center;
@@ -421,5 +432,6 @@
     font-size: 15px;
   }
 }
+
 
 

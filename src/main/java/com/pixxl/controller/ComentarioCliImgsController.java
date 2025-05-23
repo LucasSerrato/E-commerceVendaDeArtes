@@ -3,6 +3,12 @@ package com.pixxl.controller;
 import com.pixxl.dto.ComentarioCliDTO;
 import com.pixxl.model.ComentarioCliImgs;
 import com.pixxl.service.ComentarioCliImgService;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,32 +18,24 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/comentariocliimgs")
 @CrossOrigin(origins = "*")
 public class ComentarioCliImgsController {
-
     private final String uploadDir = "uploads/comentarios/";
 
-    @Autowired
-    private ComentarioCliImgService comentarioCliImgService;
+    @Autowired private ComentarioCliImgService comentarioCliImgService;
 
     @PostMapping("/{id}/upload")
-    public ResponseEntity<ComentarioCliImgs> uploadImagem(
-            @PathVariable Long id,
-            @RequestParam("imagem") MultipartFile imagem) throws IOException {
+    public ResponseEntity<ComentarioCliImgs> uploadImagem(@PathVariable Long id,
+                                                          @RequestParam("imagem") MultipartFile imagem) throws IOException {
+        ComentarioCliImgs salvo =
+                comentarioCliImgService.salvarImagemNoComentario(id, imagem, uploadDir);
 
-        ComentarioCliImgs salvo = comentarioCliImgService.salvarImagemNoComentario(id, imagem, uploadDir);
-
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(salvo.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(salvo.getId())
+                .toUri();
 
         return ResponseEntity.created(uri).body(salvo);
     }
@@ -58,7 +56,8 @@ public class ComentarioCliImgsController {
     }
 
     @GetMapping("/imagem/{nomeImagem}")
-    public ResponseEntity<byte[]> getImagem(@PathVariable String nomeImagem) throws IOException {
+    public ResponseEntity<byte[]> getImagem(@PathVariable String nomeImagem)
+            throws IOException {
         Path caminhoImagem = Paths.get(uploadDir + nomeImagem);
         byte[] imagem = Files.readAllBytes(caminhoImagem);
         HttpHeaders headers = new HttpHeaders();
@@ -77,8 +76,10 @@ public class ComentarioCliImgsController {
     }
 
     @PostMapping
-    public ResponseEntity<ComentarioCliImgs> gravarComentarioCliImgs(@RequestBody ComentarioCliImgs comentarioCliImgs) {
-        ComentarioCliImgs salvo = comentarioCliImgService.gravarComentarioCliImgs(comentarioCliImgs);
+    public ResponseEntity<ComentarioCliImgs> gravarComentarioCliImgs(
+            @RequestBody ComentarioCliImgs comentarioCliImgs) {
+        ComentarioCliImgs salvo =
+                comentarioCliImgService.gravarComentarioCliImgs(comentarioCliImgs);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(salvo.getId())
@@ -93,12 +94,13 @@ public class ComentarioCliImgsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ComentarioCliImgs> update(@PathVariable Long id, @RequestBody ComentarioCliImgs comentarioCliImgs) {
-        ComentarioCliImgs alterado = comentarioCliImgService.update(id, comentarioCliImgs);
+    public ResponseEntity<ComentarioCliImgs> update(
+            @PathVariable Long id, @RequestBody ComentarioCliImgs comentarioCliImgs) {
+        ComentarioCliImgs alterado =
+                comentarioCliImgService.update(id, comentarioCliImgs);
         if (alterado != null) {
             return ResponseEntity.ok(alterado);
         }
         return ResponseEntity.notFound().build();
     }
 }
-

@@ -1,27 +1,23 @@
 package com.pixxl.controller;
 
-
 import com.pixxl.model.AceitarComissao;
 import com.pixxl.service.AceitarComissaoService;
+import java.net.URI;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.util.List;
-
 @RestController
 @RequestMapping("api/aceitarcomissao")
 public class AceitarComissaoController {
-
-    @Autowired
-    private AceitarComissaoService aceitarComissaoService;
+    @Autowired private AceitarComissaoService aceitarComissaoService;
 
     @GetMapping("/{id}")
     public ResponseEntity<AceitarComissao> findById(@PathVariable Long id) {
         AceitarComissao aceitarComissao = aceitarComissaoService.findById(id);
-            if (aceitarComissao != null) {
+        if (aceitarComissao != null) {
             return ResponseEntity.ok(aceitarComissao);
         }
         return ResponseEntity.notFound().build();
@@ -34,8 +30,10 @@ public class AceitarComissaoController {
     }
 
     @PostMapping
-    public ResponseEntity<AceitarComissao> gravarMensagemComissao(@RequestBody AceitarComissao aceitarComissao) {
-        AceitarComissao salvo = aceitarComissaoService.gravarMensagemComissao(aceitarComissao);
+    public ResponseEntity<AceitarComissao> gravarMensagemComissao(
+            @RequestBody AceitarComissao aceitarComissao) {
+        AceitarComissao salvo =
+                aceitarComissaoService.gravarMensagemComissao(aceitarComissao);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(salvo.getId())
@@ -50,8 +48,10 @@ public class AceitarComissaoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AceitarComissao> update(@PathVariable Long id, @RequestBody AceitarComissao aceitarComissao) {
-        AceitarComissao alterado = aceitarComissaoService.update(id, aceitarComissao);
+    public ResponseEntity<AceitarComissao> update(
+            @PathVariable Long id, @RequestBody AceitarComissao aceitarComissao) {
+        AceitarComissao alterado =
+                aceitarComissaoService.update(id, aceitarComissao);
         if (alterado != null) {
             return ResponseEntity.ok(alterado);
         }

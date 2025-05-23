@@ -1,39 +1,32 @@
 package com.pixxl.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "portfolio")
 public class Portfolio {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column private String bio;
 
-    @Column
-    private String bio;
+    @Column private String tipo_arte;
 
-    @Column
-    private String tipo_arte;
+    @Column private BigDecimal preco;
 
-    @Column
-    private BigDecimal preco;
+    @Column private int prazo;
 
-    @Column
-    private int prazo;
-
-    @Column
-    private String link;
+    @Column private String link;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "artista_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(
+            name = "artista_id", referencedColumnName = "id", nullable = false)
     private Cliente artista;
 
     public Portfolio() {}
 
-    public Portfolio(Long id, String bio, String tipo_arte, BigDecimal preco, int prazo, Cliente artista, String link){
+    public Portfolio(Long id, String bio, String tipo_arte, BigDecimal preco,
+                     int prazo, Cliente artista, String link) {
         this.id = id;
         this.bio = bio;
         this.tipo_arte = tipo_arte;

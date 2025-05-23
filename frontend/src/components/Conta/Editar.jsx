@@ -110,7 +110,10 @@ function Editar() {
 
   return (
     <section className={styles.editar_container}>
-      <form>
+               <h2>Editar portfolio</h2>
+
+        <div className={styles.form}>
+      <form className={styles.edit_form}>
         <label>Tipo de arte</label>
         <input
           type="text"
@@ -182,6 +185,7 @@ function Editar() {
               </button>
             </div>
           ))}
+      </div>
       </div>
 
       {/* Novas imagens */}

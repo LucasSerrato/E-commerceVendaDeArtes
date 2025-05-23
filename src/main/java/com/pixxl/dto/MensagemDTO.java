@@ -1,17 +1,14 @@
 package com.pixxl.dto;
 
 public class MensagemDTO {
-
     private Long remetenteId;
     private Long destinatarioId;
     private Long conversaId;
     private String mensagem;
-    private String imagem; // Pode ser null
+    private String imagem;
 
-    // Construtor padrão
     public MensagemDTO() {}
 
-    // Getters e Setters
     public Long getRemetenteId() {
         return remetenteId;
     }
@@ -54,12 +51,9 @@ public class MensagemDTO {
 
     @Override
     public String toString() {
-        return "MensagemDTO{" +
-                "remetenteId=" + remetenteId +
-                ", destinatarioId=" + destinatarioId +
-                ", conversaId=" + conversaId +
-                ", mensagem='" + mensagem + '\'' +
-                ", imagem='" + imagem + '\'' +
-                '}';
+        return "MensagemDTO{"
+                + "remetenteId=" + remetenteId + ", destinatarioId=" + destinatarioId
+                + ", conversaId=" + conversaId + ", mensagem='" + mensagem + '\''
+                + ", imagem='" + imagem + '\'' + '}';
     }
 }

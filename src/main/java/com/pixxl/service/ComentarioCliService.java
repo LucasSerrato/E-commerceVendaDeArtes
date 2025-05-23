@@ -2,20 +2,18 @@ package com.pixxl.service;
 
 import com.pixxl.model.ComentarioCli;
 import com.pixxl.repository.ComentarioCliRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class ComentarioCliService {
-
-    @Autowired
-    private ComentarioCliRepository comentarioCliRepository;
+    @Autowired private ComentarioCliRepository comentarioCliRepository;
 
     public ComentarioCli findById(Long id) {
-        Optional<ComentarioCli> comentarioCli = comentarioCliRepository.findById(id);
+        Optional<ComentarioCli> comentarioCli =
+                comentarioCliRepository.findById(id);
         return comentarioCli.orElse(null);
     }
 
@@ -41,4 +39,3 @@ public class ComentarioCliService {
         return null;
     }
 }
-

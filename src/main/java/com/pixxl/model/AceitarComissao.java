@@ -1,37 +1,32 @@
 package com.pixxl.model;
 
-
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 public class AceitarComissao {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "comissao_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "fk_aceitar_comissao_comissao"))
+    @JoinColumn(name = "comissao_id", referencedColumnName = "id",
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_aceitar_comissao_comissao"))
     private Comissao comissao;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal valor;
+    @Column(nullable = false, precision = 10, scale = 2) private BigDecimal valor;
 
-    @Lob
-    private String mensagem;
+    @Lob private String mensagem;
 
-    @Column(name = "data_aceite", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "data_aceite",
+            columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dataAceite;
 
-    public AceitarComissao(){
+    public AceitarComissao() {
         this.dataAceite = LocalDateTime.now();
     }
 
     public AceitarComissao(Comissao comissao, BigDecimal valor, String mensagem) {
-
         this.comissao = comissao;
         this.valor = valor;
         this.mensagem = mensagem;

@@ -12,6 +12,7 @@ public class ComissaoDTO {
     private String descricao;
     private LocalDateTime data;
     private List<String> imagens;
+    private String status;
     private Long clienteId;
     private ArtistaResumoDTO artista;
     private PortfolioResumoDTO portfolio;
@@ -22,12 +23,14 @@ public class ComissaoDTO {
         this.mensagem = comissao.getMensagem();
         this.descricao = comissao.getDescricao();
         this.data = comissao.getData();
+        this.status = comissao.getStatus().name();
 
         if (comissao.getCliente() != null) {
             this.clienteId = comissao.getCliente().getId();
         }
 
-        if (comissao.getCaminhoImagem() != null && !comissao.getCaminhoImagem().isEmpty()) {
+        if (comissao.getCaminhoImagem() != null
+                && !comissao.getCaminhoImagem().isEmpty()) {
             this.imagens = Collections.singletonList(comissao.getCaminhoImagem());
         } else {
             this.imagens = Collections.emptyList();
@@ -45,14 +48,31 @@ public class ComissaoDTO {
     public PortfolioResumoDTO getPortfolio() {
         return portfolio;
     }
-
-    // Getters
-    public Long getId() { return id; }
-    public String getNomeUsuario() { return nomeUsuario; }
-    public String getMensagem() { return mensagem; }
-    public String getDescricao() { return descricao; }
-    public LocalDateTime getData() { return data; }
-    public List<String> getImagens() { return imagens; }
-    public Long getClienteId() { return clienteId; }
-    public ArtistaResumoDTO getArtista() { return artista; }
+    public Long getId() {
+        return id;
+    }
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+    public String getMensagem() {
+        return mensagem;
+    }
+    public String getDescricao() {
+        return descricao;
+    }
+    public LocalDateTime getData() {
+        return data;
+    }
+    public List<String> getImagens() {
+        return imagens;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public Long getClienteId() {
+        return clienteId;
+    }
+    public ArtistaResumoDTO getArtista() {
+        return artista;
+    }
 }

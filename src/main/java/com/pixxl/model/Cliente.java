@@ -5,29 +5,22 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "cliente")
 public class Cliente {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false) private String nome;
 
-    @Column(nullable = false)
-    private String nome;
+    @Column(nullable = false, unique = true) private String email;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(nullable = false) private String senha;
 
-    @Column(nullable = false)
-    private String senha;
+    @Column(nullable = false) private boolean artista;
 
-    @Column(nullable = false)
-    private boolean artista;
-
-    @Column
-    private String imagem;
+    @Column private String imagem;
 
     public Cliente() {}
 
-    public Cliente(Long id, String nome, String email, String senha, boolean artista, String imagem) {
+    public Cliente(Long id, String nome, String email, String senha,
+                   boolean artista, String imagem) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -36,27 +29,45 @@ public class Cliente {
         this.imagem = imagem;
     }
 
-    // Getters e Setters
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() { return id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setId(Long id) { this.id = id; }
+    public String getNome() {
+        return nome;
+    }
 
-    public String getNome() { return nome; }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
-    public void setNome(String nome) { this.nome = nome; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getEmail() { return email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public String getSenha() {
+        return senha;
+    }
 
-    public String getSenha() { return senha; }
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
-    public void setSenha(String senha) { this.senha = senha; }
+    public boolean isArtista() {
+        return artista;
+    }
 
-    public boolean isArtista() { return artista; }
-
-    public void setArtista(boolean artista) { this.artista = artista; }
+    public void setArtista(boolean artista) {
+        this.artista = artista;
+    }
 
     public String getImagem() {
         return imagem;

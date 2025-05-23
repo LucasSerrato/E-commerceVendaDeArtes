@@ -1,34 +1,29 @@
 package com.pixxl.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "mensagens_chat")
 public class MensagensChat {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "remetente_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(
+            name = "remetente_id", referencedColumnName = "id", nullable = false)
     private Cliente remetente;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "destinatario_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(
+            name = "destinatario_id", referencedColumnName = "id", nullable = false)
     private Cliente destinatario;
 
-    @Column(name = "conversa_id", nullable = false)
-    private Long conversaId;
+    @Column(name = "conversa_id", nullable = false) private Long conversaId;
 
-    @Column(columnDefinition = "TEXT")
-    private String mensagem;
+    @Column(columnDefinition = "TEXT") private String mensagem;
 
-    @Column
-    private String imagem;
+    @Column private String imagem;
 
     @CreationTimestamp
     @Column(name = "data_envio", updatable = false)
@@ -36,7 +31,9 @@ public class MensagensChat {
 
     public MensagensChat() {}
 
-    public MensagensChat(Long id, Cliente remetente, Cliente destinatario, Long conversaId, String mensagem, String imagem, LocalDateTime dataEnvio) {
+    public MensagensChat(Long id, Cliente remetente, Cliente destinatario,
+                         Long conversaId, String mensagem, String imagem,
+                         LocalDateTime dataEnvio) {
         this.id = id;
         this.remetente = remetente;
         this.destinatario = destinatario;

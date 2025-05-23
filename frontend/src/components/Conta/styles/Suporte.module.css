@@ -4,8 +4,9 @@
   flex-direction: column;
   align-items: left;
   gap: 1rem;
-  width: 40rem;
-  height: 100vh;
+      width: 90%;
+  min-height: 100vh;
+  height: fit-content;
 }
 
 .suporte_title h1 {

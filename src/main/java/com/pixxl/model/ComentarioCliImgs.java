@@ -3,19 +3,16 @@ package com.pixxl.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name= "comentario_cli_imgs")
+@Table(name = "comentario_cli_imgs")
 public class ComentarioCliImgs {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "comentario_cli_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(
+            name = "comentario_cli_id", referencedColumnName = "id", nullable = false)
     private ComentarioCli comentario;
 
-    @Column()
-    private String imagem;
+    @Column() private String imagem;
 
     public ComentarioCliImgs() {}
 

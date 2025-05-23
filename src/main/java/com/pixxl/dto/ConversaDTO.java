@@ -5,9 +5,8 @@ public class ConversaDTO {
     private Long idOutroUsuario;
     private String nomeOutroUsuario;
     private String imagemOutroUsuario;
-    private boolean outroUsuarioEhArtista;  // NOVO campo
+    private boolean outroUsuarioEhArtista;
 
-    // Getters e Setters
     public Long getConversaId() {
         return conversaId;
     }

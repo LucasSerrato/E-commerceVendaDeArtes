@@ -4,27 +4,23 @@ import com.pixxl.model.Portfolio;
 import com.pixxl.model.Portfolio_imgs;
 import com.pixxl.repository.PortfolioImgsRepository;
 import com.pixxl.repository.PortfolioRepository;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class PortfolioService {
+    @Autowired private PortfolioRepository portfolioRepository;
 
-    @Autowired
-    private PortfolioRepository portfolioRepository;
-
-    @Autowired
-    private PortfolioImgsRepository portfolioImgsRepository;
+    @Autowired private PortfolioImgsRepository portfolioImgsRepository;
 
     public Portfolio findById(Long id) {
-        Optional < Portfolio > portfolio = portfolioRepository.findById(id);
+        Optional<Portfolio> portfolio = portfolioRepository.findById(id);
         return portfolio.orElse(null);
     }
 
-    public List < Portfolio > findAll() {
+    public List<Portfolio> findAll() {
         return portfolioRepository.findAll();
     }
 
@@ -49,16 +45,15 @@ public class PortfolioService {
         return null;
     }
 
-    public List < Portfolio > findAllByArtistaId(Long id) {
+    public List<Portfolio> findAllByArtistaId(Long id) {
         return portfolioRepository.findAllByArtistaId(id);
     }
 
     public void deletarPortfolioCompleto(Long portfolioId) {
-        // Apaga imagens associadas
-        List < Portfolio_imgs > imagens = portfolioImgsRepository.findByPortfolioId(portfolioId);
+        List<Portfolio_imgs> imagens =
+                portfolioImgsRepository.findByPortfolioId(portfolioId);
         portfolioImgsRepository.deleteAll(imagens);
 
-        // Apaga o portfólio
         portfolioRepository.deleteById(portfolioId);
     }
 }

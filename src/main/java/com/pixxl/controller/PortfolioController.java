@@ -2,22 +2,19 @@ package com.pixxl.controller;
 
 import com.pixxl.model.Portfolio;
 import com.pixxl.service.PortfolioService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/portfolio")
 @CrossOrigin(origins = "*")
 public class PortfolioController {
-
-    @Autowired
-    private PortfolioService portfolioService;
+    @Autowired private PortfolioService portfolioService;
 
     @GetMapping("/{id}")
-    public ResponseEntity < Portfolio > findById(@PathVariable Long id) {
+    public ResponseEntity<Portfolio> findById(@PathVariable Long id) {
         Portfolio portfolio = portfolioService.findById(id);
         if (portfolio != null) {
             return ResponseEntity.ok(portfolio);
@@ -26,8 +23,9 @@ public class PortfolioController {
     }
 
     @GetMapping("/artista/{id}")
-    public ResponseEntity < List < Portfolio >> findByArtistaId(@PathVariable Long id) {
-        List < Portfolio > portfolios = portfolioService.findAllByArtistaId(id);
+    public ResponseEntity<List<Portfolio>> findByArtistaId(
+            @PathVariable Long id) {
+        List<Portfolio> portfolios = portfolioService.findAllByArtistaId(id);
         if (portfolios != null && !portfolios.isEmpty()) {
             return ResponseEntity.ok(portfolios);
         }
@@ -35,18 +33,20 @@ public class PortfolioController {
     }
 
     @GetMapping
-    public ResponseEntity < List < Portfolio >> findAll() {
+    public ResponseEntity<List<Portfolio>> findAll() {
         return ResponseEntity.ok(portfolioService.findAll());
     }
 
     @PostMapping
-    public ResponseEntity < Portfolio > gravarPortfolio(@RequestBody Portfolio portfolio) {
+    public ResponseEntity<Portfolio> gravarPortfolio(
+            @RequestBody Portfolio portfolio) {
         Portfolio salvo = portfolioService.gravarPortfolio(portfolio);
         return ResponseEntity.ok(salvo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity < Portfolio > update(@PathVariable Long id, @RequestBody Portfolio portfolio) {
+    public ResponseEntity<Portfolio> update(
+            @PathVariable Long id, @RequestBody Portfolio portfolio) {
         Portfolio atualizado = portfolioService.update(id, portfolio);
         if (atualizado != null) {
             return ResponseEntity.ok(atualizado);
@@ -55,9 +55,8 @@ public class PortfolioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity < Void > deletarPortfolio(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarPortfolio(@PathVariable Long id) {
         portfolioService.deletarPortfolioCompleto(id);
         return ResponseEntity.noContent().build();
     }
-
 }

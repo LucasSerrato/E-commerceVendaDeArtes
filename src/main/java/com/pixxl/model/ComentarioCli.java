@@ -1,24 +1,19 @@
 package com.pixxl.model;
 
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name= "comentario_cli")
+@Table(name = "comentario_cli")
 public class ComentarioCli {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(
+            name = "cliente_id", referencedColumnName = "id", nullable = false)
     private Cliente cliente;
 
-    @Column(columnDefinition = "TEXT")
-    private String descricao;
+    @Column(columnDefinition = "TEXT") private String descricao;
 
     @Column(name = "data_post", nullable = false, updatable = false)
     private LocalDateTime dataPost;

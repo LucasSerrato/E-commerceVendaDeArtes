@@ -2,7 +2,6 @@ package com.pixxl.service;
 
 import com.pixxl.model.Cliente;
 import com.pixxl.repository.ClienteRepository;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,7 +21,6 @@ public class ClienteService {
     public Cliente salvarImagem(Long id, MultipartFile file) throws IOException {
         String uploadDir = "uploads/clientes";
 
-        // Cria pasta se não existir
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);

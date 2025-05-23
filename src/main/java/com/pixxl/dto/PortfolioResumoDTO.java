@@ -1,7 +1,6 @@
 package com.pixxl.dto;
 
 import com.pixxl.model.Portfolio;
-
 import java.math.BigDecimal;
 
 public class PortfolioResumoDTO {
@@ -15,8 +14,13 @@ public class PortfolioResumoDTO {
         this.preco = portfolio.getPreco();
     }
 
-    public Long getId() { return id; }
-    public String getTipoArte() { return tipoArte; }
-    public BigDecimal getPreco() { return preco; }
+    public Long getId() {
+        return id;
+    }
+    public String getTipoArte() {
+        return tipoArte;
+    }
+    public BigDecimal getPreco() {
+        return preco;
+    }
 }
-

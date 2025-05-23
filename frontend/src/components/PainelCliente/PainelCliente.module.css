@@ -18,7 +18,7 @@
 .pedidos_card,
 .pagamentos_card,
 .trabalhofinal_card,
-.conclussao_card,
+.conclusao_card,
 .historico_card {
     margin: 10rem 0 10rem 0;
     display: flex;
@@ -77,7 +77,7 @@
     background-color: #8583D2;
 }
 
-.conclussao_card h2 {
+.conclusao_card h2 {
     background-color: #83AED2;
 }
 
@@ -156,8 +156,6 @@
     }
 }
 
-
-/* ACEITAR CANCELAR BUTTON */
 .cancelar {
     display: flex;
     justify-self: center;
@@ -193,6 +191,36 @@
     background-color: white;
     color: #3BB60F;
 }
+
+.entrega_imagem_container {
+background-color: red;
+
+}
+
+.botao_arte_final {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.botao_arte_final:hover {
+  background-color: #43a047;
+}
+
+
+.imagem_com_botao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
 
 
 /* MODAL */
@@ -344,8 +372,27 @@
     background-color: white;
 }
 
-/* RESPONSIVO */
+@keyframes aparecerDesaparecer {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
 @media (max-width: 600px) {
+
   .painelCliente_container {
     flex-direction: column;
     width: 95%;
@@ -355,85 +402,33 @@
   .pedidos_card,
   .pagamentos_card,
   .trabalhofinal_card,
-  .conclussao_card,
+  .conclusao_card,
   .historico_card {
     margin: 2rem 0;
     padding: 1rem;
-    width: 100%;
   }
 
   .pedidos_card h2,
-  .pagamentos_card h2,
+  .pagamento_card h2,
   .trabalhofinal_card h2,
-  .conclussao_card h2,
+  .conclusao_card h2,
   .historico_card h2 {
     font-size: 18px;
     padding: 10px;
   }
 
   .pedidos_card h3,
-  .pagamentos_card h3,
-  .trabalhofinal_card h3,
-  .conclussao_card h3,
+  .pagamento_card h3,
+  .trabalhoFim_card h3,
+  .conclusao_card h3,
   .historico_card h3 {
     font-size: 16px;
     padding: 8px;
   }
 
-  .botao_baixar {
-    font-size: 14px;
-    padding: 8px 15px;
-  }
-
-  .comissao_card {
-    padding: 8px;
-    font-size: 14px;
-  }
-
-  .cancelar,
-  .aceitar {
-    font-size: 14px;
-    padding: 8px;
-    width: 100%;
-  }
-
   .modal {
     width: 90%;
     padding: 1rem;
-  }
-
-  .modal h3 {
-    font-size: 20px;
-  }
-
-  .mensagem_valor {
-    flex-direction: column;
-    gap: 10px;
-    padding: 0;
-  }
-
-  .valor {
-    border-left: none;
-    border-top: 1px solid gray;
-    padding: 15px 0;
-    gap: 20px;
-  }
-
-  .pagamentos_botao {
-    flex-direction: column;
-    gap: 0.5rem;
-    font-size: 14px;
-  }
-
-  .pix, .debito, .credito {
-    padding: 10px 20px;
-    width: 100%;
-    text-align: center;
-  }
-
-  .mensagem p,
-  .mensagem span {
-    font-size: 14px;
   }
 }
 
@@ -444,28 +439,14 @@
     gap: 1.5rem;
   }
 
-
-
-  .mensagem_valor {
-    flex-direction: column;
-    gap: 15px;
+  .botoes {
+    flex-direction: row;
+    flex-wrap: wrap;
   }
-
-  .valor {
-    border-left: none;
-    border-top: 1px solid gray;
-    gap: 30px;
-    padding: 15px 0;
-  }
-
-  .pagamentos_botao {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .pix, .debito, .credito {
-    width: 100%;
+  .modal {
+    width: 80%;
   }
 }
+
 
 

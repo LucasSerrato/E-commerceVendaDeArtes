@@ -1,27 +1,26 @@
 package com.pixxl.repository;
 
 import com.pixxl.model.MensagensChat;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-
 @Repository
-public interface MensagensChatRepository extends JpaRepository<MensagensChat, Long> {
-
-    // 🔍 Busca todas as mensagens de uma conversa específica em ordem crescente pela data de envio
+public interface MensagensChatRepository
+        extends JpaRepository<MensagensChat, Long> {
     List<MensagensChat> findByConversaIdOrderByDataEnvioAsc(Long conversaId);
 
-    @Query("SELECT DISTINCT m.conversaId FROM MensagensChat m WHERE m.remetente.id = :usuarioId OR m.destinatario.id = :usuarioId")
-    List<Long> findDistinctConversaIdsByUsuarioId(@Param("usuarioId") Long usuarioId);
+    @Query("SELECT DISTINCT m.conversaId FROM MensagensChat m WHERE "
+            + "m.remetente.id = :usuarioId OR m.destinatario.id = :usuarioId")
+    List<Long>
+    findDistinctConversaIdsByUsuarioId(@Param("usuarioId") Long usuarioId);
 
-    // Padrão Spring - já funciona direto
-    Optional<MensagensChat> findTopByConversaIdOrderByDataEnvioDesc(Long conversaId);
+    Optional<MensagensChat> findTopByConversaIdOrderByDataEnvioDesc(
+            Long conversaId);
 
-    // Customizada com @Query
     @Query("""
     SELECT m FROM MensagensChat m
     WHERE m.dataEnvio = (
@@ -35,5 +34,4 @@ public interface MensagensChatRepository extends JpaRepository<MensagensChat, Lo
     List<MensagensChat> findUltimasMensagensPorUsuario(@Param("usuarioId") Long usuarioId);
 
     List<MensagensChat> findByConversaId(Long conversaId);
-
 }

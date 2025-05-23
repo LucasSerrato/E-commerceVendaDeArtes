@@ -1,4 +1,3 @@
-// src/main/java/com/pixxl/dto/LoginDTO.java
 package com.pixxl.dto;
 
 public class LoginDTO {
@@ -6,7 +5,6 @@ public class LoginDTO {
     private String senha;
     private String imagen;
 
-    // Getters e Setters
     public String getEmail() {
         return email;
     }
