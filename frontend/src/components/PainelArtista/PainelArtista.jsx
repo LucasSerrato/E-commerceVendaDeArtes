@@ -17,6 +17,8 @@
 
      const [imagemSelecionada, setImagemSelecionada] = useState(null);
      const [imagemPreview, setImagemPreview] = useState(null);
+     const [imagensPainelMap, setImagensPainelMap] = useState({});
+
 
 
      // Formata valor para BRL
@@ -96,6 +98,31 @@ const handleEnviarImagem = async () => {
     console.error(error);
   }
 };
+useEffect(() => {
+  const carregarImagens = async () => {
+    const map = {};
+
+    const pedidosEmAndamento = pedidos.filter(p => p.status === "EM_ANDAMENTO");
+
+    await Promise.all(pedidosEmAndamento.map(async (p) => {
+      try {
+        const res = await fetch(`http://localhost:8080/api/imagenspainel/por-comissao/${p.id}`);
+        if (res.ok) {
+          const imagens = await res.json();
+          map[p.id] = imagens;
+        }
+      } catch (e) {
+        console.error(`Erro ao buscar imagens da comissão ${p.id}:`, e);
+      }
+    }));
+
+    setImagensPainelMap(map);
+  };
+
+  if (pedidos.length > 0) {
+    carregarImagens();
+  }
+}, [pedidos]);
 
 
 
@@ -205,6 +232,10 @@ useEffect(() => {
 
 
      const pedidoAtivo = pedidoAtivoIndex >= 0 ? pedidosAtivos[pedidoAtivoIndex] : null;
+const handleRemoverImagem = () => {
+  setImagemSelecionada(null);
+  setImagemPreview(null);
+};
 
 
      return (
@@ -290,52 +321,78 @@ useEffect(() => {
                    </div>
                  </div>
 
-                 {/* PAINEL EM PROCESSSO*/}
+                 {/* PAINEL EM PROCESSO */}
                  <div className={styles.trabalhoFim_card}>
                    <h2>Em processo</h2>
                    <h3>Pedidos com entregas parciais ou em processo</h3>
                    <span>Você pode atualizar o progresso aqui</span>
-                   <div className={styles.card_caixa}>
-                     {pedidos
-                       .filter(p => p.status === "EM_ANDAMENTO")
-                       .map(p => (
-                         <div key={p.id} className={styles.comissao_card}>
-                           <h4>{p.nomeUsuario || "Cliente"}</h4>
-                           <h4>Tipo: <span>{p.portfolio?.tipoArte || "Não especificado"}</span></h4>
-                           <p>Você pode enviar uma entrega parcial.</p>
-                           {imagemPreview && (
-                             <div className={styles.previewBox}>
-                               <h5>Preview da imagem selecionada:</h5>
-                               <img src={imagemPreview} alt="Preview" className={styles.previewImg} />
-                             </div>
-                           )}
 
-                           <div onClick={handleClick} className={styles.uploadBox}>
-                             <img src={UploadIcon} alt="icon upload" />
-                             <p>Faça upload da imagem aqui</p>
+                   <div className={styles.card_caixa}>
+                     {pedidos.filter(p => p.status === "EM_ANDAMENTO").map(p => (
+                       <div key={p.id} className={styles.comissao_card}>
+                         <h4>{p.nomeUsuario || "Cliente"}</h4>
+                         <h4>Tipo: <span>{p.portfolio?.tipoArte || "Não especificado"}</span></h4>
+                         <p>Você pode enviar uma entrega parcial.</p>
+
+                         {imagemPreview && (
+                           <div className={styles.previewBox}>
+                             <h5>Preview da imagem selecionada:</h5>
+                             <img src={imagemPreview} alt="Preview" className={styles.previewImg} />
+                             <button
+                               className={styles.remover_botao}
+                               onClick={handleRemoverImagem}
+                             >
+                               Remover Imagem
+                             </button>
+                             <button
+                                                        className={styles.enviar_botao}
+                                                        onClick={() => handleEnviarImagem(p.id)}
+                                                      >
+                                                        Enviar
+                                                      </button>
                            </div>
-                           <input
-                             type="file"
-                             accept="image/*"
-                             ref={fileInputRef}
-                             style={{ display: 'none' }}
-                             onChange={handleFileChange}
-                           />
+                         )}
+
+                         <div onClick={handleClick} className={styles.uploadBox}>
+                           <img src={UploadIcon} alt="icon upload" />
+                           <p>Faça upload da imagem aqui</p>
                          </div>
-                       ))
-                     }
+
+                         <input
+                           type="file"
+                           accept="image/*"
+                           ref={fileInputRef}
+                           style={{ display: 'none' }}
+                           onChange={handleFileChange}
+                         />
+
+
+
+                         {/* Mostra imagens SOMENTE após o envio */}
+                                                  {imagensPainelMap[p.id] && (imagensPainelMap[p.id] || []).length > 0 && (
+                                                    <div className={styles.imagensPainel}>
+                                                      <h5>Entregas parciais enviadas:</h5>
+                                                      <div className={styles.galeria}>
+                                                        {imagensPainelMap[p.id]?.map((img) => (
+                                                          <img
+                                                            key={img.id}
+                                                            src={`http://localhost:8080/api/imagenspainel/arquivo/${img.imagem}`}
+                                                            alt={img.nomeArquivo}
+                                                            className={styles.imagemPainel}
+                                                          />
+                                                        ))}
+                                                      </div>
+                                                    </div>
+                                                  )}
+                       </div>
+                     ))}
+
                      {pedidos.filter(p => p.status === "EM_ANDAMENTO").length === 0 && (
                        <p>Sem pedidos em processo no momento.</p>
                      )}
                    </div>
-                   <button
-                     className={styles.enviar_botao}
-                     onClick={handleEnviarImagem}
-                   >
-                     Enviar
-                   </button>
-
                  </div>
+
 
                  {/* PAINEL CONCLUSÃO */}
                  <div className={styles.conclusao_card}>

@@ -12,10 +12,7 @@ function PainelCliente() {
   const [error, setError] = useState(null);
   const [comissaoSelecionada, setComissaoSelecionada] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [pedidoAtivo, setPedidoAtivo] = useState(true);
   const [aceites, setAceites] = useState([]);
-  const [showNotificacao, setShowNotificacao] = useState(false);
-  const [ultimaAtualizacao, setUltimaAtualizacao] = useState([]);
   const [imagensPainelMap, setImagensPainelMap] = useState({});
 
   const ultimaAtualizacaoRef = useRef([]);
@@ -50,16 +47,6 @@ function PainelCliente() {
           }
         }));
 
-        // Verifica mudanças de status (para notificações)
-        const novasAceitas = normalizados.filter(c => {
-          const antes = ultimaAtualizacaoRef.current.find(old => old.id === c.id);
-          return antes?.status === "PENDENTE" && c.status === "AGUARDANDO_PAGAMENTO";
-        });
-
-        if (novasAceitas.length > 0) {
-          setShowNotificacao(true);
-          setTimeout(() => setShowNotificacao(false), 4000);
-        }
 
         // Atualiza os states
         setComissoes(normalizados);
@@ -90,7 +77,7 @@ function PainelCliente() {
 
   const marcarComoEntregue = async (comissaoId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/comissoes/${comissaoId}/status?status=ENTREGUE`, {
+      const response = await fetch(`http://localhost:8080/api/comissoes/${comissaoId}/status?status=CONCLUIDA`, {
         method: 'PUT',
       });
 
@@ -167,9 +154,6 @@ function PainelCliente() {
       });
   };
 
-  const handleCancelar = () => {
-    setPedidoAtivo(false);
-  };
 
 
   return (
@@ -237,7 +221,6 @@ function PainelCliente() {
            comissoes
              .filter(c => c.status === "AGUARDANDO_PAGAMENTO")
              .map((comissao) => {
-               const aceite = getAceiteByComissaoId(comissao.id);
 
                return (
                  <div key={comissao.id} className={styles.card_caixa}>
@@ -303,35 +286,39 @@ function PainelCliente() {
                   )}
 
                   {Array.isArray(imagensPainelMap[comissao.id]) && imagensPainelMap[comissao.id].length > 0 && (
-                    <div className={styles.entrega_imagem_container}>
-                      <h4>Outras imagens entregues pelo artista:</h4>
+                    <div>
+                        <h4>Outras imagens entregues pelo artista:</h4>
+                        <div className={styles.entrega_imagem_container}>
+
                       {imagensPainelMap[comissao.id].map((imgPainel, idx) => {
                         const imagemUrl = `http://localhost:8080/api/imagenspainel/arquivo/${imgPainel.imagem}`;
                         return (
-                          <div key={idx} className={styles.imagem_com_botao}>
+                          <div key={idx} className={styles.galeria}>
                             <img
                               src={imagemUrl}
                               alt={`Entrega adicional ${idx + 1}`}
-                              className={styles.comissao_imagem}
+                              className={styles.imagemPainel}
                             />
                             <a
                               href={imagemUrl}
                               download={imgPainel.imagem}
                               className={styles.botao_baixar}
                             >
-                              <img src={UploadIcon} alt="icon baixar" />
-                              Baixar imagem
+                              <i class="fa-solid fa-upload"></i>
                             </a>
-                            <button
-                              className={styles.botao_arte_final}
-                              onClick={() => marcarComoEntregue(comissao.id)}
-                            >
-                              Arte Final Entregue
-                            </button>
+
                           </div>
                         );
                       })}
 
+
+                    </div>
+                    <button
+                                                                    className={styles.botao_arte_final}
+                                                                    onClick={() => marcarComoEntregue(comissao.id)}
+                                                                  >
+                                                                    Arte Final Entregue
+                                                                  </button>
                     </div>
                   )}
 
@@ -360,7 +347,7 @@ function PainelCliente() {
                   <h4>Comissão com {comissao.artista.nome}</h4>
                   <p><strong>Tipo:</strong> {comissao.portfolio.tipoArte}</p>
                   <p><strong>Mensagem:</strong> {comissao.mensagem}</p>
-                  <button className={styles.aceitar} onClick={() => alert("Finalizar comissão (exemplo)")}>
+                  <button className={styles.aceitar} onClick={() => alert("Finalizar comissão")}>
                     Finalizar Pedido
                   </button>
                 </div>

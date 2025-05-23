@@ -96,33 +96,6 @@
 }
 
 
-/* BOTAO PARA BAIXAR IMAGEM */
-.botao_baixar {
-    background: linear-gradient(to right, #e0e0e0, #f5f5f5, #e0e0e0);
-    color: #5a5a5a;
-    padding: 10px 20px;
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    font-size: medium;
-
-    img {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-    }
-}
-
-.botao_baixar:hover {
-    background: linear-gradient(to right, #d6d6d6, #ebebeb, #d6d6d6);
-    transform: translateY(-2px);
-    border: none;
-    color: #5a5a5a;
-}
-
 
 /* CAIXA DA COMISSÃO DO CLIENTE */
 .comissao_card {
@@ -192,10 +165,7 @@
     color: #3BB60F;
 }
 
-.entrega_imagem_container {
-background-color: red;
 
-}
 
 .botao_arte_final {
   background-color: #4caf50;
@@ -213,12 +183,50 @@ background-color: red;
 }
 
 
-.imagem_com_botao {
+.entrega_imagem_container {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 16px;
+    gap: 10px;
+      flex-wrap: wrap;
+
+justify-content: center;
+
+
+}
+
+.galeria {
+  position: relative;
+    display: inline-block;
+}
+
+.imagemPainel {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.botao_baixar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 6px;
+  border-radius: 50%;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.botao_baixar:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.botao_baixar i {
+  font-size: 14px;
 }
 
 

@@ -5,6 +5,7 @@ public enum ComissaoStatus {
     AGUARDANDO_PAGAMENTO,
     EM_ANDAMENTO,
     CONCLUIDA,
+    FINALIZADA,
     CANCELADA,
     RECUSADA
 }
