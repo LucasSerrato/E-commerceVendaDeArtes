@@ -217,8 +217,8 @@
      border-radius: 50%;
 }
  .botao_aceitar {
-     background-color: #f8f8f8;
-     border: 2px solid #dd93ff;
+     background-color: rgba(158, 0, 231, 0.219);
+     border: 2px solid white;
      border-radius: 15px;
      color: #9900e0;
      padding: 8px;
@@ -227,6 +227,7 @@
      display: flex;
      justify-content: center;
      align-items: center;
+     gap: 2rem;
 }
  .botao_aceitar:hover {
      border: none;

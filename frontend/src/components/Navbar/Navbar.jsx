@@ -73,7 +73,9 @@ function Navbar() {
     fetchImagemPerfil();
   }, [usuario]);
 
-  const isLandingPage = location.pathname === "/";
+  const landingPaths = ["/", "/termos", "/politicas"];
+  const isLandingPage = landingPaths.includes(location.pathname);
+
   const navbarClass = isLandingPage ? styles.navbarRoxo : styles.navbarBranco;
 
   return (

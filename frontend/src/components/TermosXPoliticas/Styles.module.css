@@ -1,0 +1,68 @@
+.termos_container,
+.politicas_container {
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  height: fit-content;
+  padding: 2rem 1rem;
+  font-family: "Arial", sans-serif;
+  line-height: 1.7;
+  background-color: #7d00b6;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.container {
+margin-top: 3rem;
+width: 40%;
+display: flex;
+justify-self: center;
+flex-direction: column;
+}
+
+.termos_container p,
+.politicas_container p {
+  white-space: pre-line;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-align: justify;
+}
+
+.termos_container h1,
+.politicas_container h1 {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  margin-top: 6rem;
+  text-align: center;
+  font-weight: 400;
+}
+
+.termos_container h2,
+.politicas_container h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-top: 5rem;
+  margin-bottom: 1rem;
+  color: white;
+  padding-bottom: 0.3rem;
+}
+
+.bem_vindo {
+text-align: center;
+margin-bottom: 5rem;
+font-weight: 400;
+}
+.termos_container ul,
+.politicas_container ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.termos_container li,
+.politicas_container li {
+  margin-bottom: 0.5rem;
+}
+
+
+

@@ -1,6 +1,6 @@
 import styles from "./styles/Editar.module.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function Editar() {
   const { portfolioId } = useParams();
@@ -10,6 +10,7 @@ function Editar() {
   const [tipoArte, setTipoArte] = useState("");
   const [preco, setPreco] = useState("");
   const [prazo, setPrazo] = useState("");
+  const navigate = useNavigate();
 
   // CARREGAR DADOS EXISTENTES
   useEffect(() => {
@@ -80,7 +81,7 @@ function Editar() {
     }
 
     alert("Alterações salvas com sucesso!");
-    window.location.reload(); // recarrega imagens
+    navigate('/conta/editar_portfolio');
   };
 
   const handleFiles = (files) => {

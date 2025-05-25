@@ -17,6 +17,14 @@ export default function Footer() {
                 </div>
 
                 <div className={styles.footerSection}>
+                                    <h4>Termos & politicas</h4>
+                                    <ul>
+                                        <li><Link to="/termos">Termos de Uso</Link></li>
+                                        <li><Link to="/politicas">Política de privacidade</Link></li>
+                                    </ul>
+                                </div>
+
+                <div className={styles.footerSection}>
                     <h4>Contato</h4>
                     <ul>
                         <li><a href="mailto:freemix.br@gmail.com">freemix.br@gmail.com</a></li>
@@ -52,11 +60,12 @@ export default function Footer() {
                       </a>
                     </div>
                 </div>
+                <p className={styles.footerCopy}>
+                                © 2025 Freemix Web. Todos os direitos reservados
+                            </p>
             </div>
 
-            <p className={styles.footerCopy}>
-                © 2025 Freemix Web. Todos os direitos reservados
-            </p>
+
         </footer>
     );
 }

@@ -271,6 +271,23 @@
  .perfilMenu button:last-child {
      color: red;
 }
+.trocarConta {
+  border-top: 1px solid #ccc;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+
+.trocarContaTitle {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #555;
+
+}
+.conta_btn {
+background-color: blue;
+}
+
 /* responsives */
  @media (max-width: 800px) {
      .logoTitle {

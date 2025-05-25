@@ -15,8 +15,9 @@
 .hero h1 {
     text-align: center;
     font-size: 64px;
+    font-weight: 100;
+    font-family: "Afacad", sans-serif;
 }
-
 /* CAIXA PESQUISAR */
 .searchBox {
     display: flex;

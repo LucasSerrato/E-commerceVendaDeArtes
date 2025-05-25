@@ -16,7 +16,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Só adiciona se o banco estiver vazio
+
         if (clienteRepository.count() == 0) {
             Cliente c1 = new Cliente(null, "Lucas", "lucas@gmail.com", "lucas123", false, null);
             Cliente c2 = new Cliente(null, "Ju", "ju@gmail.com", "ju123", true, null);

@@ -119,7 +119,7 @@ public class ComissaoController {
         Optional<Comissao> comissao = comissaoRepository.findById(id);
         if (comissao.isPresent()) {
             Comissao c = comissao.get();
-            c.setStatus(ComissaoStatus.CANCELADA); // ✅ CORREÇÃO
+            c.setStatus(ComissaoStatus.CANCELADA);
             comissaoRepository.save(c);
             return ResponseEntity.ok("Comissão cancelada.");
         }
@@ -200,7 +200,7 @@ public class ComissaoController {
                     .body("Comissão não encontrada");
         }
 
-        comissao.setStatus(ComissaoStatus.AGUARDANDO_PAGAMENTO); // ✅ Corrigido
+        comissao.setStatus(ComissaoStatus.AGUARDANDO_PAGAMENTO);
         comissao.setMensagem(aceiteDTO.getMensagem());
         comissaoService.salvar(comissao);
 

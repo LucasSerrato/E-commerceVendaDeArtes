@@ -24,6 +24,8 @@ import Pesquisa from "./components/Pesquisa/Pesquisa";
 import Mensagens from "./components/Mensagens/Mensagens";
 import SidebarMensagens from "./components/SidebarMensagens/SidebarMensagens";
 import Portfolio from "./components/Portfolio/Portfolio";
+import Termos from "./components/TermosXPoliticas/Termos";
+import Politicas from  "./components/TermosXPoliticas/Politicas";
 import ContaLayout from "./components/Conta/ContaLayout";
 import Perfil from "./components/Conta/Perfil";
 import EditarPortfolio from "./components/Conta/EditarPortfolio";
@@ -78,6 +80,8 @@ function App() {
         <Route path="/post" element={<Post />} />
         <Route path="/mensagens" element={<Mensagens />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/politicas" element={<Politicas />} />
+        <Route path="/termos" element={<Termos />} />
         <Route path="/pesquisa" element={<Pesquisa />} />
         <Route path="/sidebar_mensagens" element={<SidebarMensagens />} />
       </Routes>

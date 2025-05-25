@@ -115,32 +115,6 @@ useEffect(() => {
   }, [comentarioId]);
 
   useEffect(() => {
-    const buscarPortfoliosComImagens = async () => {
-      try {
-        const res = await fetch(`${API}/api/portfolio/artista/${meuId}`);
-        if (!res.ok) throw new Error("Erro ao buscar portfólios");
-        const portfolios = await res.json();
-
-        const portfoliosComImagens = await Promise.all(
-          portfolios.map(async (portfolio) => {
-            const resImgs = await fetch(`${API}/api/portfolioimgs/por-portfolio/${portfolio.id}`);
-            const imgs = resImgs.ok ? await resImgs.json() : [];
-            return { ...portfolio, imagens: imgs };
-          })
-        );
-
-        setPortfolioArtista(portfoliosComImagens);
-        const imagensSelecionadas = selecionarImagensAleatorias(portfoliosComImagens);
-        setImagensDestaque(imagensSelecionadas);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    if (meuId) buscarPortfoliosComImagens();
-  }, [meuId]);
-
-  useEffect(() => {
     const fetchConversas = async () => {
       try {
         const res = await fetch(`${API}/api/mensagemchat/usuario/${meuId}`);
@@ -243,8 +217,11 @@ useEffect(() => {
       ]);
 
       setNovaMensagem("");
+      await buscarMensagens(conversaId);
 
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+
+      await buscarMensagens(conversaId);
+
     } catch (err) {
       console.error("Erro detalhado:", err);
       alert(`Erro ao enviar mensagem: ${err.message}`);
@@ -318,8 +295,6 @@ useEffect(() => {
         },
       ]);
 
-
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     } catch (err) {
       console.error(err);
       alert("Erro ao enviar imagem.");
@@ -336,33 +311,6 @@ useEffect(() => {
     }
   };
 
-  function selecionarImagensAleatorias(portfolios, quantidade = 4) {
-    const todasImagens = portfolios.flatMap((p) =>
-      p.imagens.map((img) => ({ ...img, tipo_arte: p.tipo_arte }))
-    );
-
-    const imagensUnicasPorTipo = {};
-    todasImagens.forEach((img) => {
-      if (!imagensUnicasPorTipo[img.tipo_arte]) {
-        imagensUnicasPorTipo[img.tipo_arte] = [];
-      }
-      imagensUnicasPorTipo[img.tipo_arte].push(img);
-    });
-
-    let imagensSelecionadas = Object.values(imagensUnicasPorTipo)
-      .flatMap((lista) => lista.slice(0, 1));
-
-    while (imagensSelecionadas.length < quantidade && todasImagens.length > 0) {
-      const restante = todasImagens.filter(
-        (img) => !imagensSelecionadas.includes(img)
-      );
-      if (restante.length === 0) break;
-      const rand = restante[Math.floor(Math.random() * restante.length)];
-      imagensSelecionadas.push(rand);
-    }
-
-    return imagensSelecionadas.slice(0, quantidade);
-  }
 
   /* ---------- polling a cada 3s ---------- */
   useEffect(() => {
@@ -393,7 +341,6 @@ useEffect(() => {
           <>
             <div className={styles.chatBody}>
               <section className={styles.reply_container}>
-               <h5> Post Aceito<i className='fas fa-reply'></i></h5>
 
 
                 {solicitacaoCliente && (
@@ -405,27 +352,10 @@ useEffect(() => {
                     </button>
                   </div>
                 )}
-
-                {imagensDestaque.length > 0 && (
-                  <div className={styles.portfolioPreviewDestaque}>
-                    <h4>Portfolio</h4>
-                    <div className={styles.imagensLinha}>
-                      {imagensDestaque.map((img) => (
-                        <img
-                          key={img.id}
-                          src={`${API}/api/portfolioimgs/imagem/${img.imagem}`}
-                          alt="Arte do portfólio"
-                          className={styles.imgPortfolio}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
               </section>
 
              {mensagens.map((msg) => {
-               // Se usuário é artista, "eu" é remetente (mensagem enviada por ele)
-               // Se usuário NÃO é artista, "eu" é destinatário, então quem enviou é "outro"
+
                const ehRemetente = (artista && msg.autor === "eu") || (!artista && msg.autor !== "eu");
 
                return (

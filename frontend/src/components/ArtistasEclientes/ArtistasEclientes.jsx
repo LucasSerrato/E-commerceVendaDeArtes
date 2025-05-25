@@ -228,10 +228,9 @@ function ArtistasEclientes() {
                 className={styles.botao_aceitar}
                 onClick={() => enviarMensagemAceite(post)}
               >
-                Aceitar
+                Enviar mensagem
+                <i className="fas fa-paper-plane"></i>
               </button>
-
-
             </div>
           ))}
         </section>

@@ -1,57 +1,73 @@
 .sidebar {
   width: 20%;
+  min-width: 250px;
   background-color: white;
   overflow-y: auto;
   border-right: 1px solid #ddd;
+  min-height: 50vh;
+}
+
+.mensagens {
+  color: #B742ED;
+  text-align: center;
+  padding: 1rem 0;
+  font-weight: 400;
+  font-family: "Afacad", sans-serif;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #eee;
 }
 
 .conversa {
   display: flex;
   align-items: center;
-  padding: 10px;
+  justify-content: center;
+  padding: 12px 16px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .conversa:hover {
-  background-color: #e6e6e6;
+  background-color: #f5f5f5;
 }
 
 .conversa p {
-  margin-left: 10px;
+  margin-left: 12px;
   font-weight: 500;
+  color: #4D4D4D;
+  font-size: 1rem;
+  font-family: "Afacad", sans-serif;
+  white-space: nowrap;
 }
+
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.avatarPlaceholder {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 18px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.ativa {
-  background-color: #d0ebff;
+  flex-shrink: 0;
+  border: 1px solid #ccc;
 }
 
 .avatarCliente {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  font-weight: bold;
+  font-weight: 600;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #999;
+  font-size: 0.95rem;
+  font-family: "Afacad", sans-serif;
+  flex-shrink: 0;
 }
+
+.ativa {
+  background-color: #F1F1F1;
+}
+.avatar, .avatarCliente {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+

@@ -12,6 +12,21 @@
     gap: 10px;
     width: 85%;
     background-color: transparent;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.painelCliente_container::-webkit-scrollbar {
+  height: 10px;
+}
+
+.painelCliente_container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.painelCliente_container::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* PAINEL */
@@ -59,7 +74,8 @@
 
     span {
         padding: 10px 10px 0 10px;
-        text-align: center;
+        text-align: left;
+        width: 85%;
         color: #666666;
     }
 }
@@ -90,62 +106,124 @@
 .card_caixa {
     padding: 5px;
     margin: 10px;
-    width: 90%;
-    border-left: 5px solid rgb(209, 209, 209);
+    width: 100%;
     background-color: rgba(230, 230, 230, 0.364);
+
+    span {
+    text-align: left;
+    }
 }
 
 
 
 /* CAIXA DA COMISSÃO DO CLIENTE */
 .comissao_card {
-    border: 1px solid #D8D8D8;
-    background-color: white;
-    padding: 5px 7px;
-    color: #464646;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  padding: 16px 20px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  h4 {
+    text-align: left;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .h4 {
     display: flex;
-    justify-content: left;
-    align-items: left;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 0.5rem;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
 
-    h4 {
-        text-align: left;
+    i {
+      font-size: 18px;
+      color: #666;
+      transition: transform 0.2s, color 0.2s;
+      margin-left: 12px;
+
+      &:hover {
+        color: #007bff;
+        transform: scale(1.2) rotate(10deg);
+      }
     }
 
-    span {
-        font-weight: 450;
-        font-size: medium;
-        text-align: justify;
-        color: #464646;
+    .tooltip {
+      position: relative;
 
-    }
+      .tooltiptext {
+        visibility: hidden;
+        opacity: 0;
+        width: 140px;
+        background-color: #222;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 6px 8px;
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: opacity 0.3s ease;
+        font-size: 12px;
+        z-index: 10;
+      }
 
-    img {
-        display: flex;
-        justify-self: center;
-        align-self: center;
+      &:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+      }
     }
+  }
+
+  span {
+    font-weight: 500;
+    font-size: 15px;
+    color: #555;
+    margin-left: 6px;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-top: 8px;
+  }
 }
 
 .cancelar {
-    display: flex;
-    justify-self: center;
-    align-self: center;
-    border: 2px solid #C84545;
-    color: #C84545;
-    background-color: transparent;
-    padding: 10px 20px;
-    width: 100%;
-    font-size: 16px;
+  margin-top: 12px;
+  align-self: center;
+  border: 2px solid #e74c3c;
+  color: #e74c3c;
+  background-color: transparent;
+  padding: 10px 20px;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+  border: none;
+    background-color: #e74c3c;
+    color: white;
+  }
 }
 
-.cancelar:hover {
-    border: 2px solid #C84545;
-    background-color: #C84545;
-    color: white;
-}
 
 .aceitar {
     display: flex;
@@ -230,6 +308,39 @@ justify-content: center;
 }
 
 
+.mensagem_info {
+  font-size: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  animation: fadeInSlide 0.8s ease-in-out;
+
+  span {
+  color: #8683d2;
+  }
+
+  i {
+  color: #8683d2;
+    font-size: 1rem;
+  }
+
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
 
 /* MODAL */
 .modal_overlay {
@@ -253,15 +364,15 @@ justify-content: center;
     background-color: white;
     padding: 0.5rem 2rem 3rem 2rem;
     border-radius: 12px;
-    width: fit-content;
+    width: 40%;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 
-    span {
+    .fechar {
         text-align: right;
         font-size: 20px;
     }
 
-    span:hover {
+    .fechar:hover {
         color: red;
     }
 
@@ -275,7 +386,7 @@ justify-content: center;
 
     h4 {
         text-align: center;
-        padding-top: 1rem;
+        padding-top: 2rem;
         font-size: 15px;
     }
 }
@@ -285,16 +396,19 @@ justify-content: center;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    gap: 20px;
+    height: fit-content;
 
 }
 
 .mensagem {
-    width: 100%;
+    width: 70%;
+    height: 100%;
+    padding: 0 0 2.2rem 0;
 
     p {
         font-weight: 500;
         font-size: 15px;
+        margin-bottom: 5px;
     }
 
     span {
@@ -305,13 +419,13 @@ justify-content: center;
 }
 
 .valor {
-    width: fit-content;
+    width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
     gap: 60px;
-    padding: 30px 15px;
+    padding: 0 0 4rem 0;
     border-left: 1px solid gray;
 }
 
@@ -321,12 +435,13 @@ justify-content: center;
     justify-self: center;
     align-self: center;
     flex-direction: row;
-    gap: 1rem;
+    gap: 2rem;
     margin-top: 1rem;
     font-size: medium;
 
     button {
-        width: fit-content;
+        width: 30%;
+        height: 3rem;
 
         img {
             width: 30px;
@@ -399,12 +514,11 @@ justify-content: center;
     }
 }
 
-@media (max-width: 600px) {
-
-  .painelCliente_container {
-    flex-direction: column;
-    width: 95%;
-    gap: 1rem;
+@media screen and (max-width: 1650px) {
+  .painelArtista_container {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
   }
 
   .pedidos_card,
@@ -412,49 +526,58 @@ justify-content: center;
   .trabalhofinal_card,
   .conclusao_card,
   .historico_card {
-    margin: 2rem 0;
-    padding: 1rem;
+    min-width: 20%;
+    max-width: 10px;
+    flex-shrink: 0;
   }
-
-  .pedidos_card h2,
-  .pagamento_card h2,
-  .trabalhofinal_card h2,
-  .conclusao_card h2,
-  .historico_card h2 {
-    font-size: 18px;
-    padding: 10px;
-  }
-
-  .pedidos_card h3,
-  .pagamento_card h3,
-  .trabalhoFim_card h3,
-  .conclusao_card h3,
-  .historico_card h3 {
-    font-size: 16px;
-    padding: 8px;
-  }
-
-  .modal {
-    width: 90%;
-    padding: 1rem;
+}
+@media screen and (max-width: 1600px) {
+  .pedidos_card,
+  .pagamentos_card,
+  .trabalhofinal_card,
+  .conclusao_card,
+  .historico_card {
+    min-width: 25%;
+    max-width: 10px;
+    flex-shrink: 0;
   }
 }
 
-@media (max-width: 900px) {
+@media screen and (max-width: 1300px) {
+  .pedidos_card,
+  .pagamentos_card,
+  .trabalhofinal_card,
+  .conclusao_card,
+  .historico_card {
+    min-width: 30%;
+    max-width: 10px;
+    flex-shrink: 0;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .pedidos_card,
+  .pagamentos_card,
+  .trabalhofinal_card,
+  .conclusao_card,
+  .historico_card  {
+    min-width: 50%;
+    max-width: 200px;
+    flex-shrink: 0;
+  }
+}
+
+@media screen and (max-width: 200px) {
   .painelCliente_container {
     flex-direction: column;
-    width: 90%;
-    gap: 1.5rem;
+    align-items: center;
   }
 
-  .botoes {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  .modal {
-    width: 80%;
+  .pedidos_card,
+  .pagamentos_card,
+  .trabalhofinal_card,
+  .conclusao_card,
+  .historico_card  {
+    width: 90%;
   }
 }
-
-
 

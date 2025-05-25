@@ -1,12 +1,11 @@
 
-
 .containerMensagens {
   display: flex;
-  height: 80vh; /* Altura fixa */
-  max-height: 80vh; /* Garante que não ultrapasse */
+  height: 80vh;
+  min-height: 90vh;
   width: 100%;
   background-color: white;
-  overflow: hidden; /* Impede qualquer scroll aqui */
+  overflow: hidden;
 }
 
 .chatBox {
@@ -33,11 +32,10 @@ background-color: white;
 .mensagemCliente {
   align-self: flex-end;
   max-width: 70%;
-  background-color: gray;
-  color: #333;
+  background-color: #9e00e7;
+  color: white;
   padding: 10px 15px;
   border-radius: 18px 18px 0 18px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
 }
 
@@ -45,11 +43,10 @@ background-color: white;
 .mensagemArtista {
   align-self: flex-start;
   max-width: 70%;
-  background-color: #ffffff;
+  background-color: #9e00e70f;
   color: #6a1b9a;
   padding: 10px 15px;
   border-radius: 18px 18px 18px 0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
 }
 .inputBox {
@@ -114,48 +111,14 @@ background-color: white;
 }
 
 .solicitacaoInfo {
+  visibility: hidden;
+  display: none;
+
   background-color: #F1F1F1;
   padding: 12px;
   border-radius: 8px;
   margin-bottom: 16px;
   box-shadow: 0 6px 5px rgba(0, 0, 0, 0.11);
-}
-
-.cancel_btn {
-  background-color: #CA3333;
-}
-
-.portfolioPreviewDestaque {
-display: flex;
-flex-direction: column;
-  margin-top: 16px;
-  box-shadow: 0 6px 5px rgba(0, 0, 0, 0.11);
-
-  p {
-  color: #383838;
-  }
-
-  h4 {
-  background-color: #744909;
-  color: white;
-  width: fit-content;
-  padding: 0.5rem 1rem 0.2rem 1rem;
-  }
-}
-
-.imagensLinha {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 8px 0;
-}
-
-.imgPortfolio {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .mensagemEu {
   text-align: right;
@@ -177,4 +140,24 @@ flex-direction: column;
   max-width: 60%;
 }
 
+/* SCROLLBAR */
+.chatBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatBody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatBody::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 10px;
+}
+
+.chatBody::-webkit-scrollbar-thumb:hover {
+  background-color: #999;
+}
+.chatBody::-webkit-scrollbar-button {
+  display: none;
+}
 

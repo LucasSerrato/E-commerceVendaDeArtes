@@ -7,5 +7,4 @@ public enum ComissaoStatus {
     CONCLUIDA,
     FINALIZADA,
     CANCELADA,
-    RECUSADA
 }
