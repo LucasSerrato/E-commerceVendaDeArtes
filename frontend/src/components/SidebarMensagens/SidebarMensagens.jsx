@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './SidebarMensagens.module.css';
-import PerfilIcon from "../../assets/imgs/pro_icon.png";
 
 const cores = ['#FFB6C1', '#87CEFA', '#90EE90', '#FFD700', '#FFA07A'];
 

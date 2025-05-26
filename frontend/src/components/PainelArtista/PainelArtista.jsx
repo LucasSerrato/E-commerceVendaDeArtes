@@ -1,6 +1,6 @@
 import styles from "./PainelArtista.module.css";
 import UploadIcon from "../../assets/imgs/upload_icon.png";
-import ImgRef from "../../assets/imgs/back_illus.jpg";
+import ImgRef from "../../assets/imgs/illus_sky.jpg";
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
