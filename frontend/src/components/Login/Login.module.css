@@ -1,60 +1,58 @@
 .login_container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: white;
 }
 
 /* FORM DO LOGIN */
 .form_login {
-    margin-bottom: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    width: 40%;
-    height: 50%;
+  margin-bottom: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  width: 40%;
+  height: 50%;
 
-    input {
-        padding: 20px 30px;
-        width: 100%;
-        border: 2px solid #9E00E7;
-        border-radius: 50px;
+  input {
+    padding: 20px 30px;
+    width: 100%;
+    border: 2px solid #9e00e7;
+    border-radius: 50px;
+  }
 
-    }
+  h1 {
+    font-size: xx-large;
+    color: #580081;
+  }
 
-    h1 {
-        font-size: xx-large;
-        color: #580081;
-    }
-
-    a {
-        font-weight: bold;
-    }
+  a {
+    font-weight: bold;
+  }
 }
 
 .form_login input::placeholder {
-    color: #C66BF1;
+  color: #c66bf1;
 }
-
 
 /* BOTAO */
 .login_botao {
-    background-color: #65148B;
-    padding: 15px 30px;
-    width: 30%;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 18px;
-    box-shadow: 0 6px 5px rgba(0, 0, 0, 0.123);
+  background-color: #65148b;
+  padding: 15px 30px;
+  width: 30%;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 0 6px 5px rgba(0, 0, 0, 0.123);
 }
 
 .login_botao:hover {
-    border: 2px solid #65148B;
-    color: #65148B;
+  border: 2px solid #65148b;
+  color: #65148b;
 }

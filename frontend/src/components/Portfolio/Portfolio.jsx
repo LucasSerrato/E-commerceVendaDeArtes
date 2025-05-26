@@ -7,11 +7,12 @@ function Portfolio() {
   const { usuario } = useContext(AuthContext);
 
   const [imagemPerfil, setImagemPerfil] = useState(null);
+  const [portfolioCards, setPortfolioCards] = useState([]);
+  const [scrollIndex, setScrollIndex] = useState({});
+
   const [nome, setNome] = useState(usuario?.nome || "");
   const [bio, setBio] = useState(usuario?.bio || "");
   const [link, setLink] = useState(usuario?.link || "");
-  const [portfolioCards, setPortfolioCards] = useState([]);
-  const [scrollIndex, setScrollIndex] = useState({});
 
   // useRef para refs de imagens de cada card
   const imageRefs = useRef({});
@@ -22,7 +23,7 @@ function Portfolio() {
 
       try {
         const clienteResponse = await fetch(
-          `http://localhost:8080/api/clientes/email/${usuario.email}`,
+          `http://localhost:8080/api/clientes/email/${usuario.email}`
         );
         if (!clienteResponse.ok) throw new Error("Erro ao buscar cliente");
 
@@ -31,15 +32,15 @@ function Portfolio() {
 
         if (clienteData.imagem) {
           setImagemPerfil(
-            `http://localhost:8080/api/clientes/imagem/${clienteData.imagem}`,
+            `http://localhost:8080/api/clientes/imagem/${clienteData.imagem}`
           );
         } else {
-          // define uma imagem padrão ou deixa vazio
+          // define uma imagem padrão
           setImagemPerfil("/default-profile.png");
         }
 
         const portfolioResponse = await fetch(
-          `http://localhost:8080/api/portfolio/artista/${usuario.id}`,
+          `http://localhost:8080/api/portfolio/artista/${usuario.id}`
         );
         if (!portfolioResponse.ok) throw new Error("Erro ao buscar portfolios");
 
@@ -58,7 +59,7 @@ function Portfolio() {
         const cardsComImagens = await Promise.all(
           portfArray.map(async (p, index) => {
             const imgRes = await fetch(
-              `http://localhost:8080/api/portfolioimgs/portfolio/${p.id}`,
+              `http://localhost:8080/api/portfolioimgs/portfolio/${p.id}`
             );
             const imgs = imgRes.ok ? await imgRes.json() : [];
 
@@ -66,7 +67,7 @@ function Portfolio() {
 
             const imagens = imgs.map(
               (img) =>
-                `http://localhost:8080/api/portfolioimgs/imagem/${img.imagem}`,
+                `http://localhost:8080/api/portfolioimgs/imagem/${img.imagem}`
             );
 
             const key = `portfolio${index}`;
@@ -77,7 +78,7 @@ function Portfolio() {
               imagens,
               key,
             };
-          }),
+          })
         );
 
         setPortfolioCards(cardsComImagens);
@@ -99,8 +100,8 @@ function Portfolio() {
             ? current + 1
             : 0
           : current > 0
-            ? current - 1
-            : length - 1;
+          ? current - 1
+          : length - 1;
 
       return { ...prev, [key]: nextIndex };
     });

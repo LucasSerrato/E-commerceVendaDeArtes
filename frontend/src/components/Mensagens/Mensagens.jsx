@@ -11,6 +11,7 @@ const API = "http://localhost:8080";
 
 export default function Mensagens() {
   const { usuario } = useContext(AuthContext);
+
   /* ---------- states ---------- */
   const [conversas, setConversas] = useState([]);
   const [conversaAtivaId, setConversaAtivaId] = useState(null);
@@ -21,14 +22,33 @@ export default function Mensagens() {
   const [imagensDestaque, setImagensDestaque] = useState([]);
   const [enviando, setEnviando] = useState(false);
 
-
   const artista = usuario?.artista;
 
   const location = useLocation();
   const navigate = useNavigate();
   const bottomRef = useRef(null);
 
-  const comentarioId = parseInt(new URLSearchParams(location.search).get("id"), 10);
+  const getCorAleatoria = (id: number) => {
+    const cores = [
+      "#FFB6C1",
+      "#87CEFA",
+      "#90EE90",
+      "#FFD700",
+      "#FFA07A",
+      "pink",
+      "violet",
+      "brown",
+      "blue",
+      "yellow",
+      "purple",
+    ];
+    return cores[id % cores.length];
+  };
+
+  const comentarioId = parseInt(
+    new URLSearchParams(location.search).get("id"),
+    10
+  );
   const meuId = usuario?.id;
 
   const mapMensagemParaAutor = (msg) => {
@@ -41,41 +61,45 @@ export default function Mensagens() {
   };
 
   const handleSelecionarConversa = (id) => {
-      setConversaAtivaId(id);
-      navigate(`/mensagens?id=${id}`); // Atualiza a URL para refletir a conversa ativa
-    };
+    setConversaAtivaId(id);
+    navigate(`/mensagens?id=${id}`);
+  };
 
-const handleCancelarSolicitacao = async () => {
-  if (!conversaAtivaId) return;
+  const handleCancelarSolicitacao = async () => {
+    if (!conversaAtivaId) return;
 
-  const confirmar = window.confirm("Tem certeza que deseja cancelar a solicitação e apagar a conversa?");
-  if (!confirmar) return;
+    const confirmar = window.confirm(
+      "Tem certeza que deseja cancelar a solicitação e apagar a conversa?"
+    );
+    if (!confirmar) return;
 
-  try {
-    const res = await fetch(`${API}/api/mensagemchat/conversa/${conversaAtivaId}`, {
-      method: "DELETE"
-    });
+    try {
+      const res = await fetch(
+        `${API}/api/mensagemchat/conversa/${conversaAtivaId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
-    if (!res.ok) throw new Error("Erro ao deletar a conversa");
+      if (!res.ok) throw new Error("Erro ao deletar a conversa");
 
-    // Limpa o estado
-    setMensagens([]);
-    setConversaAtivaId(null);
-    setSolicitacaoCliente(null);
+      setMensagens([]);
+      setConversaAtivaId(null);
+      setSolicitacaoCliente(null);
 
-    // Atualiza a lista de conversas
-    const novasConversas = conversas.filter(c => c.id !== conversaAtivaId);
-    setConversas(novasConversas);
+      // Atualiza a lista de conversas
+      const novasConversas = conversas.filter((c) => c.id !== conversaAtivaId);
+      setConversas(novasConversas);
 
-    navigate("/mensagens");
-  } catch (err) {
-    console.error(err);
-    alert("Erro ao cancelar a solicitação.");
-  }
-};
+      navigate("/mensagens");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao cancelar a solicitação.");
+    }
+  };
 
-
-useEffect(() => {
+  /* ---------- effects ---------- */
+  useEffect(() => {
     const params = new URLSearchParams(location.search);
     const id = parseInt(params.get("id"), 10);
     if (id && conversaAtivaId !== id) {
@@ -83,7 +107,6 @@ useEffect(() => {
     }
   }, [location.search, conversaAtivaId]);
 
-  /* ---------- effects ---------- */
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const id = parseInt(params.get("id"), 10);
@@ -103,9 +126,8 @@ useEffect(() => {
         setSolicitacaoCliente({
           nomeUsuario: data.cliente.nome,
           descricao: data.descricao,
-          clienteId: data.cliente.id
+          clienteId: data.cliente.id,
         });
-
       } catch (err) {
         console.error(err);
       }
@@ -137,9 +159,9 @@ useEffect(() => {
   const isImagem = (texto) =>
     typeof texto === "string" &&
     (texto.endsWith(".jpg") ||
-     texto.endsWith(".jpeg") ||
-     texto.endsWith(".png") ||
-     texto.endsWith(".webp"));
+      texto.endsWith(".jpeg") ||
+      texto.endsWith(".png") ||
+      texto.endsWith(".webp"));
 
   const buscarMensagens = async (idConversa) => {
     try {
@@ -152,6 +174,8 @@ useEffect(() => {
           id: msg.id,
           texto: msg.imagem ?? msg.mensagem,
           autor: msg.remetente.id === meuId ? "eu" : "outro",
+          remetenteNome: msg.remetente.nome,
+          dataEnvio: msg.dataEnvio,
         }))
       );
     } catch (err) {
@@ -177,8 +201,8 @@ useEffect(() => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             usuario1Id: meuId,
-            usuario2Id: solicitacaoCliente.clienteId
-          })
+            usuario2Id: solicitacaoCliente.clienteId,
+          }),
         });
 
         if (!resConversa.ok) throw new Error("Falha ao criar conversa");
@@ -219,9 +243,7 @@ useEffect(() => {
       setNovaMensagem("");
       await buscarMensagens(conversaId);
 
-
       await buscarMensagens(conversaId);
-
     } catch (err) {
       console.error("Erro detalhado:", err);
       alert(`Erro ao enviar mensagem: ${err.message}`);
@@ -248,8 +270,8 @@ useEffect(() => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             usuario1Id: meuId,
-            usuario2Id: solicitacaoCliente.clienteId
-          })
+            usuario2Id: solicitacaoCliente.clienteId,
+          }),
         });
 
         if (!resConversa.ok) throw new Error("Falha ao criar conversa");
@@ -294,7 +316,6 @@ useEffect(() => {
           autor: mapMensagemParaAutor({ remetente: { id: meuId } }),
         },
       ]);
-
     } catch (err) {
       console.error(err);
       alert("Erro ao enviar imagem.");
@@ -310,7 +331,6 @@ useEffect(() => {
       enviarMensagem();
     }
   };
-
 
   /* ---------- polling a cada 3s ---------- */
   useEffect(() => {
@@ -332,64 +352,110 @@ useEffect(() => {
     <div className={styles.containerMensagens}>
       <SidebarMensagens
         conversas={conversas}
-                onSelecionarConversa={handleSelecionarConversa}
-                conversaAtivaId={conversaAtivaId}
+        onSelecionarConversa={handleSelecionarConversa}
+        conversaAtivaId={conversaAtivaId}
       />
 
       <div className={styles.chatBox}>
         {conversaAtivaId ? (
           <>
+            {conversas.length > 0 &&
+              conversaAtivaId &&
+              (() => {
+                const conversaAtual = conversas.find(
+                  (c) => c.conversaId === conversaAtivaId
+                );
+                if (!conversaAtual) return null;
+
+                const ehArtista = conversaAtual.tipoOutroUsuario === "ARTISTA";
+                const temImagem = conversaAtual.imagemOutroUsuario;
+                const imagemUrl = ehArtista
+                  ? `http://localhost:8080/uploads/portfolio/${conversaAtual.imagemOutroUsuario}`
+                  : `http://localhost:8080/api/clientes/imagem/${conversaAtual.imagemOutroUsuario}`;
+                const corFundo = getCorAleatoria(conversaAtual.idOutroUsuario);
+
+                return (
+                  <div className={styles.navTopo}>
+                    {temImagem ? (
+                      <img
+                        src={imagemUrl}
+                        alt={conversaAtual.nomeOutroUsuario}
+                        className={styles.avatarNav}
+                      />
+                    ) : (
+                      <div
+                        className={styles.avatarClienteNav}
+                        style={{ backgroundColor: corFundo }}
+                      >
+                        {conversaAtual.nomeOutroUsuario.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <span className={styles.nomeNav}>
+                      {conversaAtual.nomeOutroUsuario}
+                    </span>
+                  </div>
+                );
+              })()}
+
             <div className={styles.chatBody}>
               <section className={styles.reply_container}>
-
-
                 {solicitacaoCliente && (
                   <div className={styles.solicitacaoInfo}>
                     <h4>{solicitacaoCliente.nomeUsuario}</h4>
                     <p>{solicitacaoCliente.descricao}</p>
-                    <button className={styles.cancel_btn} onClick={handleCancelarSolicitacao}>
+                    <button
+                      className={styles.cancel_btn}
+                      onClick={handleCancelarSolicitacao}
+                    >
                       Cancelar solicitação
                     </button>
                   </div>
                 )}
               </section>
 
-             {mensagens.map((msg) => {
+              {mensagens.map((msg) => {
+                const ehRemetente =
+                  (artista && msg.autor === "eu") ||
+                  (!artista && msg.autor !== "eu");
 
-               const ehRemetente = (artista && msg.autor === "eu") || (!artista && msg.autor !== "eu");
+                return (
+                  <div
+                    key={msg.id}
+                    className={
+                      ehRemetente
+                        ? styles.mensagemArtista
+                        : styles.mensagemCliente
+                    }
+                  >
+                    <div className={styles.mensagemHeader}>
+                      <strong className={styles.remetenteNome}>
+                        {msg.remetenteNome}
+                      </strong>
+                      <span className={styles.timestamp}>
+                        {new Date(msg.dataEnvio).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
 
-               return (
-                 <div
-                   key={msg.id}
-                   className={ehRemetente ? styles.mensagemArtista : styles.mensagemCliente}
-                 >
-                   {isImagem(msg.texto) ? (
-                     <img
-                       src={`${API}/uploads/mensagens/${msg.texto}`}
-                       alt="Imagem enviada"
-                       style={{ maxWidth: "200px", borderRadius: "10px" }}
-                     />
-                   ) : (
-                     <p>{msg.texto}</p>
-                   )}
-                 </div>
-               );
-             })}
+                    {isImagem(msg.texto) ? (
+                      <img
+                        src={`${API}/uploads/mensagens/${msg.texto}`}
+                        alt="Imagem enviada"
+                        style={{ maxWidth: "200px", borderRadius: "10px" }}
+                      />
+                    ) : (
+                      <p>{msg.texto}</p>
+                    )}
+                  </div>
+                );
+              })}
 
               <div ref={bottomRef} />
             </div>
 
             <div className={styles.inputBox}>
-              <label className={styles.clipIcon}>
-                <i className="fa-solid fa-paperclip"></i>
-                <input
-                  type="file"
-                  onChange={handleUploadImagem}
-                  style={{ display: "none" }}
-                  disabled={enviando}
-                />
-              </label>
-
               <input
                 type="text"
                 value={novaMensagem}
@@ -398,14 +464,25 @@ useEffect(() => {
                 placeholder="Enviar mensagem..."
                 disabled={enviando}
               />
+              <div className={styles.icons}>
+                <label className={styles.clipIcon}>
+                  <i class="fa-solid fa-camera"></i>
+                  <input
+                    type="file"
+                    onChange={handleUploadImagem}
+                    style={{ display: "none" }}
+                    disabled={enviando}
+                  />
+                </label>
 
-              <button onClick={enviarMensagem} disabled={enviando}>
-                {enviando ? (
-                  <i className="fas fa-spinner fa-spin"></i>
-                ) : (
-                  <i className="fas fa-location-arrow"></i>
-                )}
-              </button>
+                <button onClick={enviarMensagem} disabled={enviando}>
+                  {enviando ? (
+                    <i className="fas fa-spinner fa-spin"></i>
+                  ) : (
+                    <p>&#10148;</p>
+                  )}
+                </button>
+              </div>
             </div>
           </>
         ) : (

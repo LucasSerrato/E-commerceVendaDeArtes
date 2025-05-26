@@ -8,7 +8,7 @@
 }
 
 .mensagens {
-  color: #B742ED;
+  color: #b742ed;
   text-align: center;
   padding: 1rem 0;
   font-weight: 400;
@@ -33,12 +33,11 @@
 .conversa p {
   margin-left: 12px;
   font-weight: 500;
-  color: #4D4D4D;
+  color: #4d4d4d;
   font-size: 1rem;
   font-family: "Afacad", sans-serif;
   white-space: nowrap;
 }
-
 
 .avatar {
   width: 42px;
@@ -65,9 +64,18 @@
 }
 
 .ativa {
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
 }
-.avatar, .avatarCliente {
+.avatar,
+.avatarCliente {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.ultimaMensagem {
+  font-size: 0.9em;
+  color: #888;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}

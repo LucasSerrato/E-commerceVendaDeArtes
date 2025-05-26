@@ -10,19 +10,21 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 function Navbar() {
-  const location = useLocation();
-  const navigate = useNavigate();
   const { logado, logout, usuario } = useContext(AuthContext);
   const role = usuario?.role || "usuario";
-  const [open, setOpen] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const menuRef = useRef();
+  const [open, setOpen] = useState(false);
   const [clientColor, setClientColor] = useState("");
   const [imagemPerfil, setImagemPerfil] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (role === "cliente") {
-      // Gerar uma vez por sessão
+      // gerar cor uma vez por sessão
       const storedColor = sessionStorage.getItem("clientColor");
       if (storedColor) {
         setClientColor(storedColor);
@@ -270,7 +272,7 @@ function Navbar() {
                           navigate("/");
                           setTimeout(() => {
                             window.location.reload();
-                          }); // espera 100ms após a navegação para recarregar
+                          });
                         }, 600);
                       }}
                     >

@@ -13,11 +13,11 @@
 }
 
 .container {
-margin-top: 3rem;
-width: 40%;
-display: flex;
-justify-self: center;
-flex-direction: column;
+  margin-top: 3rem;
+  width: 40%;
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
 }
 
 .termos_container p,
@@ -49,9 +49,9 @@ flex-direction: column;
 }
 
 .bem_vindo {
-text-align: center;
-margin-bottom: 5rem;
-font-weight: 400;
+  text-align: center;
+  margin-bottom: 5rem;
+  font-weight: 400;
 }
 .termos_container ul,
 .politicas_container ul {
@@ -63,6 +63,3 @@ font-weight: 400;
 .politicas_container li {
   margin-bottom: 0.5rem;
 }
-
-
-

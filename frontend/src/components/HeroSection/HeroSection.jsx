@@ -1,10 +1,11 @@
+import styles from "./HeroSection.module.css";
 import React, { useState } from "react";
-import styles from './HeroSection.module.css';
 import { useNavigate } from "react-router-dom";
 
 function HeroSection() {
-  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
@@ -13,7 +14,7 @@ function HeroSection() {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
@@ -34,7 +35,7 @@ function HeroSection() {
 
       <button
         className={styles.button}
-        onClick={() => navigate('/artistas_clientes')}
+        onClick={() => navigate("/artistas_clientes")}
       >
         Descubra artistas
       </button>
@@ -43,4 +44,3 @@ function HeroSection() {
 }
 
 export default HeroSection;
-

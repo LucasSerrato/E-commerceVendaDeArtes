@@ -1,19 +1,19 @@
 .caixa {
-    background-color: white;
-    height: fit-content;
-    margin-top: 0;
+  background-color: white;
+  height: fit-content;
+  min-height: 100vh;
+  margin-top: 0;
 }
 
 .painelArtista_container {
-    display: flex;
-    align-self: center;
-    justify-self: center;
-    flex-direction: row;
-    gap: 10px;
-    width: 85%;
-    background-color: transparent;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  flex-direction: row;
+  gap: 10px;
+  width: 85%;
+  background-color: transparent;
 }
-
 
 .painelArtista_container::-webkit-scrollbar {
   height: 10px;
@@ -34,81 +34,77 @@
 .trabalhoFim_card,
 .conclusao_card,
 .concluidos_card {
-    margin: 10rem 0 10rem 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  margin: 10rem 0 10rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 10px;
+  padding: 0;
+  height: fit-content;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.093);
+  background-color: transparent;
+
+  h2 {
+    margin-top: 0;
+    padding: 5px 50px;
+    border-radius: 10px 10px 0 0;
     width: 100%;
-    border-radius: 10px;
-    padding: 0;
+    margin-top: 0;
+    text-align: center;
+    color: white;
+    font-weight: 500;
+  }
+
+  h3 {
+    margin-top: 1rem;
+    background-color: rgb(255, 255, 255);
+    padding: 5px 10px 5px 10px;
     height: fit-content;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.093);
-    background-color: transparent;
+    font-weight: 600;
+    font-size: 17px;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.67);
+    border-bottom: 1px solid #b1b1b163;
+    border-top: 1px solid #b1b1b163;
+    width: 90%;
+  }
 
-    h2 {
-        margin-top: 0;
-        padding: 5px 50px;
-        border-radius: 10px 10px 0 0;
-        width: 100%;
-        margin-top: 0;
-        text-align: center;
-        color: white;
-        font-weight: 500;
-    }
-
-    h3 {
-        margin-top: 1rem;
-        background-color: rgb(255, 255, 255);
-        padding: 5px 10px 5px 10px;
-        height: fit-content;
-        font-weight: 600;
-        font-size: 17px;
-        text-align: left;
-        color: rgba(0, 0, 0, 0.67);
-        border-bottom: 1px solid #b1b1b163;
-        border-top: 1px solid #b1b1b163;
-        width: 90%;
-    }
-
-    span {
-        padding: 10px 10px 0 10px;
-        text-align: center;
-        color: #666666;
-    }
-
+  span {
+    padding: 10px 10px 0 10px;
+    text-align: center;
+    color: #666666;
+  }
 }
 
 .pedidos_card h2 {
-    background-color: #FA5D5D;
+  background-color: #fa5d5d;
 }
 
 .pagamento_card h2 {
-    background-color: #87D283;
+  background-color: #87d283;
 }
 
 .trabalhoFim_card h2 {
-    background-color: #8583D2;
+  background-color: #8583d2;
 }
 
 .concluidos_card h2 {
-    background-color: #D2B183;
+  background-color: #d2b183;
 }
 
 .conclusao_card h2 {
-    background-color: #83AED2;
+  background-color: #83aed2;
 }
-
-
 
 /* CAIXA CINZA QUE APARECE AS INFORMAÇÕES DENTRO DO PAINEL */
 .card_caixa {
-    padding: 5px;
-    margin: 10px;
-    width: 100%;
-    background-color: rgba(230, 230, 230, 0.364);
+  padding: 5px;
+  margin: 10px;
+  width: 100%;
+  background-color: rgba(230, 230, 230, 0.364);
 }
-
 
 /* BOTAO DE UPLOAD */
 .uploadBox {
@@ -142,8 +138,8 @@
 }
 
 .botao_cancelar {
-  background-color: #C84545;
-  border: 2px solid #C84545;
+  background-color: #c84545;
+  border: 2px solid #c84545;
   color: white;
   border-radius: 100%;
   padding: 12px;
@@ -159,13 +155,13 @@
 .botao_cancelar:hover {
   background-color: white;
   transform: scale(1.1);
-  color: #C84545;
-  border-color: #C84545;
+  color: #c84545;
+  border-color: #c84545;
 }
 
 .botao_enviar {
-  background-color: #3BB60F;
-  border: 2px solid #3BB60F;
+  background-color: #3bb60f;
+  border: 2px solid #3bb60f;
   color: white;
   border-radius: 100%;
   padding: 12px;
@@ -181,8 +177,8 @@
 .botao_enviar:hover {
   background-color: white;
   transform: scale(1.1);
-  color: #3BB60F;
-  border-color: #3BB60F;
+  color: #3bb60f;
+  border-color: #3bb60f;
 }
 
 /* PREVIEW DA IMAGEM SELECIONADA */
@@ -226,26 +222,26 @@
   height: 100px;
   object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 /* BOTAO MARCAR COMO ENTREGUE */
 .botao_arte_final {
-background-color: #177fb3;
+  background-color: #177fb3;
   font-size: 14px;
   padding: 0.8rem 1rem;
   width: 100%;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(171, 112, 255, 0.3);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(171, 112, 255, 0.3);
 }
 
 .botao_arte_final i {
@@ -256,19 +252,18 @@ background-color: #177fb3;
   transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(171, 112, 255, 0.5);
   border: 1px solid #177fb3;
-    color: #177fb3;
+  color: #177fb3;
 }
 
 /* AVISO DE AGUARDA APROVACAO DO CLI */
 .aprovacaoAviso {
-  color: #83AED2;
+  color: #83aed2;
   font-weight: 500;
   font-size: 1rem;
   margin-top: 12px;
   text-align: center;
   letter-spacing: 0.3px;
 }
-
 
 /* CAIXA DA COMISSÃO DO CLIENTE */
 .comissao_card {
@@ -359,52 +354,51 @@ background-color: #177fb3;
   }
 }
 
-
 /* ACEITAR CANCELAR BUTTON */
 .botoes {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 20px;
-    background-color: white;
-    padding: 5px 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+  background-color: white;
+  padding: 5px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .aceitar {
-    border: 2px solid #3BB60F;
-    background-color: #3BB60F;
-    color: white;
-    border-radius: 100%;
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-    font-weight: bolder;
+  border: 2px solid #3bb60f;
+  background-color: #3bb60f;
+  color: white;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bolder;
 }
 
 .aceitar:hover {
-    border: 2px solid #3BB60F;
-    background-color: white;
-    color: #3BB60F;
+  border: 2px solid #3bb60f;
+  background-color: white;
+  color: #3bb60f;
 }
 
 .recusar {
-    border: 2px solid #C84545;
-    color: #C84545;
-    border-radius: 100%;
-    background-color: transparent;
-    font-size: 20px;
-    font-weight: bolder;
-    width: 50px;
-    height: 50px;
+  border: 2px solid #c84545;
+  color: #c84545;
+  border-radius: 100%;
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: bolder;
+  width: 50px;
+  height: 50px;
 }
 
 .recusar:hover {
-    border: 2px solid #C84545;
-    background-color: #C84545;
-    color: white;
+  border: 2px solid #c84545;
+  background-color: #c84545;
+  color: white;
 }
 
 .cancelar {
@@ -421,7 +415,7 @@ background-color: #177fb3;
   transition: background-color 0.3s, color 0.3s;
 
   &:hover {
-  border: none;
+    border: none;
     background-color: #e74c3c;
     color: white;
   }
@@ -429,25 +423,25 @@ background-color: #177fb3;
 
 /* AÇAO DO BOTAO */
 .tip {
-      position: relative;
+  position: relative;
 
-      .tiptext {
-        visibility: hidden;
-        opacity: 0;
-        width: fit-content;
-        background-color: white;
-        color: black;
-        text-align: center;
-        border-radius: 6px;
-        padding: 6px 8px;
-        position: absolute;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        transition: opacity 0.3s ease;
-        font-size: 12px;
-        z-index: 10;
-      }
+  .tiptext {
+    visibility: hidden;
+    opacity: 0;
+    width: fit-content;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px 8px;
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease;
+    font-size: 12px;
+    z-index: 10;
+  }
 }
 .tip:hover .tiptext {
   visibility: visible;
@@ -456,172 +450,177 @@ background-color: #177fb3;
 
 /* MODAL */
 .modal_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
 .modal {
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  flex-direction: column;
+  background-color: white;
+  padding: 0.5rem 2rem 3rem 2rem;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  span {
+    text-align: right;
+    font-size: 20px;
+  }
+
+  span:hover {
+    color: red;
+  }
+
+  .h3 {
     display: flex;
-    justify-content: right;
-    align-items: right;
-    flex-direction: column;
-    background-color: white;
-    padding: 0.5rem 2rem 3rem 2rem;
-    border-radius: 12px;
-    width: 400px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 7.5rem;
+    margin-top: 1rem;
+  }
 
-    span {
-        text-align: right;
-        font-size: 20px;
-    }
+  h3 {
+    font-size: 25px;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
 
-    span:hover {
-        color: red;
-    }
-
-    .h3 {
-    display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: row;
-        gap: 7.5rem;
-        margin-top: 1rem;
-    }
-
-    h3 {
-        font-size: 25px;
-        margin-bottom: 1rem;
-        font-weight: 500;
-    }
-
-    p {
-     color: #4d4d4d;
-        font-weight: 400;
-        font-size: 15px;
-        width: 100%;
-        text-align: left;
-        margin-top: 1rem;
-    }
+  p {
+    color: #4d4d4d;
+    font-weight: 400;
+    font-size: 15px;
+    width: 100%;
+    text-align: left;
+    margin-top: 1rem;
+  }
 }
 
 .form_modal {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 1rem;
 
-     label {
-        color: #4d4d4d;
-        font-size: 15px;
-        font-weight: 450;
-    }
+  label {
+    color: #4d4d4d;
+    font-size: 15px;
+    font-weight: 450;
+  }
 
-    input {
-        padding: 13px;
-          border: 1px solid #ccc;
-           border-radius: 0.7rem;
-    }
+  input {
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 0.7rem;
+  }
 
-    textarea {
-        padding: 0.5rem 0.5rem 5rem 0.5rem;
-        border: 1px solid #ccc;
-        border-radius: 0.7rem;
-                width: 100%
-
-    }
+  textarea {
+    padding: 0.5rem 0.5rem 5rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.7rem;
+    width: 100%;
+  }
 }
 
 .label {
-    display: flex-start;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid #C8C8C8;
-            padding-bottom: 2rem;
-
+  display: flex-start;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #c8c8c8;
+  padding-bottom: 2rem;
 }
 
-
 .modal button {
-    background-color: #9E00E7;
-    display: flex;
-    justify-self: center;
-    align-self: center;
-    margin-top: 1rem;
-    font-size: medium;
-    width: 50%;
+  background-color: #9e00e7;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin-top: 1rem;
+  font-size: medium;
+  width: 50%;
 }
 
 .modal button:hover {
-    background-color: white;
-    color: #9E00E7;
-    border: 2px solid #9E00E7;
+  background-color: white;
+  color: #9e00e7;
+  border: 2px solid #9e00e7;
 }
 
 .notificacao {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    z-index: 0;
-    font-weight: 500;
-    animation: aparecerDesaparecer 4s ease-in-out;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 0;
+  font-weight: 500;
+  animation: aparecerDesaparecer 4s ease-in-out;
 }
 
 @keyframes aparecerDesaparecer {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    10% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    90% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 }
 
 .pagamento_notif {
   display: flex;
   align-items: center;
   font-size: 14px;
-  color:  #87D283;
+  color: #87d283;
 }
 
 .dot {
   width: 1px;
   height: 1px;
-  background-color:  #87D283;
+  background-color: #87d283;
   border-radius: 100%;
   margin-right: 9px;
   animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.8; }
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
 }
-
 
 .alertaQuantidade {
   background-color: #fff3cd;

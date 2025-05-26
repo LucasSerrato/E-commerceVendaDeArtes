@@ -1,62 +1,62 @@
 .footer {
-    background-color: #a000f0;
-    color: white;
-    padding: 30px 20px;
-    font-family: Arial, sans-serif;
+  background-color: #a000f0;
+  color: white;
+  padding: 30px 20px;
+  font-family: Arial, sans-serif;
 }
 
 .footerContainer {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 90%;
-    margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .footerSection {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .footerSection h4 {
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .footerSection ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footerSection ul li {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .footerSection ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
 }
 
 .footerSection ul li a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .socialIcons {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .socialIcons img {
-    width: 28px;
-    height: 28px;
-    margin-right: 10px;
-    cursor: pointer;
-    transition: transform 0.2s;
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 .socialIcons img:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 .whiteIcon {
   filter: invert(1) brightness(2);
@@ -67,96 +67,32 @@
   filter: invert(0.7) brightness(2.5);
 }
 
-
 .footerCopy {
-    text-align: center;
-    width: 100%;
-    display: block;
-    margin-top: 30px;
-    font-size: 13px;
-    font-style: italic;
-    color: white;
+  text-align: center;
+  width: 100%;
+  display: block;
+  margin-top: 30px;
+  font-size: 13px;
+  font-style: italic;
+  color: white;
 }
-
-
-/* ======== NAVBAR (TOPO) ADICIONADO AO Footer.module.css ======== */
-
-.navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-}
-
-.logo {
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.buttons {
-    display: flex;
-    gap: 15px;
-}
-
-.buttons a {
-    text-decoration: none;
-}
-
-.loginButton {
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.loginButton:hover {
-    background-color: white;
-    color: #a000f0;
-}
-
-.registerButton {
-    background-color: #9b30ff;
-    color: white;
-    border: 2px solid white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.registerButton:hover {
-    background-color: white;
-    color: #9b30ff;
-}
-
-/* ======== ANIMAÇÃO GERAL DO FOOTER ======== */
 
 .footerSection a,
 .footerCopy,
 .footer h4 {
-    transition: transform 0.2s ease, color 0.2s ease;
-    display: inline-block;
-    will-change: transform;
+  transition: transform 0.2s ease, color 0.2s ease;
+  display: inline-block;
+  will-change: transform;
 }
 
 .footerCopy {
-font-size: 1rem;
-text-align: left;
+  font-size: 1rem;
+  text-align: left;
 }
 .footerSection a:hover,
 .footerCopy:hover,
 .footer h4:hover {
-    transform: scale(1.1);
-    color: #9b30ff;
-    cursor: pointer;
+  transform: scale(1.1);
+  color: #9b30ff;
+  cursor: pointer;
 }

@@ -30,7 +30,7 @@
 
 /* CAMPO EDITAR */
 .editar_card {
-width: 100%;
+  width: 100%;
   margin-top: 2rem;
   display: flex;
   justify-content: center;
@@ -114,9 +114,9 @@ width: 100%;
     text-align: left;
     margin-bottom: 2rem;
     color: #4d4d4d;
-      font-weight: 500;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 0.5rem;
+    font-weight: 500;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
   }
 }
 
@@ -131,15 +131,15 @@ width: 100%;
 .label {
   text-align: left;
   color: #4d4d4d;
-        font-size: 13px;
+  font-size: 13px;
 }
 
 .input {
   width: 100%;
   margin-bottom: 1rem;
   padding: 10px;
-    border: 1px solid #ccc;
-     border-radius: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 0.7rem;
 }
 
 .textarea {
@@ -149,25 +149,24 @@ width: 100%;
   margin-bottom: 15px;
   padding: 10px;
   padding: 10px;
-    border: 1px solid #ccc;
-     border-radius: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 0.7rem;
   resize: none;
   margin-bottom: 1rem;
 }
 
 .bio_btn {
-display: flex;
-justify-self: center;
+  display: flex;
+  justify-self: center;
   background-color: #177fb3;
-    font-size: 14px;
-    padding: 0.8rem 2rem;
-    width: 50%
+  font-size: 14px;
+  padding: 0.8rem 2rem;
+  width: 50%;
 }
 .bio_btn:hover {
-border: 1px solid #177fb3;
+  border: 1px solid #177fb3;
   color: #177fb3;
 }
-
 
 /* MODAL DELETE  */
 .delete_modal {

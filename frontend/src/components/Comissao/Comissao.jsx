@@ -83,7 +83,7 @@ function Comissao() {
     setImage(null);
   };
 
-  // Envia o formulário para o backend com multipart/form-data
+  // Envia o formulário para o backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -100,7 +100,7 @@ function Comissao() {
     const formData = new FormData();
     formData.append("nomeUsuario", nomeUsuario);
     formData.append("descricao", descricao);
-    formData.append("mensagem", descricao); // mensagem igual à descrição
+    formData.append("mensagem", descricao);
     formData.append("imagem", image.file);
     formData.append("portfolioId", id);
     formData.append("clienteId", clienteId);

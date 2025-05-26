@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo } from "react";
 
 function VerArte() {
   const { id: artistaId } = useParams();
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const selectedPortfolioId = queryParams.get("portfolio");

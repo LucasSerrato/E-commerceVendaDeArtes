@@ -1,13 +1,15 @@
 import styles from "./Post.module.css";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-import { AuthContext } from "../../context/AuthContext"; // ajuste o caminho se necessário
 
 function Post() {
+  const { usuario } = useContext(AuthContext);
+
   const [descricao, setDescricao] = useState("");
   const [image, setImage] = useState(null);
-  const { usuario } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const handleFileChange = (files) => {
@@ -31,7 +33,6 @@ function Post() {
         return;
       }
 
-      // 1. Enviar texto do comentário com cliente
       const comentarioResponse = await axios.post(
         "http://localhost:8080/api/comentariocli",
         {
@@ -44,7 +45,7 @@ function Post() {
 
       const comentarioId = comentarioResponse.data.id;
 
-      // 2. Enviar imagem (se houver)
+      //Enviar imagem
       if (image && image.file) {
         const formData = new FormData();
         formData.append("imagem", image.file);

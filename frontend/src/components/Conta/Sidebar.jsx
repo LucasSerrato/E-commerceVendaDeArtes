@@ -75,7 +75,7 @@ function Sidebar({ role }) {
                 <i className={`${icon}`}></i>
                 {label}
               </NavLink>
-            ),
+            )
           )}
         </nav>
       </aside>

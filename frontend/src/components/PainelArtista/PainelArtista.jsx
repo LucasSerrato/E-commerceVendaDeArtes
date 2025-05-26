@@ -7,21 +7,23 @@ import { useNavigate } from "react-router-dom";
 
 function PainelArtista() {
   const { usuario } = useContext(AuthContext); // artista logado
+
+  const navigate = useNavigate();
+
   const [showModal, setShowModal] = useState(false);
   const [pedidos, setPedidos] = useState([]); // lista de pedidos do backend
-  const pedidosPendentes = pedidos.filter((p) => p.status === "PENDENTE");
   const [pedidoAtivoIndex, setPedidoAtivoIndex] = useState(0); // controle do pedido ativo
   const [showNotificacao, setShowNotificacao] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [valor, setValor] = useState("");
   const fileInputRef = useRef(null);
-
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const [imagemPreview, setImagemPreview] = useState(null);
   const [imagensPainelMap, setImagensPainelMap] = useState({});
 
-  const navigate = useNavigate();
+  const pedidosPendentes = pedidos.filter((p) => p.status === "PENDENTE");
 
+  // enviar mensagem
   const enviarMensagemAceite = async ({
     idComissao,
     clienteId,
@@ -69,13 +71,13 @@ function PainelArtista() {
 
     fetch(`http://localhost:8080/api/comissoes/artista/${usuario.id}`)
       .then((res) => {
-        if (res.status === 204) return []; // nenhum pedido
+        if (res.status === 204) return [];
         if (!res.ok) throw new Error("Erro ao carregar pedidos");
         return res.json();
       })
       .then((data) => {
         setPedidos(data);
-        setPedidoAtivoIndex(0); // volta para o primeiro pedido
+        setPedidoAtivoIndex(0);
       })
       .catch((err) => console.error(err));
   }, [usuario]);
@@ -89,7 +91,7 @@ function PainelArtista() {
     if (!file) return;
 
     setImagemSelecionada(file);
-    setImagemPreview(URL.createObjectURL(file)); // Para preview
+    setImagemPreview(URL.createObjectURL(file));
   };
 
   const handleEnviarImagem = async () => {
@@ -199,7 +201,6 @@ function PainelArtista() {
           if (!res.ok) throw new Error("Erro ao atualizar lista");
           const data = await res.json();
 
-          // Opcional: normaliza o status igual no cliente
           const normalizados = data.map((c) => ({
             ...c,
             status: c.status?.toUpperCase().trim(),
@@ -260,7 +261,7 @@ function PainelArtista() {
       );
       if (resAtualizado.ok) {
         const dataAtualizada = await resAtualizado.json();
-        setPedidos(dataAtualizada); // ✅ atualiza com tudo do backend
+        setPedidos(dataAtualizada);
         setPedidoAtivoIndex(0);
       }
 
@@ -347,7 +348,6 @@ function PainelArtista() {
                     pedidoAtivo.clienteNome ||
                     "Cliente"}
 
-                  {/* passo 3 - colocar onClick no ícone */}
                   <span
                     className={styles.tooltip}
                     onClick={() =>
@@ -435,7 +435,6 @@ function PainelArtista() {
                   <h4 className={styles.h4}>
                     {p.nomeUsuario || "Cliente"}
 
-                    {/* passo 3 - colocar onClick no ícone */}
                     <span
                       className={styles.tooltip}
                       onClick={() =>
@@ -495,7 +494,6 @@ function PainelArtista() {
                   <h4 className={styles.h4}>
                     {p.nomeUsuario || "Cliente"}
 
-                    {/* passo 3 - colocar onClick no ícone */}
                     <span
                       className={styles.tooltip}
                       onClick={() =>
@@ -602,11 +600,12 @@ function PainelArtista() {
               .filter((p) => p.status === "CONCLUIDA")
               .map((p) => (
                 <div key={p.id} className={styles.comissao_card}>
-                    <p className={styles.aprovacaoAviso}>Aguardando a aprovação</p>
+                  <p className={styles.aprovacaoAviso}>
+                    Aguardando a aprovação
+                  </p>
                   <h4 className={styles.h4}>
                     {p.nomeUsuario || "Cliente"}
 
-                    {/* passo 3 - colocar onClick no ícone */}
                     <span
                       className={styles.tooltip}
                       onClick={() =>
@@ -630,8 +629,8 @@ function PainelArtista() {
                     <span>{p.portfolio?.tipoArte || "Não especificado"}</span>
                   </h4>
                   <h4>
-                                      Mensagem:<span>{p.mensagem || p.descricaoPedido}</span>
-                                    </h4>
+                    Mensagem:<span>{p.mensagem || p.descricaoPedido}</span>
+                  </h4>
                 </div>
               ))}
             {pedidos.filter((p) => p.status === "CONCLUIDA").length === 0 && (
@@ -647,17 +646,13 @@ function PainelArtista() {
           <span>Aqui ficam os pedidos finalizados ou encerrados.</span>
           <div className={styles.card_caixa}>
             {pedidos.filter(
-              (p) =>
-                p.status === "FINALIZADA" ||
-                p.status === "CANCELADA"
+              (p) => p.status === "FINALIZADA" || p.status === "CANCELADA"
             ).length === 0 ? (
               <div></div>
             ) : (
               pedidos
                 .filter(
-                  (p) =>
-                    p.status === "FINALIZADA" ||
-                    p.status === "CANCELADA"
+                  (p) => p.status === "FINALIZADA" || p.status === "CANCELADA"
                 )
                 .map((p) => (
                   <div key={p.id} className={styles.comissao_card}>
@@ -666,7 +661,7 @@ function PainelArtista() {
                       Tipo: <span>{p.portfolio?.tipoArte}</span>
                     </h4>
                     <p>
-                        <strong>Status:</strong>{" "}
+                      <strong>Status:</strong>{" "}
                       {p.status === "FINALIZADA" &&
                         "Pedido finalizado com sucesso."}
                       {p.status === "CANCELADA" &&

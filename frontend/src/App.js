@@ -20,12 +20,11 @@ import PainelArtista from "./components/PainelArtista/PainelArtista";
 import PainelCliente from "./components/PainelCliente/PainelCliente";
 import Comissao from "./components/Comissao/Comissao";
 import Post from "./components/Post/Post";
-import Pesquisa from "./components/Pesquisa/Pesquisa";
 import Mensagens from "./components/Mensagens/Mensagens";
 import SidebarMensagens from "./components/SidebarMensagens/SidebarMensagens";
 import Portfolio from "./components/Portfolio/Portfolio";
 import Termos from "./components/TermosXPoliticas/Termos";
-import Politicas from  "./components/TermosXPoliticas/Politicas";
+import Politicas from "./components/TermosXPoliticas/Politicas";
 import ContaLayout from "./components/Conta/ContaLayout";
 import Perfil from "./components/Conta/Perfil";
 import EditarPortfolio from "./components/Conta/EditarPortfolio";
@@ -69,8 +68,14 @@ function App() {
 
         {/* outras rotas */}
         <Route path="/artistas_clientes" element={<ArtistasEclientes />} />
-        <Route path="/artistas_clientes/solicitacoes" element={<ArtistasEclientes />} />
-        <Route path="/artistas_clientes" element={<Navigate to="/artistas_clientes" />} />
+        <Route
+          path="/artistas_clientes/solicitacoes"
+          element={<ArtistasEclientes />}
+        />
+        <Route
+          path="/artistas_clientes"
+          element={<Navigate to="/artistas_clientes" />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/ver_arte/:id" element={<VerArte />} />
@@ -82,7 +87,6 @@ function App() {
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/politicas" element={<Politicas />} />
         <Route path="/termos" element={<Termos />} />
-        <Route path="/pesquisa" element={<Pesquisa />} />
         <Route path="/sidebar_mensagens" element={<SidebarMensagens />} />
       </Routes>
       <Footer />

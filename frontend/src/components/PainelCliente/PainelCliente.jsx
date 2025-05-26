@@ -7,6 +7,7 @@ import MasterCard from "../../assets/imgs/mastercard.webp";
 
 function PainelCliente() {
   const { usuario } = useContext(AuthContext);
+
   const [comissoes, setComissoes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -16,6 +17,7 @@ function PainelCliente() {
   const [imagensPainelMap, setImagensPainelMap] = useState({});
 
   const ultimaAtualizacaoRef = useRef([]);
+
   const navigate = useNavigate();
 
   const enviarMensagemAceite = async ({
@@ -180,29 +182,34 @@ function PainelCliente() {
       });
   };
 
-const finalizarComissao = async (comissaoId) => {
-  try {
-    const response = await fetch(`http://localhost:8080/api/comissoes/${comissaoId}/status?status=FINALIZADA`, {
-      method: 'PUT',
-    });
+  const finalizarComissao = async (comissaoId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/comissoes/${comissaoId}/status?status=FINALIZADA`,
+        {
+          method: "PUT",
+        }
+      );
 
-    if (response.ok) {
-      alert("Pedido finalizado com sucesso!");
-      // Atualiza as comissões no estado
-      const res = await fetch(`http://localhost:8080/api/comissoes/cliente/${usuario.id}`);
-      if (res.ok) {
-        const data = await res.json();
-        setComissoes(data);
+      if (response.ok) {
+        alert("Pedido finalizado com sucesso!");
+        // Atualiza as comissões no estado
+        const res = await fetch(
+          `http://localhost:8080/api/comissoes/cliente/${usuario.id}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setComissoes(data);
+        }
+      } else {
+        const error = await response.text();
+        alert("Erro ao finalizar pedido: " + error);
       }
-    } else {
-      const error = await response.text();
-      alert("Erro ao finalizar pedido: " + error);
+    } catch (error) {
+      console.error("Erro ao finalizar pedido:", error);
+      alert("Erro ao finalizar pedido.");
     }
-  } catch (error) {
-    console.error("Erro ao finalizar pedido:", error);
-    alert("Erro ao finalizar pedido.");
-  }
-};
+  };
 
   return (
     <div className={styles.caixa}>
@@ -496,34 +503,30 @@ const finalizarComissao = async (comissaoId) => {
           <span>Acesse detalhes de comissões finalizadas</span>
 
           {comissoes.filter(
-            (c) =>
-              c.status === "FINALIZADA" ||
-              c.status === "CANCELADA"
+            (c) => c.status === "FINALIZADA" || c.status === "CANCELADA"
           ).length === 0 ? (
             <div className={styles.card_caixa}></div>
           ) : (
             comissoes
               .filter(
-                (c) =>
-                  c.status === "FINALIZADA" ||
-                  c.status === "CANCELADA"
+                (c) => c.status === "FINALIZADA" || c.status === "CANCELADA"
               )
               .map((comissao) => (
                 <div key={comissao.id} className={styles.card_caixa}>
-                    <div className={styles.comissao_card}>
-                  <h4>Comissão com {comissao.artista?.nome || "Artista"}</h4>
-                  <p>
-                    <strong>Tipo:</strong>{" "}
-                    {comissao.portfolio?.tipoArte || "Desconhecido"}
-                  </p>
-                  <p>
-                    <strong>Status:</strong>{" "}
-                    {{
-                      FINALIZADA: "Pedido finalizado com sucesso.",
-                      CANCELADA: "Solicitação cancelada e encerrada.",
-                    }[comissao.status] || "Status desconhecido"}
-                  </p>
-                </div>
+                  <div className={styles.comissao_card}>
+                    <h4>Comissão com {comissao.artista?.nome || "Artista"}</h4>
+                    <p>
+                      <strong>Tipo:</strong>{" "}
+                      {comissao.portfolio?.tipoArte || "Desconhecido"}
+                    </p>
+                    <p>
+                      <strong>Status:</strong>{" "}
+                      {{
+                        FINALIZADA: "Pedido finalizado com sucesso.",
+                        CANCELADA: "Solicitação cancelada e encerrada.",
+                      }[comissao.status] || "Status desconhecido"}
+                    </p>
+                  </div>
                 </div>
               ))
           )}

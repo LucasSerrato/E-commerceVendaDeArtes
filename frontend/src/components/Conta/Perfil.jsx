@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from "react";
 import styles from "./styles/Perfil.module.css";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ function Perfil() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [randomColor] = useState(
-    `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`,
+    `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`
   );
   const [nome, setNome] = useState(usuario?.nome || "");
   const [email, setEmail] = useState(usuario?.email || "");
@@ -24,7 +24,7 @@ function Perfil() {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/clientes/email/${usuario.email}`,
+          `http://localhost:8080/api/clientes/email/${usuario.email}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -33,7 +33,7 @@ function Perfil() {
           setProfileImage(
             data.imagem
               ? `http://localhost:8080/api/clientes/imagem/${data.imagem}`
-              : null,
+              : null
           );
         } else {
           console.error("Falha ao buscar dados do usuário");
@@ -78,7 +78,7 @@ function Perfil() {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ nome }),
-        },
+        }
       );
 
       if (response.ok) {
@@ -98,7 +98,7 @@ function Perfil() {
           {
             method: "POST",
             body: formData,
-          },
+          }
         );
 
         if (uploadResponse.ok) {
@@ -117,7 +117,7 @@ function Perfil() {
 
         if (updatedUser.imagem) {
           setProfileImage(
-            `http://localhost:8080/api/clientes/imagem/${updatedUser.imagem}`,
+            `http://localhost:8080/api/clientes/imagem/${updatedUser.imagem}`
           );
         }
 
@@ -139,7 +139,7 @@ function Perfil() {
         `http://localhost:8080/api/clientes/${usuario.id}`,
         {
           method: "DELETE",
-        },
+        }
       );
 
       if (response.ok) {

@@ -1,19 +1,19 @@
 import styles from "./ArtistasEclientes.module.css";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { urlToFile } from "../../utils/fileUtils";  // ajuste o caminho conforme sua estrutura
-
+import { urlToFile } from "../../utils/fileUtils";
 
 function ArtistasEclientes() {
   const [imagensArtista, setImagensArtista] = useState([]);
   const [filtroSelecionado, setFiltroSelecionado] = useState("Todos");
   const location = useLocation();
   const navigate = useNavigate();
+
   // Estado para pesquisa
   const [pesquisa, setPesquisa] = useState("");
 
+  // Envia a mensagem
   const enviarMensagemAceite = async (post) => {
-    // Envia a mensagem de aceite, incluindo clienteId no body se quiser
     await fetch("http://localhost:8080/api/mensagemchat", {
       method: "POST",
       body: JSON.stringify({ id: post.id, clienteId: post.clienteId }),
@@ -21,9 +21,12 @@ function ArtistasEclientes() {
         "Content-Type": "application/json",
       },
     });
-
     // Navega para mensagens, incluindo clienteId na query
-    navigate(`/mensagens?id=${post.id}&nome=${encodeURIComponent(post.nomeUsuario)}&clienteId=${post.clienteId}`);
+    navigate(
+      `/mensagens?id=${post.id}&nome=${encodeURIComponent(
+        post.nomeUsuario
+      )}&clienteId=${post.clienteId}`
+    );
   };
 
   // Função para pegar query param 'busca' da URL
@@ -37,7 +40,6 @@ function ArtistasEclientes() {
 
   // Trocar entre artistas e solicitações usando navegação
   const toggle = () => {
-    // Ao trocar de aba, limpa a pesquisa
     setPesquisa("");
     navigate(isOn ? "/artistas_clientes" : "/artistas_clientes/solicitacoes");
   };
@@ -91,7 +93,7 @@ function ArtistasEclientes() {
     return newArr;
   };
 
-  // Filtrar imagens baseado no filtroSelecionado e no texto da pesquisa (ignora maiúsculas/minúsculas)
+  // Filtrar imagens baseado no filtroSelecionado e no texto da pesquisa
   const imagensFiltradas = imagensArtista.filter((imgData) => {
     // Se estiver na aba de solicitações (isOn), só filtra pela pesquisa no nomeUsuario e descrição
     if (isOn) {
@@ -122,6 +124,26 @@ function ArtistasEclientes() {
       imgData.portfolio?.artista?.nome?.toLowerCase().includes(termo)
     );
   });
+
+  function timeAgo(date) {
+    const rtf = new Intl.RelativeTimeFormat("pt-BR", { numeric: "auto" });
+    const diffMs = Date.now() - new Date(date).getTime();
+
+    const second = 1000;
+    const minute = 60 * second;
+    const hour = 60 * minute;
+    const day = 24 * hour;
+
+    if (diffMs < minute) {
+      return rtf.format(-Math.floor(diffMs / second), "second");
+    } else if (diffMs < hour) {
+      return rtf.format(-Math.floor(diffMs / minute), "minute");
+    } else if (diffMs < day) {
+      return rtf.format(-Math.floor(diffMs / hour), "hour");
+    } else {
+      return null;
+    }
+  }
 
   return (
     <section className={styles.artistas_container}>
@@ -203,10 +225,17 @@ function ArtistasEclientes() {
                 <h6>{post.nomeUsuario}</h6>
                 <span className={styles.data_post}>
                   {post.data
-                    ? new Intl.DateTimeFormat("pt-BR", {
-                        day: "2-digit",
-                        month: "2-digit",
-                      }).format(new Date(post.data))
+                    ? (() => {
+                        const rel = timeAgo(post.data);
+                        if (rel) {
+                          return rel;
+                        } else {
+                          return new Intl.DateTimeFormat("pt-BR", {
+                            day: "2-digit",
+                            month: "2-digit",
+                          }).format(new Date(post.data));
+                        }
+                      })()
                     : "Data indisponível"}
                 </span>
               </div>

@@ -15,7 +15,7 @@ public class DataLoader implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String...args) throws Exception {
 
         if (clienteRepository.count() == 0) {
             Cliente c1 = new Cliente(null, "Lucas", "lucas@gmail.com", "lucas123", false, null);

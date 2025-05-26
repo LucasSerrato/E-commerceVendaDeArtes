@@ -10,6 +10,7 @@ function Editar() {
   const [tipoArte, setTipoArte] = useState("");
   const [preco, setPreco] = useState("");
   const [prazo, setPrazo] = useState("");
+
   const navigate = useNavigate();
 
   // CARREGAR DADOS EXISTENTES
@@ -17,7 +18,7 @@ function Editar() {
     const fetchPortfolioData = async () => {
       try {
         const resPortfolio = await fetch(
-          `http://localhost:8080/api/portfolio/${portfolioId}`,
+          `http://localhost:8080/api/portfolio/${portfolioId}`
         );
         const portfolio = await resPortfolio.json();
         setPortfolioData(portfolio);
@@ -26,7 +27,7 @@ function Editar() {
         setPrazo(portfolio.prazo || "");
 
         const resImgs = await fetch(
-          `http://localhost:8080/api/portfolioimgs/portfolio/${portfolioId}`,
+          `http://localhost:8080/api/portfolioimgs/portfolio/${portfolioId}`
         );
         const imgs = await resImgs.json();
 
@@ -76,17 +77,17 @@ function Editar() {
         {
           method: "POST",
           body: formData,
-        },
+        }
       );
     }
 
     alert("Alterações salvas com sucesso!");
-    navigate('/conta/editar_portfolio');
+    navigate("/conta/editar_portfolio");
   };
 
   const handleFiles = (files) => {
     const newImages = Array.from(files).filter((file) =>
-      file.type.startsWith("image/"),
+      file.type.startsWith("image/")
     );
     const previews = newImages.map((file) => ({
       file,
@@ -111,82 +112,82 @@ function Editar() {
 
   return (
     <section className={styles.editar_container}>
-               <h2>Editar portfolio</h2>
+      <h2>Editar portfolio</h2>
 
-        <div className={styles.form}>
-      <form className={styles.edit_form}>
-        <label>Tipo de arte</label>
-        <input
-          type="text"
-          value={tipoArte}
-          onChange={(e) => setTipoArte(e.target.value)}
-        />
-
-        <label>Valor</label>
-        <input
-          type="number"
-          value={preco}
-          onChange={(e) => setPreco(e.target.value)}
-        />
-
-        <label>Prazo</label>
-        <input
-          type="number"
-          value={prazo}
-          onChange={(e) => setPrazo(e.target.value)}
-        />
-
-        <div
-          className={styles.dropzone}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => {
-            e.preventDefault();
-            handleFiles(e.dataTransfer.files);
-          }}
-          onClick={() => document.getElementById("multiImageInput").click()}
-        >
-          Arraste uma ou mais imagens de referência aqui ou clique para
-          selecionar
+      <div className={styles.form}>
+        <form className={styles.edit_form}>
+          <label>Tipo de arte</label>
           <input
-            type="file"
-            id="multiImageInput"
-            accept="image/*"
-            multiple
-            style={{ display: "none" }}
-            onChange={(e) => handleFiles(e.target.files)}
+            type="text"
+            value={tipoArte}
+            onChange={(e) => setTipoArte(e.target.value)}
           />
+
+          <label>Valor</label>
+          <input
+            type="number"
+            value={preco}
+            onChange={(e) => setPreco(e.target.value)}
+          />
+
+          <label>Prazo</label>
+          <input
+            type="number"
+            value={prazo}
+            onChange={(e) => setPrazo(e.target.value)}
+          />
+
+          <div
+            className={styles.dropzone}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              handleFiles(e.dataTransfer.files);
+            }}
+            onClick={() => document.getElementById("multiImageInput").click()}
+          >
+            Arraste uma ou mais imagens de referência aqui ou clique para
+            selecionar
+            <input
+              type="file"
+              id="multiImageInput"
+              accept="image/*"
+              multiple
+              style={{ display: "none" }}
+              onChange={(e) => handleFiles(e.target.files)}
+            />
+          </div>
+
+          <button
+            className={styles.edit_btn}
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Salvar alterações
+          </button>
+        </form>
+
+        {/* Imagens já existentes */}
+        <div className={styles.previousImgsGrid}>
+          {images
+            .filter((img) => img.id)
+            .map((img, index) => (
+              <div key={index} className={styles.previewItem}>
+                <img
+                  src={img.url}
+                  alt={`Preview ${index}`}
+                  className={styles.previewImage}
+                />
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={() => deleteExistingImage(img.id)}
+                >
+                  &#10006;
+                </button>
+              </div>
+            ))}
         </div>
-
-        <button
-          className={styles.edit_btn}
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Salvar alterações
-        </button>
-      </form>
-
-      {/* Imagens já existentes no servidor */}
-      <div className={styles.previousImgsGrid}>
-        {images
-          .filter((img) => img.id)
-          .map((img, index) => (
-            <div key={index} className={styles.previewItem}>
-              <img
-                src={img.url}
-                alt={`Preview ${index}`}
-                className={styles.previewImage}
-              />
-              <button
-                type="button"
-                className={styles.cancelButton}
-                onClick={() => deleteExistingImage(img.id)}
-              >
-                &#10006;
-              </button>
-            </div>
-          ))}
-      </div>
       </div>
 
       {/* Novas imagens */}

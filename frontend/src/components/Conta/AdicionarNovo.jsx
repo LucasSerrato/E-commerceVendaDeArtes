@@ -13,7 +13,7 @@ function AdiconarNovo() {
   // PREVIEW IMAGEM
   const handleFiles = (files) => {
     const newImages = Array.from(files).filter((file) =>
-      file.type.startsWith("image/"),
+      file.type.startsWith("image/")
     );
     const previews = newImages.map((file) => ({
       file,
@@ -77,7 +77,7 @@ function AdiconarNovo() {
         {
           method: "POST",
           body: formData,
-        },
+        }
       );
 
       if (!imgResponse.ok) {
@@ -101,7 +101,7 @@ function AdiconarNovo() {
   return (
     <section className={styles.addicionar_container}>
       <form className={styles.form_add} onSubmit={handleSubmit}>
-          <h2>Adicionar portfolio</h2>
+        <h2>Adicionar portfolio</h2>
         <label>Tipo de arte</label>
         <input
           type="text"

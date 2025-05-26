@@ -73,4 +73,9 @@ public class ComentarioCliImgService {
         }
         return null;
     }
+
+    public List<ComentarioCliImgs> findByClienteId(Long clienteId) {
+        return comentarioCliImgsRepository.findByComentarioClienteId(clienteId);
+    }
+
 }

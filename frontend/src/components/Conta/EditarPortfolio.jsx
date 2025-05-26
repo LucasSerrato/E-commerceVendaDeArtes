@@ -23,7 +23,7 @@ function EditarPortfolio() {
 
     try {
       const responseImgs = await fetch(
-        `http://localhost:8080/api/portfolioimgs/artista/${usuario.id}`,
+        `http://localhost:8080/api/portfolioimgs/artista/${usuario.id}`
       );
       if (!responseImgs.ok) throw new Error("Erro ao buscar imagens");
       const dataImgs = await responseImgs.json();
@@ -31,7 +31,7 @@ function EditarPortfolio() {
       setTemPortfolio(dataImgs.length > 0);
 
       const responseBio = await fetch(
-        `http://localhost:8080/api/portfolio/artista/${usuario.id}`,
+        `http://localhost:8080/api/portfolio/artista/${usuario.id}`
       );
       if (responseBio.ok) {
         const data = await responseBio.json();
@@ -61,7 +61,7 @@ function EditarPortfolio() {
 
     try {
       const buscaResponse = await fetch(
-        `http://localhost:8080/api/portfolio/artista/${usuario.id}`,
+        `http://localhost:8080/api/portfolio/artista/${usuario.id}`
       );
       if (!buscaResponse.ok)
         throw new Error("Erro ao buscar portfolio existente");
@@ -86,7 +86,7 @@ function EditarPortfolio() {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(atualizado),
-        },
+        }
       );
 
       if (!response.ok) throw new Error("Erro ao salvar");
@@ -111,7 +111,7 @@ function EditarPortfolio() {
         `http://localhost:8080/api/portfolio/${portfolioParaDeletar}`,
         {
           method: "DELETE",
-        },
+        }
       );
 
       if (!response.ok) throw new Error("Erro ao deletar");

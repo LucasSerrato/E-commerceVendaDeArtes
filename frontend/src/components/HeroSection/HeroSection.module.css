@@ -1,69 +1,67 @@
 .hero {
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url('../../assets/imgs/tela_inicial_fundo.jpg');
-    background-size: 65%;
-    background-position: center;
-    height: 700px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../../assets/imgs/tela_inicial_fundo.jpg");
+  background-size: 65%;
+  background-position: center;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
 
 .hero h1 {
-    text-align: center;
-    font-size: 64px;
-    font-weight: 100;
-    font-family: "Afacad", sans-serif;
+  text-align: center;
+  font-size: 64px;
+  font-weight: 100;
+  font-family: "Afacad", sans-serif;
 }
 /* CAIXA PESQUISAR */
 .searchBox {
-    display: flex;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.219);
-    border-radius: 30px;
-    padding: 6px;
-    width: 766px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border: 1px solid #DFDFDF;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.219);
+  border-radius: 30px;
+  padding: 6px;
+  width: 766px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #dfdfdf;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .searchBox input {
-    border: none;
-    outline: none;
-    padding: 10px;
-    flex: 1;
-    border-radius: 30px;
-    font-size: 22px;
-    background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 10px;
+  flex: 1;
+  border-radius: 30px;
+  font-size: 22px;
+  background-color: transparent;
 }
 
 .searchBox input::placeholder {
-    color: #DFDFDF;
+  color: #dfdfdf;
 }
 
 .searchBox:hover {
-    border: 2px solid #ffffff;
+  border: 2px solid #ffffff;
 }
-
 
 /* BOTAO */
 .button {
-    background-color: #9E00E7;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 23px;
+  background-color: #9e00e7;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 23px;
 }
 
 .button:hover {
-    background-color: #ffffff62;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+  background-color: #ffffff62;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }

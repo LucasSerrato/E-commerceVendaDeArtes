@@ -55,6 +55,17 @@ public class ComentarioCliImgsController {
         return ResponseEntity.ok(lista);
     }
 
+    @GetMapping("/cliente/{id}")
+    public ResponseEntity<List<ComentarioCliDTO>> getByCliente(@PathVariable Long id) {
+        List<ComentarioCliDTO> dtos = comentarioCliImgService.findByClienteId(id)
+                .stream()
+                .map(ComentarioCliDTO::new)
+                .toList();
+
+        return ResponseEntity.ok(dtos);
+    }
+
+
     @GetMapping("/imagem/{nomeImagem}")
     public ResponseEntity<byte[]> getImagem(@PathVariable String nomeImagem)
             throws IOException {
