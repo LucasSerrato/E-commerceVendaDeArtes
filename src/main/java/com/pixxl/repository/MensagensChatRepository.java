@@ -1,5 +1,6 @@
 package com.pixxl.repository;
 
+import com.pixxl.model.Cliente;
 import com.pixxl.model.MensagensChat;
 import java.util.List;
 import java.util.Optional;
@@ -34,4 +35,6 @@ public interface MensagensChatRepository
     List<MensagensChat> findUltimasMensagensPorUsuario(@Param("usuarioId") Long usuarioId);
 
     List<MensagensChat> findByConversaId(Long conversaId);
+
+    void deleteByRemetenteOrDestinatario(Cliente remetente, Cliente destinatario);
 }

@@ -120,12 +120,14 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
-        Cliente cliente = service.buscarPorId(id);
-        if (cliente != null) {
-            service.deletarPorId(id);
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deletarCliente(@PathVariable Long id) {
+        try {
+            service.deletarClienteComDependencias(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Erro ao deletar cliente: " + e.getMessage());
         }
-        return ResponseEntity.notFound().build();
     }
+
 }

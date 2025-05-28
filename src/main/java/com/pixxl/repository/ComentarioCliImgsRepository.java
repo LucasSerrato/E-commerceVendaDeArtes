@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ComentarioCliImgsRepository extends JpaRepository <ComentarioCliImgs, Long> {
     List<ComentarioCliImgs> findByComentarioClienteId(Long clienteId);
+    void deleteByComentarioClienteId(Long comentarioId);
 }

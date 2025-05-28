@@ -1,5 +1,6 @@
 package com.pixxl.repository;
 
+import com.pixxl.model.Portfolio;
 import com.pixxl.model.Portfolio_imgs;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,6 @@ public interface PortfolioImgsRepository
             + "LOWER(p.portfolio.tipo_arte) = LOWER(:tipo))")
     List<Portfolio_imgs>
     findByTipoArte(String tipo);
+
+    void deleteByPortfolio(Portfolio portfolio);
 }

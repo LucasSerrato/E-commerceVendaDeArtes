@@ -78,7 +78,7 @@
   background-color: #9e00e70f;
   color: #6a1b9a;
   padding: 10px 15px;
-  border-radius: 18px 18px 0 18px;
+  border-radius: 18px 18px 18px 0;
   word-wrap: break-word;
 }
 
@@ -89,7 +89,7 @@
   background-color: #9e00e70f;
   color: #6a1b9a;
   padding: 10px 15px;
-  border-radius: 18px 18px 18px 0;
+  border-radius: 18px 18px 0 18px;
   word-wrap: break-word;
 }
 .inputBox {

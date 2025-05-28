@@ -1,7 +1,11 @@
 package com.pixxl.service;
 
 import com.pixxl.model.Cliente;
-import com.pixxl.repository.ClienteRepository;
+import com.pixxl.model.ComentarioCli;
+import com.pixxl.model.Comissao;
+import com.pixxl.model.Portfolio;
+import com.pixxl.repository.*;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,13 +14,23 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ClienteService {
     @Autowired private ClienteRepository repository;
+    @Autowired private ComentarioCliRepository comentarioCliRepository;
+    @Autowired private ComentarioCliImgsRepository comentarioCliImgsRepository; // opcional
+    @Autowired private ComissaoRepository comissaoRepository;
+    @Autowired private MensagensChatRepository mensagensChatRepository;
+    @Autowired private PortfolioRepository portfolioRepository;
+    @Autowired private PortfolioImgsRepository portfolioImgsRepository;
+    @Autowired private AceitarComissaoRepository aceitarComissaoRepository;
+    @Autowired private ImagensPainelRepository imagensPainelRepository;
 
     public Cliente salvarImagem(Long id, MultipartFile file) throws IOException {
         String uploadDir = "uploads/clientes";
@@ -75,11 +89,41 @@ public class ClienteService {
         return null;
     }
 
-    public void deletarPorId(Long id) {
-        repository.deleteById(id);
-    }
 
     public void deletar(Cliente cliente) {
+        repository.delete(cliente);
+    }
+
+    @Transactional
+    public void deletarClienteComDependencias(Long clienteId) {
+        Cliente cliente = repository.findById(clienteId)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+        mensagensChatRepository.deleteByRemetenteOrDestinatario(cliente, cliente);
+
+        List<ComentarioCli> comentarios = comentarioCliRepository.findAllByCliente(cliente);
+        for (ComentarioCli comentario : comentarios) {
+            comentarioCliImgsRepository.deleteByComentarioClienteId(comentario.getId());
+        }
+        comentarioCliRepository.deleteAll(comentarios);
+
+        List<Comissao> comissoes = comissaoRepository.findByClienteId(clienteId);
+        comissoes.addAll(comissaoRepository.findByArtistaId(clienteId)); // caso seja artista também
+
+        for (Comissao comissao : comissoes) {
+            imagensPainelRepository.deleteAll(imagensPainelRepository.findByComissaoId(comissao.getId()));
+
+            aceitarComissaoRepository.deleteByComissao(comissao);
+        }
+
+        comissaoRepository.deleteByClienteOrArtista(cliente, cliente);
+
+        List<Portfolio> portfolios = portfolioRepository.findByArtista(cliente);
+        for (Portfolio portfolio : portfolios) {
+            portfolioImgsRepository.deleteByPortfolio(portfolio);
+        }
+        portfolioRepository.deleteAll(portfolios);
+
         repository.delete(cliente);
     }
 }
