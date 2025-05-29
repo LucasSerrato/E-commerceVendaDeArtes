@@ -99,8 +99,8 @@ The platform is built upon a **client-server architecture**, where the React fro
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/LucasSerrato/curriculoTsuda.git
-cd Projeto5Sem
+git clone https://github.com/Gabriel-Gato/FrameWix.git
+cd frontend
 ```
 
 ### 2. Run the Spring Boot back-end
@@ -119,7 +119,6 @@ cd backend
 cd frontend
 npm install
 npm install @fortawesome/fontawesome-free
-npm install react-router-dom
 npm install react-toastify
 npm start
 
@@ -259,8 +258,8 @@ O Pixxl utiliza uma **arquitetura cliente-servidor**, com comunicação via API 
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/LucasSerrato/curriculoTsuda.git
-cd Projeto5Sem
+git clone https://github.com/Gabriel-Gato/FrameWix.git
+cd frontend
 ```
 
 ### 2. Inicie o back-end (Spring Boot)
@@ -279,7 +278,6 @@ cd backend
 cd frontend
 npm install
 npm install @fortawesome/fontawesome-free
-npm install react-router-dom
 npm install react-toastify
 npm start
 ```
