@@ -396,3 +396,9 @@ export default SidebarMensagens;
   color: #333;
 }
 
+---------------------------------------------------------------------
+Expondo minha arte com amor e abrindo comissões — leve um pedacinho do meu traço pra você!
+
+Criando mundos em cores e linhas. Veja meus trabalhos e peça sua arte personalizada!
+
+Ilustradora apaixonada por transformar ideias em arte. Comissões abertas!
