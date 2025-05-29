@@ -1,16 +1,16 @@
 
 
-# 🎨 **Pixxl – Digital Art Marketplace for Independent Artists**
+# 🎨 **FrameWix – Digital Art Marketplace for Independent Artists**
 
-**Pixxl** is a complete **full stack web application** developed using **React** (front-end), **Spring Boot** (back-end), and **H2 Database** (for persistence during development). The platform serves as a **marketplace for independent artists** to publish their artwork, receive commissions, and communicate directly with potential buyers. It includes a clean, modern interface tailored separately for **artists (sellers)** and **clients (buyers)**.
+**FrameWix** is a complete **full stack web application** developed using **React** (front-end), **Spring Boot** (back-end), and **H2 Database** (for persistence during development). The platform serves as a **marketplace for independent artists** to publish their artwork, receive commissions, and communicate directly with potential buyers. It includes a clean, modern interface tailored separately for **artists (sellers)** and **clients (buyers)**.
 
-Pixxl enables communication, project management, and negotiation through an **integrated internal chat system**, a **project wall** where artists showcase their work, and a **proposal system** where clients can send custom art requests that artists may accept or reject.
+FrameWix enables communication, project management, and negotiation through an **integrated internal chat system**, a **project wall** where artists showcase their work, and a **proposal system** where clients can send custom art requests that artists may accept or reject.
 
 ---
 
 ## 🧠 **Project Overview**
 
-Pixxl was designed with a **user-centric and scalable architecture**, incorporating industry-standard technologies. The application provides a platform that:
+FrameWix was designed with a **user-centric and scalable architecture**, incorporating industry-standard technologies. The application provides a platform that:
 
 - Promotes the work of independent visual artists
 - Enables direct artist-client interaction
@@ -131,7 +131,7 @@ npm start
 
 ## 📚 **Academic Highlights**
 
-Pixxl demonstrates proficiency in:
+FrameWix demonstrates proficiency in:
 
 - Front-end and back-end integration
 - MVC architecture and component design
@@ -148,12 +148,11 @@ Feel free to fork, suggest improvements, or open issues and pull requests. Colla
 
 ---
 
-## 📧 **Contact**
+## 📧 **Contacts**
 
 **Lucas Serrato**  
 [🔗 LinkedIn](https://www.linkedin.com/in/lucasserrato201)  
-📩 alfalifeclothes@gmail.com  
-☕ [Donate via Pix](https://livepix.gg/lkshow)
+[🔗 LinkedIn](www.linkedin.com/in/pearl-nyarko-2a8014265)  
 
 ## **Read-me by Lucas Serrato Bonito.**
 
@@ -161,9 +160,9 @@ Feel free to fork, suggest improvements, or open issues and pull requests. Colla
 
 ---
 
-# 🎨 **Pixxl – Plataforma de Artes Digitais para Artistas Independentes**
+# 🎨 **FrameWix – Plataforma de Artes Digitais para Artistas Independentes**
 
-**Pixxl** é uma aplicação web **full stack** desenvolvida com **React** (front-end), **Spring Boot** (back-end) e **H2 Database** (para persistência local), que funciona como um **marketplace de artes**. Seu foco é conectar **artistas independentes (vendedores)** a **clientes (compradores)**, facilitando negociações, comissões e comunicação direta.
+**FrameWix** é uma aplicação web **full stack** desenvolvida com **React** (front-end), **Spring Boot** (back-end) e **H2 Database** (para persistência local), que funciona como um **marketplace de artes**. Seu foco é conectar **artistas independentes (vendedores)** a **clientes (compradores)**, facilitando negociações, comissões e comunicação direta.
 
 A plataforma conta com interfaces distintas para artistas e clientes, um **chat interno**, um **mural público de projetos**, e um sistema de **propostas personalizadas**, onde o artista pode **aceitar ou recusar** encomendas feitas pelo cliente.
 
@@ -171,7 +170,7 @@ A plataforma conta com interfaces distintas para artistas e clientes, um **chat 
 
 ## 🧠 **Visão Geral do Projeto**
 
-Pixxl foi planejado com uma arquitetura escalável, modular e voltada à experiência do usuário. A proposta é proporcionar uma plataforma digital moderna onde:
+FrameWix foi planejado com uma arquitetura escalável, modular e voltada à experiência do usuário. A proposta é proporcionar uma plataforma digital moderna onde:
 
 - Artistas possam expor seus trabalhos e receber propostas
 - Clientes possam contratar projetos personalizados
@@ -291,7 +290,7 @@ npm start
 
 ## 📚 **Destaques Acadêmicos**
 
-Pixxl é um projeto ideal para contextos acadêmicos e portfólios de desenvolvedores, pois demonstra:
+FrameWix é um projeto ideal para contextos acadêmicos e portfólios de desenvolvedores, pois demonstra:
 
 - Integração entre front-end e back-end
 - Implementação de APIs REST com Spring Boot
@@ -312,9 +311,8 @@ Contribua com código, abra issues ou envie pull requests.
 ## 📧 **Contato**
 
 **Lucas Serrato**  
-[🔗 LinkedIn](https://www.linkedin.com/in/lucasserrato201)  
-📩 alfalifeclothes@gmail.com  
-☕ [Doe via Pix](https://livepix.gg/lkshow)
+[🔗 LinkedIn](https://www.linkedin.com/in/lucasserrato201) 
+[🔗 LinkedIn](www.linkedin.com/in/pearl-nyarko-2a8014265)  
 
 ## **Leia-me feito por Lucas Serrato Bonito.**
 
