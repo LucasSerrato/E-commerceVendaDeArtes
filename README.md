@@ -150,8 +150,8 @@ Feel free to fork, suggest improvements, or open issues and pull requests. Colla
 ## 📧 **Contacts**
 
 **Lucas Serrato**  
-[🔗 LinkedIn](https://www.linkedin.com/in/lucasserrato201)  
-[🔗 LinkedIn](www.linkedin.com/in/pearl-nyarko-2a8014265)  
+🤝[🔗 LinkedIn](https://www.linkedin.com/in/lucasserrato201)  
+
 
 ## **Read-me by Lucas Serrato Bonito.**
 
