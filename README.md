@@ -306,11 +306,11 @@ Contribua com código, abra issues ou envie pull requests.
 
 ---
 
-## 📧 **Contato**
+## 🤝 **Contato**
 
 **Lucas Serrato**  
-[🔗 LinkedIn](https://www.linkedin.com/in/lucasserrato201) 
-[🔗 LinkedIn](www.linkedin.com/in/pearl-nyarko-2a8014265)  
+🤝[🔗 LinkedIn](https://www.linkedin.com/in/lucasserrato201) 
+
 
 ## **Leia-me feito por Lucas Serrato Bonito.**
 
